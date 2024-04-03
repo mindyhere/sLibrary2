@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="rebook">
-	<select id="list" resultType="admin.l_book.ReBookDTO">
+	<select id="list" resultType="com.example.syLibrary2.admin.model.dto.ReBookDTO">
 		select * 
 		from (
 			select rownum as rn, A.*
@@ -16,7 +16,7 @@
 		select count(*) from rbook
 	</select>
 	
-	<select id="search_list" resultType="admin.l_book.ReBookDTO">
+	<select id="search_list" resultType="com.example.syLibrary2.admin.model.dto.ReBookDTO">
 		select *
 		from (
 			select rownum as rn, A.*

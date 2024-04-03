@@ -16,7 +16,7 @@ import com.example.syLibrary2.admin.model.dto.BookDTO;
 import com.example.syLibrary2.util.PageUtil;
 
 @Controller
-@RequestMapping("/admin/*")
+@RequestMapping("/book/*")
 public class BookController {
 	@Autowired
 	BookDAO dao;
