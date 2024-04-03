@@ -28,8 +28,8 @@
 	});
 
 	function list(page) {
-		location.href = "/syLibrary/book_servlet/search.do?cur_page=" + page
-				+ "&search_option=${search_option}&keyword=${keyword}";
+		location.href = "/admin/list_all.do?cur_page="+page
+				+ "&search_option=${map.search_option}&keyword=${map.keyword}";
 	}
 </script>
 <style>
@@ -117,10 +117,10 @@ padding-bottom: 20px;
 </style>
 </head>
 <body>
-	<jsp:include page="../admin_header.jsp" />
+	<%-- <jsp:include page="../admin_header.jsp" /> --%>
 	<div id="body-wrapper">
 	<div id="body-content">
-	<jsp:include page="../menu.jsp" />
+	<%-- <jsp:include page="../menu.jsp" /> --%>
 	<div style="width:1000px;">
 	<div class="page-direction" style="padding: 20px; padding-left: 250px;">
 		<div class="navi">
@@ -129,9 +129,71 @@ padding-bottom: 20px;
 		</div>
 	</div>
 
-	<form name="form1" method="post"
-		action="/syLibrary/book_servlet/search.do">
-
+	<form name="form1" method="post">
+		<div class="search">
+			<select id="s_list" id="search_option" name="search_option">
+				<c:choose>
+					<c:when test="${search_option == null}">
+						<option value="none" hidden>선택</option>
+						<option value="b_id">도서번호</option>
+						<option value="b_name">도서명</option>
+						<option value="b_author">저자명</option>
+						<option value="b_pub">출판사</option>
+						<option value="b_category">분류</option>
+					</c:when>
+					<c:when test="${search_option == 'b_id'}">
+						<option value="none" hidden>선택</option>
+						<option value="b_id" selected>도서번호</option>
+						<option value="b_name">도서명</option>
+						<option value="b_author">저자명</option>
+						<option value="b_pub">출판사</option>
+						<option value="b_category">분류</option>
+					</c:when>
+					<c:when test="${search_option == 'b_name'}">
+						<option value="none" hidden>선택</option>
+						<option value="b_id">도서번호</option>
+						<option value="b_name" selected>도서명</option>
+						<option value="b_author">저자명</option>
+						<option value="b_pub">출판사</option>
+						<option value="b_category">분류</option>
+					</c:when>
+					<c:when test="${search_option == 'b_author'}">
+						<option value="none" hidden>선택</option>
+						<option value="b_id">도서번호</option>
+						<option value="b_name">도서명</option>
+						<option value="b_author" selected>저자명</option>
+						<option value="b_pub">출판사</option>
+						<option value="b_category">분류</option>
+					</c:when>
+					<c:when test="${search_option == 'b_pub'}">
+						<option value="none" hidden>선택</option>
+						<option value="b_id">도서번호</option>
+						<option value="b_name">도서명</option>
+						<option value="b_author">저자명</option>
+						<option value="b_pub" selected>출판사</option>
+						<option value="b_category">분류</option>
+					</c:when>
+					<c:when test="${search_option == 'b_category'}">
+						<option value="none" hidden>선택</option>
+						<option value="b_id">도서번호</option>
+						<option value="b_name">도서명</option>
+						<option value="b_author">저자명</option>
+						<option value="b_pub">출판사</option>
+						<option value="b_category" selected>분류</option>
+					</c:when>
+				</c:choose>
+			</select> <input type="text" id="keyword" name="keyword" value="${keyword}"
+				placeholder="검색어를 입력하세요">
+			<div class="icon">
+				<input type="submit" id="btnSearch" style="display: none;">
+				<label for="btnSearch"><svg
+						xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+						fill="#666666" class="bi bi-search" viewBox="0 0 16 16">
+  <path
+							d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+</svg></label>
+			</div>
+		</div>
 	</form>
 	<table border="1">
 		<tr align="center" style="color: white; font-size: 17px;">
@@ -142,6 +204,13 @@ padding-bottom: 20px;
 			<th>발행년도</th>
 			<th>분류</th>
 		</tr>
+		<c:choose>
+			<c:when test="${map.count == 0}">
+			<tr height="100px" align="center">
+			<td colspan="6">일치하는 항목이 없습니다.</td>
+			</tr>
+			</c:when>
+			<c:otherwise>
 				<c:forEach var="dto" items="${map.dto}">
 					<tr align="center">
 						<td><a style="color: black;" href="../book_servlet/edit.do?b_id=${dto.b_id}">${dto.b_id}</a></td>
@@ -158,7 +227,7 @@ padding-bottom: 20px;
 							<a id="hr" href="#" onclick="list('1')">[처음]</a>
 						</c:if> <c:if test="${map.page.curBlock>1}">
 							<a id="hr" href="#" onclick="list('${map.page.prevPage}')">[이전]</a>
-						</c:if> <c:forEach var="num" begin="${map.page.blockStart}"
+						</c:if> <c:forEach var="num" begin="${map.page.blockBegin}"
 							end="${map.page.blockEnd}">
 							<c:choose>
 								<c:when test="${num==map.page.curPage}">
@@ -168,16 +237,19 @@ padding-bottom: 20px;
 									<a id="hr" href="#" onclick="list('${num}')">${num} </a>
 								</c:otherwise>
 							</c:choose>
-						</c:forEach> <c:if test="${map.page.curBlock <= map.page.totBlock}">
+						</c:forEach> <c:if test="${map.page.curBlock < map.page.totBlock}">
 							<a id="hr" href="#" onclick="list('${map.page.nextPage}')">[다음]</a>
-						</c:if> <c:if test="${map.page.curPage <= map.page.totPage}">
+						</c:if> <c:if test="${map.page.curPage < map.page.totPage}">
 							<a id="hr" href="#" onclick="list('${map.page.totPage}')">[마지막]</a>
 						</c:if></td>
 				</tr>
+
+			</c:otherwise>
+		</c:choose>
 	</table>
 	</div>
 		</div>
-	<jsp:include page="/admin/admin_footer.jsp" />
+	<%-- <jsp:include page="/admin/admin_footer.jsp" /> --%>
 </div>
 </body>
 </html>

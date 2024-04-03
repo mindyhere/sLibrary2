@@ -25,9 +25,13 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public List<BookDTO> list_search(String search_option, String keyword, int start, int end) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BookDTO> list(int start, int end, String search_option, String keyword) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("search_option",search_option);
+		map.put("keyword",keyword);
+		map.put("start",start);
+		map.put("end",end);
+		return sqlSession.selectList("book.list",map);
 	}
 
 	@Override
@@ -60,14 +64,11 @@ public class BookDAOImpl implements BookDAO {
 
 	}
 
-	@Override
-	public List<BookDTO> list(int start, int end) {
-		Map<String,Object> map=new HashMap<>();
-		map.put("start",start);
-		map.put("end",end);
-		List<BookDTO> list = sqlSession.selectList("book.list", map);
-		return list;
-	}
+	/*
+	 * @Override public List<BookDTO> list(int start, int end) { Map<String,Object>
+	 * map=new HashMap<>(); map.put("start",start); map.put("end",end);
+	 * List<BookDTO> list = sqlSession.selectList("book.list", map); return list; }
+	 */
 
 	@Override
 	public String url_cate(int b_id) {
