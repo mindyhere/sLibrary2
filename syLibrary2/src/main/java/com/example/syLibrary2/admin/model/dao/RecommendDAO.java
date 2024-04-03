@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.example.syLibrary2.admin.model.dto.BookDTO;
 
+
 public interface RecommendDAO {
 	// 사용자 탭 선택 → 목록 가져오기
 	List<BookDTO> getList(String option);
