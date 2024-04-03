@@ -3,7 +3,8 @@ package com.example.syLibrary2.user.model.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.example.syLibrary2.admin.model.BookDTO;
+import com.example.syLibrary2.admin.model.dto.BookDTO;
+
 
 public interface SearchDAO {
 	// 키워드로 통합검색(도서명, 작가, 출판사)
