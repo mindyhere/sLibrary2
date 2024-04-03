@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <link rel="icon" href="/syLibrary/resources/images/icon.png"
 	type="image/x-icon">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/user.css">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <head>
 <meta charset="UTF-8">
@@ -16,7 +16,7 @@
 	<div class="container">
 		<div class="card-style mb-30">
 			<h3 class="text-bold">
-				<img src="/syLibrary/resources/images/info.png" width="35px"
+				<img src="/resources/images/info.png" width="35px"
 					height="35px"> 대출/예약/반납
 			</h3>
 			<hr>

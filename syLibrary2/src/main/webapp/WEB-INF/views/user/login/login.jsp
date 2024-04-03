@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
+<link rel="icon" href="/resources/images/icon.png"
 	type="image/x-icon">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/user.css">
 <c:if test="${param.message == 'join'}">
 	<script>
 	$(function() {
@@ -107,7 +107,7 @@
 	<%@ include file="../common/header.jsp"%>
 	<div class="container min-vh-100">
 		<h3 class="text-bold">
-			<img src="/syLibrary/resources/images/login.png" width="35px"
+			<img src="/resources/images/login.png" width="35px"
 				height="35px"> 로그인
 		</h3>
 		<hr>
@@ -116,7 +116,7 @@
 		<!--  로그인 입력창 -->
 		<div class="card-style mb-30">
 			<form name="loginForm" method="post"
-				action="/syLibrary/login_servlet/login.do">
+				action="/user/login/login.do">
 				<div>
 					<div class="input-style-1">
 						<label>아이디</label> <input type="text" name="mId" id="mId"
@@ -140,14 +140,14 @@
 			style="background-color: #E8E8E4; border: 1px solid #D5D5D5; height: 300px">
 			<div class="col text-center">
 				<div class="btnLoginBottom">
-					<a href="../login/searchId.jsp"> <img
+					<a href="/user/login/searchId"> <img
 						src="../../resources/images/login/id.png"><br> 아이디 찾기
 					</a>
 				</div>
 			</div>
 			<div class="col text-center">
 				<div class="btnLoginBottom">
-					<a href="../login/searchPasswd.jsp "> <img
+					<a href="/user/login/searchPasswd"> <img
 						src="../../resources/images/login/forgot.png"><br> 비밀번호
 						찾기
 					</a>

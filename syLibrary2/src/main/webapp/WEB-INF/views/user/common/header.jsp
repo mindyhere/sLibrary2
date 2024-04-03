@@ -122,16 +122,16 @@ body {
 							aria-expanded="false">이용안내</a>
 						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
 							<div>
-								<a class="dropdown-item" href="/syLibrary/user/info/guide.jsp">대출/반납/예약</a>
+								<a class="dropdown-item" href="/user/info/guide">대출/반납/예약</a>
 							</div>
 							<div class="dropdown-divider"></div>
 							<div>
-								<a class="dropdown-item" href="/syLibrary/user/info/map.jsp">도서관
+								<a class="dropdown-item" href="/user/info/map">도서관
 									오는길</a>
 							</div>
 							<div class="dropdown-divider"></div>
 							<div>
-								<a class="dropdown-item" href="/syLibrary/user/info/sitemap.jsp">사이트맵</a>
+								<a class="dropdown-item" href="/user/info/sitemap">사이트맵</a>
 							</div>
 						</div>
 					</div>
