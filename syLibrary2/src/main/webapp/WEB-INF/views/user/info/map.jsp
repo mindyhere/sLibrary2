@@ -4,18 +4,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
-	type="image/x-icon">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=81721d18b772f4418205b8ac5f1d014c"></script>
+<link rel="stylesheet" href="/resources/static/user.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<script src="/syLibrary/include/js/bootstrap.js"></script>
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
+<script src="/resources/static/js/bootstrap.js"></script>
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0e210f77be896b9944b8fb0593850ab6"></script>
 <style>
 .customoverlay {
 	position: relative;
@@ -75,8 +74,8 @@
 		style="float: none; margin: 0 auto; margin-top: 3em">
 		<div class="card-style mb-30">
 			<h3 class="text-bold">
-				<img src="/syLibrary/resources/images/map.png" width="40px"
-					height="40px"> 도서관 오는 길
+				<img src="/resources/images/map.png" width="40px" height="40px">
+				도서관 오는 길
 			</h3>
 			<hr>
 			<div id="map"
@@ -91,8 +90,7 @@
 			</div>
 			<div class="bot">
 				<h5>
-					<img src="/syLibrary/resources/images/subway.png" alt="icon" />
-					지하철 이용시
+					<img src="/resources/images/subway.png" alt="icon" /> 지하철 이용시
 				</h5>
 				<ul>
 					<li>
@@ -109,8 +107,7 @@
 					</li>
 				</ul>
 				<h5>
-					<img src="/syLibrary/resources/images/bus.png" alt="icon" /> 버스
-					이용시
+					<img src="/resources/images/bus.png" alt="icon" /> 버스 이용시
 				</h5>
 				<ul>
 					<li class="w125">
@@ -135,7 +132,7 @@
 	var markerPosition = new kakao.maps.LatLng(37.55655, 126.91952);
 
 	// 마커 이미지
-	var imageSrc = "/syLibrary/resources/images/marker.png";
+	var imageSrc = "/resources/images/marker.png";
 	imageSize = new kakao.maps.Size(60, 60);
 	imageOption = {
 		offset : new kakao.maps.Point(27, 69)

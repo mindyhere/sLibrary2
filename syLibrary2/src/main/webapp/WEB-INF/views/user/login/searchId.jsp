@@ -13,7 +13,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <link type="text/css" rel="stylesheet"
-	href="/syLibrary/include/user.css">
+	href="/resources/static/user.css">
 <script>
 	$(document).ready(function() {
 		$('ul.tabs li').click(function() {
@@ -54,7 +54,8 @@
 			"mBirthDate" : mBirthDate
 		};
 		$.ajax({
-			url : "/syLibrary/login_servlet/searchId.do",
+//			url : "/syLibrary/login_servlet/searchId.do",
+			url : "/searchId.do",
 			type : "post",
 			data : params,
 			success : function(searchIdResult) {
@@ -66,7 +67,8 @@
 						icon : 'info',
 						closeOnClickOutside : false
 					}).then(function() {
-						location.href = "/syLibrary/user/login/login.jsp";
+//						location.href = "/syLibrary2/user/login/login.jsp";
+						location.href = "/user/login/login.jsp";
 					});
 				} else if (data.status == 2) {
 					swal('', '입력하신 정보에 해당하는 아이디가 없습니다.', 'warning');
@@ -83,14 +85,14 @@
 	<%@ include file="../common/header.jsp"%>
 	<div class="container min-vh-100">
 		<h3 class="text-bold">
-			<img src="/syLibrary/resources/images/search_id.png" width="35px"
+			<img src="/resources/images/search_id.png" width="35px"
 				height="35px"> 아이디 찾기
 		</h3>
 		<hr>
 		<p class="text-sm text-gray">아이디를 찾으실 방법을 선택해주세요.</p>
 		<div class="card-style mb-30">
 			<form name="searchId" method="post"
-				action="/syLibrary/login_servlet/searchId.do">
+				action="/user/login/searchId.do">
 				<div class="tab-area">
 					<!-- 이메일 / 전화번호 선택 -->
 					<ul class="tabs">

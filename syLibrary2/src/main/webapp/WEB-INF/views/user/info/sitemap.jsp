@@ -7,12 +7,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
+<link rel="icon" href="/resources/images/icon.png"
 	type="image/x-icon">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
+<link rel="stylesheet" href="/resources/static/user.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<script src="/syLibrary/include/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.js"></script>
 
 
 <style>
@@ -144,7 +144,7 @@ text-decoration-line: none !important;
 			  <li><p>- 키워드 상세검색</p></li>
 			  <li><p>- 도서 상세정보</p></li>
 			</ul>
-			<img src="/syLibrary/resources/images/book-half.svg" alt="Member information">
+			<img src="/resources/images/book-half.svg" alt="Member information">
 		  </div><!-- card-body 끝 -->
 		</div>
 	  
@@ -187,7 +187,7 @@ text-decoration-line: none !important;
 				  <li><p>- 대출이력</p></li>
 				  <li><p>- 대출통계</p></li>
 				</ul>
-				<img src="/syLibrary/resources/images/person-workspace.svg" alt="Member information">
+				<img src="/resources/images/person-workspace.svg" alt="Member information">
 		    </div><!-- card-body 끝 -->
 		</div>
 		
@@ -206,7 +206,7 @@ text-decoration-line: none !important;
 			  <li><a href="#" onclick="location.href='/syLibrary/user/info/map.jsp'"><p>- 도서관 오는길</p></a></li>
 			  <li><a href="#" onclick="location.href='/syLibrary/user/info/sitemap.jsp'"><p>- 사이트맵</p></a></li>
 			</ul>
-			<img src="/syLibrary/resources/images/info-square.svg" alt="Member information">
+			<img src="/resources/images/info-square.svg" alt="Member information">
 		  </div><!-- card-body 끝 -->
 		</div>
   </div> <!-- bot 끝 -->

@@ -12,7 +12,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/user.css">
 <script>
 	$(document).ready(function() {
 		$('ul.tabs li').click(function() {
@@ -88,14 +88,14 @@
 	<%@ include file="../common/header.jsp"%>
 	<div class="container min-vh-100">
 		<h3 class="text-bold">
-			<img src="/syLibrary/resources/images/login.png" width="35px"
+			<img src="/resources/images/login.png" width="35px"
 				height="35px"> 비밀번호 찾기
 		</h3>
 		<hr>
 		<p class="text-sm text-gray">비밀번호를 찾으실 방법을 선택해주세요.</p>
 		<div class="card-style mb-30">
 			<form name="searchPwd" method="post"
-				action="/syLibrary/login_servlet/searchPwd.do">
+				action="/user/login/searchPwd.do">
 				<div class="tab-area">
 					<ul class="tabs">
 						<li class="tab-link current" data-tab="tab-1">이메일</li>
