@@ -1,4 +1,4 @@
-package com.example.syLibrary2.admin.model;
+package com.example.syLibrary2.admin.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.example.syLibrary2.admin.model.dto.BookDTO;
 
 @Repository
 public class RecommendDAOImpl implements RecommendDAO {

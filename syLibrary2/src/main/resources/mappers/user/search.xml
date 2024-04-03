@@ -3,7 +3,7 @@
 <mapper namespace="search">
 
 <!-- 키워드 통합검색 -->
-<select id="totSearch" resultType="com.example.syLibrary2.admin.model.BookDTO">
+<select id="totSearch" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
 	select *
 	from (
 	  select rownum as rn, A.*
@@ -21,7 +21,7 @@
 </select>
 
 <!-- 상세검색(도서명, 작가, 출판사) -->
-<select id="detailSearch" resultType="com.example.syLibrary2.admin.model.BookDTO">
+<select id="detailSearch" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
   select *	
   from(
 	select rownum as rn, A.*
@@ -40,7 +40,7 @@
 </select>
 
 <!-- 페이지별 목록(페이지나누기) -->
-<select id="pageList" resultType="com.example.syLibrary2.admin.model.BookDTO">
+<select id="pageList" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
 	select *
 	from (
 	    select rownum as rn, A.*
@@ -53,7 +53,7 @@
 	where rn between #{start} and #{end}
 </select>
 
-<select id="simpleSearch" resultType="com.example.syLibrary2.admin.model.BookDTO">
+<select id="simpleSearch" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
 select b_id, b_name, b_author, b_pub, b_year
 from  sl_book 
 where
