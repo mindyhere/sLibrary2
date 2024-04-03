@@ -38,5 +38,12 @@ public class BookController {
 		System.out.println(mav);
 		return mav;
 	}
+	
+	@GetMapping("list.do")
+	public String list() {
+		System.out.println("확인");
+		return "admin/test";
+	}
+	
 }
 
