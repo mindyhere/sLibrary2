@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <title>3월에 만나요:)</title>
 
-<link rel="icon" href="/resources/images/icon.png"
-	type="image/x-icon">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <link rel="stylesheet" href="/resources/static/user.css">
 <script src="/resources/static/js/bootstrap.js"></script>
@@ -47,9 +46,9 @@ body {
 <body>
 	<nav class="navbar navbar-expand-lg" style="background-color: #FBFBFD;">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="/syLibrary/main/index.jsp"> <img
-				src="/resources/images/icon.png" width="60px"
-				height="60px"> <b> 3월 도서관</b>
+			<a class="navbar-brand" href="main"> <img
+				src="/resources/images/icon.png" width="60px" height="60px"> <b>
+					3월 도서관</b>
 			</a>
 
 			<button class="navbar-toggler" type="button"
@@ -64,22 +63,20 @@ body {
 				<div class="navbar-nav">
 					<c:choose>
 						<c:when
-							test="${sessionScope.mName != null && sessionScope.a_id == null}">
+							test="${mName != null && session.a_id == null}">
 							<div class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" role="button"
 									data-bs-toggle="dropdown" aria-expanded="false">마이 페이지</a>
-								<div
-									class="dropdown-menu dropdown-menu-end">
+								<div class="dropdown-menu dropdown-menu-end">
 									<div>
 										<a class="dropdown-item"
-											href="/syLibrary/member_servlet/detail_memberInfo.do?mId=${sessionScope.mId}">회원정보
+											href="/user/member/detail_memberInfo?mId=${session.mId}">회원정보
 											수정</a>
 									</div>
 									<div class="dropdown-divider"></div>
 									<div>
 										<a class="dropdown-item"
-											href="/syLibrary/myLibrary_servlet/myLibray_info.do?mId=${sessionScope.mId}">나의
-											서재</a>
+											href="/user/book/myLibrary?mId=${mId}">나의 서재</a>
 									</div>
 									<div class="dropdown-divider"></div>
 									<div>
@@ -91,7 +88,7 @@ body {
 						</c:when>
 
 						<c:when
-							test="${sessionScope.mName == null && sessionScope.a_id != null}">
+							test="${mName == null && session.a_id != null}">
 							<div class="nav-item">
 								<a class="nav-link" href="/syLibrary/admin/admin_main.jsp"
 									title="사서 통합관리시스템">${sessionScope.a_name }
@@ -105,7 +102,7 @@ body {
 
 						<c:otherwise>
 							<div class="nav-item">
-								<a class="nav-link" href="/syLibrary/user/login/login.jsp">로그인</a>
+								<a class="nav-link" href="/user/login/login">로그인</a>
 							</div>
 							<div class="nav-item">
 								<a class="nav-link" href="/syLibrary/user/member/join.jsp">회원가입</a>
@@ -120,14 +117,14 @@ body {
 						<a class="nav-link dropdown-toggle" role="button"
 							id="dropdownMenu2" data-bs-toggle="dropdown"
 							aria-expanded="false">이용안내</a>
-						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
+						<div class="dropdown-menu dropdown-menu-end"
+							aria-labelledby="dropdownMenu2">
 							<div>
 								<a class="dropdown-item" href="/user/info/guide">대출/반납/예약</a>
 							</div>
 							<div class="dropdown-divider"></div>
 							<div>
-								<a class="dropdown-item" href="/user/info/map">도서관
-									오는길</a>
+								<a class="dropdown-item" href="/user/info/map">도서관 오는길</a>
 							</div>
 							<div class="dropdown-divider"></div>
 							<div>
