@@ -118,7 +118,7 @@ div {
 /* 개별요소 */
 #section1 {
 	min-height:70%;
-	background-image: url("/syLibrary/resources/images/bg1.jpg");
+	background-image: url("/resources/images/bg1.jpg");
 	opacity: 0.5;
 	padding: 10%;
 	justify-content: center;
