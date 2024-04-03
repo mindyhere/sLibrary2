@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.syLibrary2.admin.model.BookDTO;
-import com.example.syLibrary2.admin.model.RecommendDAO;
+import com.example.syLibrary2.admin.model.dao.RecommendDAO;
 
 @Controller
 public class RecommendController {
@@ -28,7 +28,7 @@ public class RecommendController {
 	public ModelAndView list(@RequestParam(name = "opt", defaultValue = "") String option, ModelAndView mav) {
 		//String resultPage = "";
 		if (option.equals("")) {
-			List<BookDTO> list = recommendDao.getList("opt1");
+			List<com.example.syLibrary2.admin.model.dto.BookDTO> list = recommendDao.getList("opt1");
 			mav.setViewName("user/main");
 			mav.addObject("list", list);
 			System.out.println("list 확인/추천목록 getList =>" + list);

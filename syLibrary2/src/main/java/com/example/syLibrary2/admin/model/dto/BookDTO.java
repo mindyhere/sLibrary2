@@ -1,4 +1,4 @@
-package com.example.syLibrary2.admin.model;
+package com.example.syLibrary2.admin.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
