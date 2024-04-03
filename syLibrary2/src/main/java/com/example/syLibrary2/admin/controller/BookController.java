@@ -22,17 +22,21 @@ public class BookController {
 	BookDAO dao;
 	
 	@GetMapping("list_all.do")
-	public ModelAndView list(@RequestParam(name="curPage", defaultValue="1")int curPage) {
-		int count = dao.count();
+	public ModelAndView list(@RequestParam(name="curPage", defaultValue="1")int curPage, 
+			@RequestParam(name = "search_option", defaultValue="none") String search_option,
+			@RequestParam(name = "keyword", defaultValue = "") String keyword) {
+		int count = dao.count(search_option, keyword);
 		PageUtil page = new PageUtil(count, curPage);
 		int start = page.getPageBegin();
 		int end = page.getPageEnd();
-		List<BookDTO> dto = dao.list(start, end);
+		List<BookDTO> dto = dao.list(start, end, search_option, keyword);
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("admin/book/list");
 		Map<String,Object> map=new HashMap<>();
 		map.put("dto", dto);
 		map.put("count",count);
+		map.put("search_option", search_option);
+		map.put("keyword", keyword);
 		map.put("page",page);
 		mav.addObject("map",map);
 		System.out.println(mav);
