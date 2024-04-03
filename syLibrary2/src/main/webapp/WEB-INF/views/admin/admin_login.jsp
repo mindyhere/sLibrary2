@@ -19,7 +19,7 @@
 	href="https://fonts.googleapis.com/css2?family=Noto Sans Korean&display=swap"
 	rel="stylesheet">
 	
-<c:if test="${param.message=='error'}">
+<%-- <c:if test="${param.message=='error'}">
 	<script>
 		$(function(){
 			swal("관리자 아이디 또는 비밀번호가 일치하지 않습니다.");
@@ -41,6 +41,26 @@ $(function() {
 			alert("비밀번호를 입력하세요.");
 			return false;
 		}
+	});
+});
+</script> --%>
+<script>
+$(function(){
+	$("#btnLogin").click(function(){
+		const a_id = $("#a_id").val();
+		const a_passwd = $("#a_passwd").val();
+		if(a_id==""){
+			alert("아이디를 입력하세요.");
+			$("#a_id").focus();
+			return;
+		}
+		if(a_passwd==""){
+			alert("비밀번호를 입력하세요.");
+			$("#a_passwd").focus();
+			return;
+		}
+		document.form1.action="/admin/adlogin.do";
+		document.form1.submit();
 	});
 });
 </script>
@@ -104,7 +124,7 @@ table {
 		</div>
 	</nav>
 		<div align="right" style="position: static;">
-			<a class="navbar-brand" href="/syLibrary/main/index.jsp">
+			<a class="navbar-brand" href="/main/index/">
 				<input type="button" value="이용자페이지" class="btn btn-outline-light">
 			</a>
 		</div>
@@ -113,7 +133,7 @@ table {
 	<div id="body-content">
 <main id="login" class="form-signin">
 		<h2 align="center">관리자 로그인</h2>
-			<form method="post" name="form1" action="/syLibrary/admin_servlet/adlogin.do">
+			<form method="post" name="form1" action="/admin/adlogin.do">
 				<table align="center">
 				<tr>
 					<td align="center" width="110px">아이디</td>

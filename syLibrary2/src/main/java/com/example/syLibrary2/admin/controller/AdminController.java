@@ -13,7 +13,7 @@ import com.example.syLibrary2.admin.model.dto.AdminDTO;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/admin/*")
+@RequestMapping("/admin_login/*")
 public class AdminController {
 	
 	@Autowired

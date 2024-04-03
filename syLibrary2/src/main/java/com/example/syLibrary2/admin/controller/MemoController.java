@@ -27,7 +27,7 @@ import jakarta.servlet.http.HttpSession;
 
 //json객체 => RestController
 @RestController
-@RequestMapping("/admin/*")
+@RequestMapping("/memo/*")
 public class MemoController {
 	
 	@Autowired
@@ -83,7 +83,7 @@ public class MemoController {
 	
 	//메모상세 (확인요망)
 	@RequestMapping("/search/{me_rownum}")
-	public ResponseEntity<String> detail(@PathVariable(name="me_rownum") int me_rownum,@RequestBody MemoDTO dto) {
+	public ResponseEntity<String> detail(@PathVariable(name="me_rownum") int me_rownum, @RequestBody MemoDTO dto) {
 		ResponseEntity<String> entity = null;
 		try{
 			//dto.setMe_rownum(me_rownum);

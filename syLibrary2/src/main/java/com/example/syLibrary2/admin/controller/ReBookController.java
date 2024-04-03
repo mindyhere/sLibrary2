@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.syLibrary2.admin.model.dao.ReBookDAO;
 
 @Controller
-@RequestMapping("/admin/*")
 public class ReBookController {
 	
 	@Autowired
