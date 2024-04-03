@@ -1,4 +1,4 @@
-package com.example.syLibrary2.admin.model;
+package com.example.syLibrary2.admin.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;

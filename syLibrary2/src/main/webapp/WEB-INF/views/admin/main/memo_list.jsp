@@ -52,14 +52,21 @@ function modal() {
 	const modal = document.getElementById("modal")
 	modal.style.display = "Flex"
 }
+function modal2() {
+	const modal2 = document.getElementById("modal2")
+	modal2.style.display = "Flex"
+}
 //모달 바깥쪽 누르면 화면창 꺼짐
 $(document).mouseup(function (e){
 	var LayerPopup = $("#modal-window");
 	if(LayerPopup.has(e.target).length === 0){
 		const modal = document.getElementById("modal");
+		const modal2 = document.getElementById("modal2");
 		modal.style.display = "none";
+		modal2.style.display = "none";
 	}
 });
+//수정모달
 function onModal(me_rownum) {
 	$.ajax({
 		type : "post",
@@ -77,10 +84,28 @@ function onModal(me_rownum) {
 		}
 	});
 }
+//상세모달
+function onModal2(me_rownum) {
+	$.ajax({
+		type : "post",
+		url : "/syLibrary/memo_servlet/search.do",
+		data : {
+			"me_rownum" : me_rownum
+		},
+		dataType : "json",
+		success : function(data) {
+			modal2();
+			document.getElementById("writer2").value=data.a_name;
+			document.getElementById("date2").value=data.me_post_date;
+			document.getElementById("message2").value=data.me_memo;
+			document.getElementById("rownum2").value=data.me_rownum;
+		}
+	});
+}
 
 </script>
 <style>
-#modal.modal-overlay {
+.modal-overlay {
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -91,14 +116,9 @@ function onModal(me_rownum) {
 	align-items: center;
 	justify-content: center;
 	background: rgba(255, 255, 255, 0.25);
-	/* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); */
-	/* backdrop-filter: blur(1.5px); */
-	/* -webkit-backdrop-filter: blur(1.5px); */
-	/* border-radius: 10px; */
-	/* border: 1px solid rgba(255, 255, 255, 0.18); */
 }
 
-#modal .modal-window {
+.modal-window {
 	background: white;
 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(13.5px);
@@ -113,18 +133,18 @@ function onModal(me_rownum) {
 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
-#modal .title {
+.title {
 	padding-left: 10px;
 	display: inline;
 	text-shadow: 1px 1px 2px gray;
 	color: black;
 }
 
-#modal .title h3 {
+.title h3 {
 	display: inline;
 }
 
-#modal .close-area {
+.close-area {
 	display: inline;
 	float: right;
 	padding-right: 10px;
@@ -133,7 +153,7 @@ function onModal(me_rownum) {
 	color: black;
 }
 
-#modal .content {
+.content {
 	padding-left: 10px;
 	text-shadow: 1px 1px 2px gray;
 }
@@ -157,11 +177,6 @@ padding-right: 3px;
 padding-top: 3px;
 padding-bottom: 3px;
 }
-/* td {
-  background-color: white;
-  color: none;
-  height: 20px;
-} */
 
 /* 테이블 올렸을 때 */
 tbody tr:hover {
@@ -230,23 +245,29 @@ tbody tr:hover {
 		<form method="post" name="form1">
 			<table style='table-layout:fixed; width: 500px;'>
 				<tr align="center">
-					<th width="70px" height="20px">작성자</th>
-					<th width="200px" height="20px">메모</th>
-					<th width="100px" height="20px">날짜</th>
+					<th width="70px" height="45px">작성자</th>
+					<th width="200px" height="45px">메모</th>
+					<th width="100px" height="45px">날짜</th>
 					<th width="65px">&nbsp;</th>
 					<th width="65px">&nbsp;</th>
 				</tr>
 				<c:forEach var="dto" items="${list}">
 					<tr align="center">
-						<td width="70px" height="20px">${dto.a_name}</td>
-						<td width="200px" height="20px" style='word-break:break-all; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'>${dto.me_memo}</td>
-						<td width="100px" height="20px">${dto.me_post_date}</td>
-						<td width="65px" height="20px" class="ddd">
-							<input type="hidden" id="me_rownum" name="me_rownum" value="${dto.me_rownum}">
-							<input type="button" value="수정" id="btnModal" onclick="onModal(${dto.me_rownum});"
-								class="btn btn-outline-warning"></td>
-						<td width="65px" height="20px" class="ddd"><input type="button" value="삭제"
-							onclick="memo_del('${dto.me_rownum}')" class="btn btn-outline-warning"></td>
+						<td width="70px" height="45px" id="a_name">${dto.a_name}</td>
+						<td onclick="onModal2(${dto.me_rownum});" id="btnModal2" width="200px" height="45px" style='word-break:break-all; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'>${dto.me_memo}</td>
+						<td width="100px" height="45px">${dto.me_post_date}</td>
+				
+						<c:choose>
+							<c:when test="${sessionScope.a_id == dto.me_a_id}">
+									<td width="60px" height="45x" class="ddd">
+										<input type="hidden" id="me_rownum" name="me_rownum" value="${dto.me_rownum}">
+										<input type="button" value="수정" id="btnModal" onclick="onModal(${dto.me_rownum});"
+											class="btn btn-outline-warning"></td>
+									<td width="60px" height="45px" class="ddd">
+										<input type="button" value="삭제" onclick="memo_del('${dto.me_rownum}')" class="btn btn-outline-warning">
+									</td>
+							</c:when>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			 	<tr align="center">
@@ -281,8 +302,9 @@ tbody tr:hover {
 	
  	</c:when>
 </c:choose>
+<!-- 수정모달 -->
 	<div id="modal" class="modal-overlay">
-		<div class="modal-window">
+		<div class="modal-window" id="modal-window">
 			<div class="title">
 				<h3>메모수정</h3>
 			</div>
@@ -295,9 +317,30 @@ tbody tr:hover {
 					<span style="color: #26262b">작성자</span> <input type="text" id="writer" name="writer" readonly><br> 
 					<span style="color: #26262b">작성 날짜</span> <input type="text" id="date" name="date" readonly><br>
 					<textarea rows="5" style="border-radius:5px; margin-top:10px;" cols="40" id="message" name="message" placeholder="메모"></textarea><br>
+					<br><br>
 					<div align="center">
 						<input type="button" class="btn btn-warning" id="btnUpdate" value="수정" align="center">
 					</div>
+				</form>
+			</div>
+			</div>
+		</div>
+	</div>
+<!-- 상세모달 -->
+	<div id="modal2" class="modal-overlay">
+		<div class="modal-window" id="modal-window">
+			<div class="title">
+				<h3>메모상세</h3>
+			</div>
+			<div class="close-area" id="ca">X</div>
+			<div class="content">
+			<div class="modal-body"><hr/>
+				<form id="m_form" method="post">
+					<input type="hidden" id="rownum2" name="rownum2">
+					<input type="hidden" id="me_a_id" name="me_a_id">
+					<span style="color: #26262b">작성자</span> <input type="text" id="writer2" name="writer2" readonly><br> 
+					<span style="color: #26262b">작성 날짜</span> <input type="text" id="date2" name="date2" readonly><br>
+					<textarea rows="5" style="border-radius:5px; margin-top:10px;" cols="40" id="message2" name="message2" placeholder="메모"></textarea><br>
 				</form>
 			</div>
 			</div>

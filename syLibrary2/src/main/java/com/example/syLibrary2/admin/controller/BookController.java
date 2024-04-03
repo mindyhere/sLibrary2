@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.syLibrary2.admin.model.BookDAO;
-import com.example.syLibrary2.admin.model.BookDTO;
+import com.example.syLibrary2.admin.model.dao.BookDAO;
+import com.example.syLibrary2.admin.model.dto.BookDTO;
 import com.example.syLibrary2.util.PageUtil;
 
 @Controller
