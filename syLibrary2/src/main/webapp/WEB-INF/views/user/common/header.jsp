@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <title>3월에 만나요:)</title>
 
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
+<link rel="icon" href="/resources/images/icon.png"
 	type="image/x-icon">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
-<script src="/syLibrary/include/js/bootstrap.js"></script>
-<script src="/syLibrary/include/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
+<link rel="stylesheet" href="/resources/static/user.css">
+<script src="/resources/static/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!--  폰트 적용  -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,7 +48,7 @@ body {
 	<nav class="navbar navbar-expand-lg" style="background-color: #FBFBFD;">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/syLibrary/main/index.jsp"> <img
-				src="/syLibrary/resources/images/icon.png" width="60px"
+				src="/resources/images/icon.png" width="60px"
 				height="60px"> <b> 3월 도서관</b>
 			</a>
 
