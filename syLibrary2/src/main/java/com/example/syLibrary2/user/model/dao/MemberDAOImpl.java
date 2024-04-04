@@ -28,12 +28,12 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override // 회원정보 수정
 	public void edit_memberInfo(MemberDTO dto) {
 		sqlSession.update("member.edit_memberInfo", dto);		
-	}
+	} 
 	
 @Override // 아이디 중복체크 
 public int checkId(String m_Id) {
 	int  cnt = sqlSession.selectOne("member.id_check", m_Id);
-	return cnt;
+	return cnt;    
 
 	}
 }

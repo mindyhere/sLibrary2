@@ -7,6 +7,6 @@ public interface MemberDAO {
 	 MemberDTO detailMember(String m_Id); // 회원조회
 	 void edit_memberInfo(MemberDTO dto); // 회원정보 수정
 	 int checkId(String m_id);// 회원아이디 중복 체크
-	} 
+	}  
 
 
