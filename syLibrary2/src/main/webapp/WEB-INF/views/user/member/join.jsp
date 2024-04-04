@@ -130,7 +130,7 @@
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
-		<form method="post" action="user/member/join.do">
+		<form method="post" action="user/member/join">
 	<div class="container">
 		<h3 class="text-bold">회원가입</h3>
 		<hr>
