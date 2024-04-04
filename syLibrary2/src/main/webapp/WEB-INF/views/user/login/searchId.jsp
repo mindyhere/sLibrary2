@@ -5,15 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
-	type="image/x-icon">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
+<link type="text/css" rel="stylesheet" href="/resources/static/user.css">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-<link type="text/css" rel="stylesheet"
-	href="/resources/static/user.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 	$(document).ready(function() {
 		$('ul.tabs li').click(function() {
@@ -35,47 +31,70 @@
 
 	// 아이디 찾기 버튼 클릭
 	function searchIdBtn() {
-		let mEmail = $("#mEmail").val();
-		let mTel = $("#mTel").val();
-		let mName = $("#mName").val();
-		let mBirthDate = $("#mBirthDate").val();
+		const mEmail = $("#mEmail").val();
+		const mTel = $("#mTel").val();
+		const mName = $("#mName").val();
+		const mBirthDate = $("#mBirthDate").val();
 		if ($('#mName').val() == "") {
-			swal('', '이름을 입력해주세요.', 'warning');
+			Swal.fire({
+				icon : 'warning', // Alert 타입
+				title : '', // Alert 제목
+				text : '이름을 입력해주세요.', // Alert 내용
+			});
 			return false;
 		}
 		if ($('#mBirthDate').val() == "") {
-			swal('', '생년월일을 입력해주세요.', 'warning');
+			Swal.fire({
+				icon : 'warning', // Alert 타입
+				title : '', // Alert 제목
+				text : '생년월일을 입력해주세요.', // Alert 내용
+			});
 			return false;
 		}
-		let params = {
-			"mEmail" : mEmail,
-			"mTel" : mTel,
-			"mName" : mName,
-			"mBirthDate" : mBirthDate
-		};
+		alert(mEmail);
+		alert(mName);
+		alert(mBirthDate);
+		/* 		const params = {
+		 "mEmail" : $("#mEmail").val();
+		 "mTel" : mTel,
+		 "mName" : mName,
+		 "mBirthDate" : mBirthDate
+		 }; */
 		$.ajax({
-//			url : "/syLibrary/login_servlet/searchId.do",
-			url : "/searchId.do",
-			type : "post",
-			data : params,
+			url : "/user/login/searchId.do",
+			type : "POST",
+			dataType : "json",
+			data : {
+				mEmail : $("#mEmail").val(),
+				mTel : $("#mTel").val(),
+				mName : $("#mName").val(),
+				mBirthDate : $("#mBirthDate").val()
+			},
 			success : function(searchIdResult) {
 				let data = JSON.parse(searchIdResult);
 				if (data.status == 1) {
-					swal({
+					Swal.fire({
 						title : '',
 						text : '아이디는 "' + data.mId + '" 입니다',
 						icon : 'info',
 						closeOnClickOutside : false
 					}).then(function() {
-//						location.href = "/syLibrary2/user/login/login.jsp";
 						location.href = "/user/login/login.jsp";
 					});
 				} else if (data.status == 2) {
-					swal('', '입력하신 정보에 해당하는 아이디가 없습니다.', 'warning');
+					Swal.fire({
+						icon : 'warning', // Alert 타입
+						title : '', // Alert 제목
+						text : '입력하신 정보에 해당하는 아이디가 없습니다.', // Alert 내용
+					});
 				}
 			},
 			error : function() {
-				swal('에러 발생', '관리자에게 문의바랍니다.', 'error');
+				Swal.fire({
+					icon : 'error', // Alert 타입
+					title : '에러 발생', // Alert 제목
+					text : '관리자에게 문의바랍니다.', // Alert 내용
+				});
 			}
 		});
 	}
@@ -85,14 +104,13 @@
 	<%@ include file="../common/header.jsp"%>
 	<div class="container min-vh-100">
 		<h3 class="text-bold">
-			<img src="/resources/images/search_id.png" width="35px"
-				height="35px"> 아이디 찾기
+			<img src="/resources/images/search_id.png" width="35px" height="35px">
+			아이디 찾기
 		</h3>
 		<hr>
 		<p class="text-sm text-gray">아이디를 찾으실 방법을 선택해주세요.</p>
 		<div class="card-style mb-30">
-			<form name="searchId" method="post"
-				action="/user/login/searchId.do">
+			<form name="searchId" method="post" action="/user/login/searchId.do">
 				<div class="tab-area">
 					<!-- 이메일 / 전화번호 선택 -->
 					<ul class="tabs">
@@ -101,7 +119,8 @@
 					</ul>
 
 					<div id="tab-1" class="input-style-tab current">
-						이메일 <input type="text" name="mEmail" id="mEmail" placeholder="이메일을 입력하세요">
+						이메일 <input type="text" name="mEmail" id="mEmail"
+							placeholder="이메일을 입력하세요">
 					</div>
 					<div id="tab-2" class="input-style-tab">
 						전화번호 <input type="tel" name="mTel" id="mTel"

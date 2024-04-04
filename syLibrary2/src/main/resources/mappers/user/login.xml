@@ -15,8 +15,7 @@
 		FROM sl_member
 		WHERE m_email = #{m_email}
 		AND m_name = #{m_name}
-		AND
-	<!-- m_birth_date = #{m_birth_date} -->
+		AND m_birth_date = #{m_birth_date}
 	</select>
 
 	<!-- 아이디 찾기(전화번호) -->
@@ -25,18 +24,18 @@
 		FROM sl_member
 		WHERE m_tel = #{m_tel}
 		AND m_name = #{m_name}
-		<!-- AND m_birth_date = #{m_birth_date} -->
+		ND m_birth_date = #{m_birth_date}
 	</select>
 
 	<!-- 비밀번호 찾기(이메일) -->
 	<select id="searchPwEmail" resultType="String">
 		SELECT m_passwd
 		FROM sl_member
-		WHERE m_email = #{m_email}
-		AND m_name = #{m_name}
+		WHERE m_email = #{mEmail}
+		AND m_name = #{mName}
 		AND m_id =
-		#{m_id}
-		AND m_birth_date = #{m_birth_date}
+		#{mId}
+		AND m_birth_date = #{mBirthDate}
 	</select>
 
 	<!-- 비밀번호 찾기(전화번호) -->
@@ -44,9 +43,9 @@
 		SELECT m_passwd
 		FROM
 		sl_member
-		WHERE m_tel = #{m_tel}
-		AND m_name = #{m_name}
-		AND m_id = #{m_id}
-		AND m_birth_date = #{m_birth_date}
+		WHERE m_tel = #{mTel}
+		AND m_name = #{mName}
+		AND m_id = #{mId}
+		AND m_birth_date = #{mBirthDate}
 	</select>
 </mapper>
