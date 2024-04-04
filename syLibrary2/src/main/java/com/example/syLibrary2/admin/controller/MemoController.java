@@ -24,8 +24,8 @@ import com.example.syLibrary2.util.PageUtil2;
 import jakarta.servlet.http.HttpSession;
 
 //json객체 => RestController
-@RestController
-@RequestMapping("/memo/*")
+@Controller
+@RequestMapping("admin/memo/*")
 public class MemoController {
 	
 	@Autowired
@@ -48,6 +48,7 @@ public class MemoController {
 		map.put("count", count);
 		map.put("page_info", page_info);
 		mav.addObject("map", map);
+		//mav.setViewName("admin/admin_main");
 		return mav;
 	}
 	
@@ -59,6 +60,7 @@ public class MemoController {
 		dto.setMe_memo(me_memo);
 		memoDao.insert(dto);
 		return "redirect:/admin/list.do";
+		//return "redirect:/admin/list.do";
 	}
 	
 	@PostMapping("delete.do")
