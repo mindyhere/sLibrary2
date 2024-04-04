@@ -16,8 +16,8 @@ public interface RecommendDAO {
 	String insert(String a_id, int b_id);
 	
 	// 전체 레코드 삭제
-	String delete(String option);
+	void delete(String option);
 
-	// 선택 레코드 삭제
-	String delete(String option, int idx);
+	// 선택 레코드 개별 삭제
+	void delete(String option, int idx);
 }

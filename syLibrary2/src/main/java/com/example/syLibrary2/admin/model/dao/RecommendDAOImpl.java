@@ -61,35 +61,18 @@ public class RecommendDAOImpl implements RecommendDAO {
 	}
 
 	@Override
-	public String delete(String option) {
-		String result = "";
-		try {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("option", option);
-			sqlSession.delete("recommend.delete", map);
-			sqlSession.commit();
-			result = "삭제되었습니다.";
-		} catch (Exception e) {
-			result = "Error";
-			e.printStackTrace();
-		} 
-		return result;
+	public void delete(String option) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("option", option);
+		sqlSession.delete("recommend.delete", map);
 	}
 
 	@Override
-	public String delete(String option, int idx) {
-		String result = "";
-		try {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("option", option);
-			map.put("idx", idx);
-			sqlSession.delete("recommend.delete", map);
-			result = "삭제되었습니다.";
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = "Error";
-		}
-		return result;
+	public void delete(String option, int idx) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("option", option);
+		map.put("idx", idx);
+		sqlSession.delete("recommend.delete", map);
 	}
 
 }
