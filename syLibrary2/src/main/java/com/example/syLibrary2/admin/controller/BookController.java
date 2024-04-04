@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.syLibrary2.admin.model.dao.BookDAO;
 import com.example.syLibrary2.admin.model.dto.BookDTO;
-import com.example.syLibrary2.util.PageUtil;
+import com.example.syLibrary2.util.PageUtil2;
 
 @Controller
 @RequestMapping("/book/*")
@@ -21,14 +21,16 @@ public class BookController {
 	@Autowired
 	BookDAO dao;
 	
-	@GetMapping("list_all.do")
-	public ModelAndView list(@RequestParam(name="curPage", defaultValue="1")int curPage, 
+	@RequestMapping("list_all.do")
+	public ModelAndView list(@RequestParam(name="cur_page", defaultValue="1")int curPage, 
 			@RequestParam(name = "search_option", defaultValue="none") String search_option,
 			@RequestParam(name = "keyword", defaultValue = "") String keyword) {
+		// System.out.println(curPage);
 		int count = dao.count(search_option, keyword);
-		PageUtil page = new PageUtil(count, curPage);
+		PageUtil2 page = new PageUtil2(count, curPage);
 		int start = page.getPageBegin();
 		int end = page.getPageEnd();
+		// System.out.println(count+" "+start + " " + end);
 		List<BookDTO> dto = dao.list(start, end, search_option, keyword);
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("admin/book/list");
@@ -39,7 +41,7 @@ public class BookController {
 		map.put("keyword", keyword);
 		map.put("page",page);
 		mav.addObject("map",map);
-		System.out.println(mav);
+		// System.out.println(search_option);
 		return mav;
 	}
 	

@@ -15,11 +15,11 @@
 <script>
 	$(function() {
 		$("#btnSearch").click(function() {
-			if ($("select[name=search_option] option:selected")
+			/* if ($("select[name=search_option] option:selected")
 					.text() == "선택") {
 				swal("분류를 선택하세요");
 				return false;
-			}
+			} */
 			if ($("#keyword").val() == "") {
 				swal("검색어를 입력하세요");
 				return false;
@@ -28,7 +28,7 @@
 	});
 
 	function list(page) {
-		location.href = "/admin/list_all.do?cur_page="+page
+		location.href = "/book/list_all.do?cur_page="+page
 				+ "&search_option=${map.search_option}&keyword=${map.keyword}";
 	}
 </script>
@@ -117,10 +117,10 @@ padding-bottom: 20px;
 </style>
 </head>
 <body>
-	<%-- <jsp:include page="../admin_header.jsp" /> --%>
+	<jsp:include page="./admin_header.jsp" />
 	<div id="body-wrapper">
 	<div id="body-content">
-	<%-- <jsp:include page="../menu.jsp" /> --%>
+	<jsp:include page="./menu.jsp" />
 	<div style="width:1000px;">
 	<div class="page-direction" style="padding: 20px; padding-left: 250px;">
 		<div class="navi">
@@ -129,11 +129,11 @@ padding-bottom: 20px;
 		</div>
 	</div>
 
-	<form name="form1" method="post">
+	<form name="form1" method="post" action="/book/list_all.do">
 		<div class="search">
 			<select id="s_list" id="search_option" name="search_option">
 				<c:choose>
-					<c:when test="${search_option == null}">
+					<c:when test="${map.search_option == 'none'}">
 						<option value="none" hidden>선택</option>
 						<option value="b_id">도서번호</option>
 						<option value="b_name">도서명</option>
@@ -141,7 +141,7 @@ padding-bottom: 20px;
 						<option value="b_pub">출판사</option>
 						<option value="b_category">분류</option>
 					</c:when>
-					<c:when test="${search_option == 'b_id'}">
+					<c:when test="${map.search_option == 'b_id'}">
 						<option value="none" hidden>선택</option>
 						<option value="b_id" selected>도서번호</option>
 						<option value="b_name">도서명</option>
@@ -149,7 +149,7 @@ padding-bottom: 20px;
 						<option value="b_pub">출판사</option>
 						<option value="b_category">분류</option>
 					</c:when>
-					<c:when test="${search_option == 'b_name'}">
+					<c:when test="${map.search_option == 'b_name'}">
 						<option value="none" hidden>선택</option>
 						<option value="b_id">도서번호</option>
 						<option value="b_name" selected>도서명</option>
@@ -157,7 +157,7 @@ padding-bottom: 20px;
 						<option value="b_pub">출판사</option>
 						<option value="b_category">분류</option>
 					</c:when>
-					<c:when test="${search_option == 'b_author'}">
+					<c:when test="${map.search_option == 'b_author'}">
 						<option value="none" hidden>선택</option>
 						<option value="b_id">도서번호</option>
 						<option value="b_name">도서명</option>
@@ -165,7 +165,7 @@ padding-bottom: 20px;
 						<option value="b_pub">출판사</option>
 						<option value="b_category">분류</option>
 					</c:when>
-					<c:when test="${search_option == 'b_pub'}">
+					<c:when test="${map.search_option == 'b_pub'}">
 						<option value="none" hidden>선택</option>
 						<option value="b_id">도서번호</option>
 						<option value="b_name">도서명</option>
@@ -182,7 +182,7 @@ padding-bottom: 20px;
 						<option value="b_category" selected>분류</option>
 					</c:when>
 				</c:choose>
-			</select> <input type="text" id="keyword" name="keyword" value="${keyword}"
+			</select> <input type="text" id="keyword" name="keyword" value="${map.keyword}"
 				placeholder="검색어를 입력하세요">
 			<div class="icon">
 				<input type="submit" id="btnSearch" style="display: none;">
@@ -227,7 +227,7 @@ padding-bottom: 20px;
 							<a id="hr" href="#" onclick="list('1')">[처음]</a>
 						</c:if> <c:if test="${map.page.curBlock>1}">
 							<a id="hr" href="#" onclick="list('${map.page.prevPage}')">[이전]</a>
-						</c:if> <c:forEach var="num" begin="${map.page.blockBegin}"
+						</c:if> <c:forEach var="num" begin="${map.page.blockStart}"
 							end="${map.page.blockEnd}">
 							<c:choose>
 								<c:when test="${num==map.page.curPage}">
@@ -249,7 +249,7 @@ padding-bottom: 20px;
 	</table>
 	</div>
 		</div>
-	<%-- <jsp:include page="/admin/admin_footer.jsp" /> --%>
+	<jsp:include page="./admin_footer.jsp" />
 </div>
 </body>
 </html>

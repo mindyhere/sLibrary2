@@ -8,7 +8,7 @@
 		from (
 			select b_id, b_name, b_author, b_pub, b_year, b_category 
 			from sl_book 
-			where ${search_option} like '%' || #{keyword} || '%' 
+			<include refid="search"/>
 			order by b_id
 		) A
 	) where rn between #{start} and #{end}
@@ -44,6 +44,7 @@ where b_id=#{b_id}
 </delete>
 <select id="count" resultType="int">
 	select count(*) from sl_book
+	<include refid="search"/>
 </select>
 <select id="search_count" resultType="int">
 	select count(*) from sl_book
@@ -52,4 +53,19 @@ where b_id=#{b_id}
 <select id="url_cate" resultType="String">
 	select b_url from sl_book where b_id=#{b_id}
 </select>
+
+<sql id="search">
+	<choose>
+		<when test="search_option == 'none' ">
+			where b_id like '%' || #{keyword} || '%'
+			or b_name like '%' || #{keyword} || '%'
+			or b_author like '%' || #{keyword} || '%'
+			or b_pub like '%' || #{keyword} || '%'
+			or b_category like '%' || #{keyword} || '%'
+		</when>
+		<otherwise>
+			where ${search_option} like '%' || #{keyword} || '%'
+		</otherwise>
+	</choose>
+</sql>
 </mapper>
