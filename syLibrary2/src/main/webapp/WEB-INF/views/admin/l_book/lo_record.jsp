@@ -268,7 +268,7 @@ tbody tr:hover {
 			<div class="search">
 				<select id="s_list" id="search_option" name="search_option">
 					<c:choose>
-						<c:when test="${search_option == null}">
+						<c:when test="${search_option == 'none'}">
 							<option value="none" hidden>선택</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name">도서명</option>
