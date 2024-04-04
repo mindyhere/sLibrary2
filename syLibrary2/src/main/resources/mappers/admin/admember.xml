@@ -1,30 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admember">
+
 	<!-- 관리자회원분류검색리스트 -->
-	<select id="ad_search_list" resultType="com.example.syLibrary2.user.model.dto.MemberDTO"> 
-		select * from (
-		select
-		rownum as rn, A.* from ( select m_no,m_name, to_char(m_birth_date,
-		'yyyy-mm-dd') m_birth_date, m_id, m_tel, to_char(m_year, 'yyyy-mm-dd')
-		m_year from sl_member where ${search_option} like '%' || #{search} ||
-		'%' order by m_no ) A ) where rn between #{start} and #{end} </select>
+	<select id="ad_search_list" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
+		select * 
+		from (
+			select rownum as rn, A.*
+			from (
+				select m_no,
+				m_name,
+				to_char(m_birth_date, 'yyyy-mm-dd') m_birth_date,
+				m_id,
+				m_tel,
+				to_char(m_year, 'yyyy-mm-dd') m_year
+				from sl_member
+				<include refid="search" />
+				order by m_no
+				)
+			A )
+		where rn between #{start} and #{end}
+	</select>
+	
 	<!-- 관리자회원검색 개수 -->
-	<select id="ad_search_count" resultType="int"> select count(*) from
-		sl_member where ${search_option} like '%' || #{search} || '%' </select>
+	<select id="ad_search_count" resultType="int">
+		select count(*)
+		from sl_member
+		<include refid="search" />
+	</select>
+	
+	<sql id="search">
+		<choose>
+			<when test="search_option == 'all">
+				where m_name like '%' || #{search} || '%'
+					or m_birth_date like '%' || #{search} || '%'
+					or m_id like '%' || #{search} || '%'
+					or m_tel like '%' || #{search} || '%'
+					or m_year like '%' || #{search} || '%'
+			</when>
+			<otherwise>
+				where ${search_option} like '%' || #{search} || '%'
+			</otherwise>
+		</choose>
+	
+	</sql>
+	
 	<!-- 관리자회원상세 -->
-	<select id="ad_detail" resultType="com.example.syLibrary2.user.model.dto.MemberDTO"> select m_no, m_name, m_id,
-		to_char(m_birth_date, 'yyyy-mm-dd') m_birth_date, m_img, m_tel,
-		m_email, m_zip_no, m_address, m_detail_address, m_img,to_char(m_year,
-		'yyyy-mm-dd') m_year from sl_member where m_no=#{m_no} </select>
+	<select id="ad_detail" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
+		select
+		m_no,
+		m_name,
+		m_id,
+		to_char(m_birth_date, 'yyyy-mm-dd') m_birth_date,
+		m_img,
+		m_tel,
+		m_email,
+		m_zip_no,
+		m_address,
+		m_detail_address,
+		m_img,
+		to_char(m_year, 'yyyy-mm-dd') m_year
+		from sl_member
+		where m_no=#{m_no}
+	</select>
+	
 	<!-- 관리자회원목록 -->
-	<select id="ad_p_list" resultType="com.example.syLibrary2.user.model.dto.MemberDTO"> select * from( select rownum
-		as rn, A.* from( select m_no, m_name, to_char(m_birth_date,
-		'yyyy-mm-dd') m_birth_date, m_id, m_tel, to_char(m_year, 'yyyy-mm-dd')
-		m_year from sl_member order by m_no ) A ) where rn between #{start}
-		and #{end} </select>
+	<select id="ad_p_list" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
+		select *
+		from (
+			select rownum as rn, A.*
+			from ( 
+				select m_no,
+				m_name,
+				to_char(m_birth_date, 'yyyy-mm-dd') m_birth_date,
+				m_id,
+				m_tel,
+				to_char(m_year, 'yyyy-mm-dd') m_year
+				from sl_member order by m_no
+				)
+			A )
+		where rn between #{start} and #{end}
+	</select>
+	
 	<!-- 관리자회원수(페이지나누기) -->
-	<select id="ad_p_count" resultType="int"> select count(*) from
-		sl_member </select>
+	<select id="ad_p_count" resultType="int">
+		select count(*) from sl_member
+	</select>
 
 </mapper>

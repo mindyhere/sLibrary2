@@ -37,7 +37,7 @@ function ad_list() {
 	/* let params = {"m_name": m_name,"m_birth_date":m_birth_date,"m_id":m_id,"m_tel":m_tel,"m_year":m_year}; */
 	let params={"search_option": $("#search_option").val(), "search":$("#search").val(),"num":$("#num")};
 	$.ajax({
-		url :"/syLibrary/admember_servlet/search.do",
+		url :"/admin/admember/search.do",
 		data : params,
 		success : function(txt) { //작업종료
 			$("#result").html(txt);
@@ -52,10 +52,10 @@ function ad_list() {
 }
 
 function slist(m_no){
-	location.href="/syLibrary/admember_servlet/ad_list_detail.do?m_no=" + m_no;
+	location.href="/admin/admember/ad_list_detail.do?m_no=" + m_no;
 }
 function list(page){
-	location.href="/syLibrary/admember_servlet/search.do?cur_page="+page+"&search_option=${search_option}&search=${search}";
+	location.href="/admin/admember/search.do?cur_page="+page+"&search_option=${map.search_option}&search=${map.search}";
 }
 </script>
 <style>
@@ -127,10 +127,10 @@ tbody tr:hover {
 </style>
 </head>
 <body>
-<%@ include file="../admin_header.jsp" %>
+<%@ include file="/WEB-INF/views/admin/admin_header.jsp" %>
 <div id="body-wrapper">
 	<div id="body-content">
-			<jsp:include page="/admin/menu.jsp" />
+			<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
 
 <div style="width:1000px;">
 <div class="page-direction" style="padding: 20px; padding-left: 250px;">
@@ -140,48 +140,61 @@ tbody tr:hover {
 </div>
 
 	<nav style="position: static; padding-left: 300px;">
-			<form name="form1" method="post" action="/syLibrary/admember_servlet/search.do">
+			<form name="form1" method="post" action="/admin/admember/search.do">
 			<div class="search" style="text-color: white;">
 			<select id="search_option" name="search_option">
 				<c:choose>
-					<c:when test="${search_option==null||search_option=='m_name'}">
-						<option value="m_name" selected>이름</option>
-						<option value="m_birth_date">생년월일</option>
-						<option value="m_id">아이디</option>
-						<option value="m_tel">전화번호</option>
-						<option value="m_year">가입일</option>
-					</c:when>
-					<c:when test="${search_option=='m_birth_date'}">
-						<option value="m_name">이름</option>
-						<option value="m_birth_date" selected>생년월일</option>
-						<option value="m_id">아이디</option>
-						<option value="m_tel">전화번호</option>
-						<option value="m_year">가입일</option>
-					</c:when>
-					<c:when test="${search_option=='m_id'}">
-						<option value="m_name">이름</option>
-						<option value="m_birth_date">생년월일</option>
-						<option value="m_id" selected>아이디</option>
-						<option value="m_tel">전화번호</option>
-						<option value="m_year">가입일</option>
-					</c:when>
-					<c:when test="${search_option=='m_tel'}">
-						<option value="m_name">이름</option>
-						<option value="m_birth_date">생년월일</option>
-						<option value="m_id">아이디</option>
-						<option value="m_tel" selected>전화번호</option>
-						<option value="m_year">가입일</option>
-					</c:when>
-					<c:when test="${search_option=='m_year'}">
-						<option value="m_name">이름</option>
-						<option value="m_birth_date">생년월일</option>
-						<option value="m_id">아이디</option>
-						<option value="m_tel">전화번호</option>
-						<option value="m_year" selected>가입일</option>
-					</c:when>
-				</c:choose>
+				<c:when test="${map.search_option=='all'}">
+					<option value="all" selected>전체검색</option>
+					<option value="m_name">이름</option>
+					<option value="m_birth_date">생년월일</option>
+					<option value="m_id">아이디</option>
+					<option value="m_tel">전화번호</option>
+					<option value="m_year">가입일</option>
+				</c:when>
+				<c:when test="${map.search_option=='m_name'}">
+					<option value="all">전체검색</option>
+					<option value="m_name" selected>이름</option>
+					<option value="m_birth_date">생년월일</option>
+					<option value="m_id">아이디</option>
+					<option value="m_tel">전화번호</option>
+					<option value="m_year">가입일</option>
+				</c:when>
+				<c:when test="${map.search_option=='m_birth_date'}">
+					<option value="all">전체검색</option>
+					<option value="m_name">이름</option>
+					<option value="m_birth_date" selected>생년월일</option>
+					<option value="m_id">아이디</option>
+					<option value="m_tel">전화번호</option>
+					<option value="m_year">가입일</option>
+				</c:when>
+				<c:when test="${map.search_option=='m_id'}">
+					<option value="all">전체검색</option>
+					<option value="m_name">이름</option>
+					<option value="m_birth_date">생년월일</option>
+					<option value="m_id" selected>아이디</option>
+					<option value="m_tel">전화번호</option>
+					<option value="m_year">가입일</option>
+				</c:when>
+				<c:when test="${map.search_option=='m_tel'}">
+					<option value="all">전체검색</option>
+					<option value="m_name">이름</option>
+					<option value="m_birth_date">생년월일</option>
+					<option value="m_id">아이디</option>
+					<option value="m_tel" selected>전화번호</option>
+					<option value="m_year">가입일</option>
+				</c:when>
+				<c:when test="${map.search_option=='m_year'}">
+					<option value="all">전체검색</option>
+					<option value="m_name">이름</option>
+					<option value="m_birth_date">생년월일</option>
+					<option value="m_id">아이디</option>
+					<option value="m_tel">전화번호</option>
+					<option value="m_year" selected>가입일</option>
+				</c:when>
+			</c:choose>
 			</select>
-				<input id="search" name="search" value="${search}">
+				<input id="search" name="search" value="${map.search}">
 				<div class="icon">
 			<input type="submit" id="btnSearch" style="display: none;">
 			<label for="btnSearch"><svg
@@ -204,13 +217,13 @@ tbody tr:hover {
 		 	<th>&nbsp;</th>
 	</tr>
 	<c:choose>
-			<c:when test="${list.size()==0}">
+			<c:when test="${map.list.size()==0}">
 			<tr height="100px" align="center">
 			<td colspan="6">일치하는 항목이 없습니다.</td>
 			</tr>
 			</c:when>
 			<c:otherwise>
-	<c:forEach var="row" items="${list}">
+	<c:forEach var="row" items="${map.list}">
 		    <tr align="center">
 			  	<td width="150px">${row.m_name}</td>
 				<td width="150px">${row.m_birth_date}</td>
@@ -225,28 +238,28 @@ tbody tr:hover {
 
 	<tr align="center">
 			<td colspan="7">
-				<c:if test="${page.curPage > 1}">
-					<a id="hr" href="#" onclick="list('1')">[처음]</a>
+				<c:if test="${map.page.curPage > 1}">
+					<a id="hr" href="#" onclick="javascript:list('1')">[처음]</a>
 				</c:if>
-				<c:if test="${page.curBlock > 1}">
-					<a id="hr" href="#" onclick="list('${page.prevPage}')">[이전]</a>
-					<a id="hr" href="#" onclick="slist(${row.m_no}); mlist(${row.m_no});">상세</a>
+				<c:if test="${map.page.curBlock > 1}">
+					<a id="hr" href="#" onclick="javascript:list('${map.page.prevPage}')">[이전]</a>
+					<a id="hr" href="#" onclick="javascript:slist(${row.m_no}); javascript:mlist(${row.m_no});">상세</a>
 				</c:if>
-				<c:forEach var="num" begin="${page.blockStart}" end="${page.blockEnd}">
+				<c:forEach var="num" begin="${map.page.blockBegin}" end="${map.page.blockEnd}">
 					<c:choose>
-						<c:when test="${num == page.curPage}">
+						<c:when test="${num == map.page.curPage}">
 							<span style="color:blue">${num}</span>
 						</c:when>
 						<c:otherwise>
-							<a id="hr" href="#" onclick="list('${num}')">${num}</a>
+							<a id="hr" href="#" onclick="javascript:list('${num}')">${num}</a>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
-				<c:if test="${page.curBlock < page.totBlock}">
-					<a id="hr" href="#" onclick="list('${page.nextPage}')">[다음]</a>
+				<c:if test="${map.page.curBlock < map.page.totBlock}">
+					<a id="hr" href="#" onclick="javascript:list('${map.page.nextPage}')">[다음]</a>
 				</c:if>
-				<c:if test="${page.curPage < page.totPage}">
-					<a id="hr" href="#" onclick="list('${page.totPage}')">[마지막]</a>
+				<c:if test="${map.page.curPage < map.page.totPage}">
+					<a id="hr" href="#" onclick="javascript:list('${map.page.totPage}')">[마지막]</a>
 				</c:if>
 			</td>
 	</tr>
@@ -255,7 +268,7 @@ tbody tr:hover {
 </table>
 </div>
 	</div>
-	<jsp:include page="/admin/admin_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>
 </body>
 </html>
