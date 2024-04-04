@@ -155,7 +155,7 @@
 			</div>
 			<div class="col text-center">
 				<div class="btnLoginBottom">
-					<a href="../member/join.jsp "> <img
+					<a href="/user/member/join"> <img
 						src="../../resources/images/login/join.png"><br>회원가입
 					</a>
 				</div>

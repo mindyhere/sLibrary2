@@ -81,7 +81,7 @@ body {
 									<div class="dropdown-divider"></div>
 									<div>
 										<a class="dropdown-item"
-											href="/syLibrary/login_servlet/logout.do">로그아웃</a>
+											href="/user/login/logout">로그아웃</a>
 									</div>
 								</div>
 							</div>
