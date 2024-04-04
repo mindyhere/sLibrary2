@@ -85,7 +85,7 @@ Header {
 </script>
 </head>
 <body>
-<header>
+<header> 
 	<nav>
 		<div>
 			<a id="aa" class="navbar-brand" href="/syLibrary/admin/admin_main.jsp">
