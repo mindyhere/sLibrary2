@@ -46,7 +46,7 @@ body {
 <body>
 	<nav class="navbar navbar-expand-lg" style="background-color: #FBFBFD;">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="main"> <img
+			<a class="navbar-brand" href="/"> <img
 				src="/resources/images/icon.png" width="60px" height="60px"> <b>
 					3월 도서관</b>
 			</a>
@@ -111,7 +111,7 @@ body {
 					</c:choose>
 
 					<div class="nav-item">
-						<a class="nav-link" href="/syLibrary/user/search/search.jsp">자료찾기</a>
+						<a class="nav-link" href="/user/search/">자료찾기</a>
 					</div>
 					<div class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" role="button"
