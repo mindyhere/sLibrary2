@@ -13,7 +13,7 @@
 		) A
 	) where rn between #{start} and #{end}
 </select>
-<select id="select_cg" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
+<select id="select_cg" resultType="String">
 	select distinct b_category from sl_book
 </select>
 <insert id="insert">
