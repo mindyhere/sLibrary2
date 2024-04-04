@@ -5,20 +5,21 @@
 $(function(){
 	$("#autoKey").keyup(function(){
 		let keyword=$("#autoKey").val();
-		if(keyword.length===0){
-		$("#autocomplete").addClass("card-1");
-		}else{
+		if(keyword.length===0) {
+			$("#autocomplete").addClass("card-1");
+		} else {
 			$("#autocomplete").addClass("card-1");
 			$("#autocomplete").css("visibility","visible");
 			$.ajax({
-				url: "/syLibrary/home/search.do",
+				url: "/index/search",
 				data:{"keyword":keyword},
-				success:function(txt){
-					$("#autocomplete").html(txt);
+				success:function(data) {
+					$("#autocomplete").html(data);
 				}
 			});
 		}
 	});
+	
 	$("#autoKey").focusout(function() {
 		$("#autocomplete").removeClass("card-1");
 	});
@@ -27,21 +28,22 @@ $(function(){
 		if(!$("#chkAll").is(":checked")) {
 			$("#chkAll").attr("checked", true);
 			$("input[name=checkIdx]").prop("checked", true);			
-		}else {
+		} else {
 			$("#chkAll").attr("checked", false);
 			$("input[name=checkIdx]").prop("checked", false);
 		}
 	});
+	
 	$("#btnDelete").click(function() {
 		let arr=$("input[name=checkIdx]:checked");	
 		let cnt=0;	
 		let values='';
-		for(i=0; i<arr.length; i++){
+		for(i=0; i<arr.length; i++) {
 			if(arr[i].checked==true) cnt++;
 			values += arr[i].value+",";
 		}
 		
-		if(cnt==0){
+		if (cnt==0) {
 			Swal.fire({
 				title: "잠깐!",
 				text: "삭제할 항목을 선택해주세요.",
@@ -54,12 +56,16 @@ $(function(){
 					return;
 				}
 			});
-		}else{
+		} else {
 			$.ajax({
-				url: "/syLibrary/home/delete.do",
+				url: "/index/delete",
 				data:{"cnt":cnt, "arr":values},
-				success:function(txt){
-					showTableList();
+				dataType: "json",
+				success: function (data) {
+					console.log(data);
+					if(data.result=="success") {
+						recommendList();
+					}
 				}
 			});
 		}
@@ -68,7 +74,7 @@ $(function(){
 
 function insert(e){
  	$.ajax({
-		url: "/syLibrary/home/insert.do",
+		url: "/index/insert",
 		data:{"b_id":e, "a_id":"${a_id}"},
 		success:function(txt){
 			Swal.fire({
@@ -77,7 +83,7 @@ function insert(e){
 				text: txt,
 				confirmButtonText: "OK"
 			});
-			showTableList();
+			recommendList();
 		}
 	}); 
 }
@@ -141,7 +147,6 @@ b {
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 } 
 </style>
-</head>
 
 
 <div class="modal-container">
@@ -204,4 +209,3 @@ b {
 	</div><!-- buttons -->	
 </div><!-- modal-container 끝 -->
 
-</html>

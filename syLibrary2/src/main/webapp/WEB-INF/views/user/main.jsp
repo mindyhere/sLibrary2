@@ -23,17 +23,13 @@ $(function() {
 			event.preventDefault();
 		}
 	});
-	
-/* 	$("li[name='btnOpen']").click(function(){
-		openModal();
-	}); */
 });
 
 function formCheck() {
 	let form = $("form[name=form1]");
     let keyword	= $("input[name=keyword]");
-    let view	= $("input[name=view]").val();
-	if(keyword.val() == "" || keyword.val().trim().length==0 ){
+    let view = $("input[name=view]").val();
+	if(keyword.val() == "" || keyword.val().trim().length==0 ) {
 		Swal.fire({
 			icon: "warning",
 			title: "잠깐!",
@@ -47,24 +43,18 @@ function formCheck() {
 	form.submit();
 }
 
-function showTableList(){
+function recommendList() {
 	$.ajax({
-		url:"/syLibrary/home/showTableList.do",
-		success:function(txt){
-			$("#modal-body").html(txt);
+		url:"/index/recommendList",
+		success:function(result){
+			$("#modal-body").html(result);
 		}
 	});
 }
 function openModal(){
 	$('.modal-bg').removeClass("invisible");
 	$('.modal-bg').addClass("visible");
-	$.ajax({
-		type:"post",
-		url:"/syLibrary/home/showTableList.do",
-		success:function(){
-			showTableList();
-		}
-	});
+	recommendList();
 }
 function closeModal(){
 	Swal.fire({
@@ -255,7 +245,7 @@ margin: 0 1% 0 1%;
 <div id="section-main" class="d-flex-col min-vh-100">
 	<!-- section1 검색창 -->
 	<div id="section1" class="input-group mb-3">
-		<form class="d-flex input-group" style="width:100%;" id="form1" name="form1" method="post" action="/syLibrary/search_servlet/search.do">
+		<form class="d-flex input-group" style="width:100%;" id="form1" name="form1" method="post" action="/user/search/result">
 			<input id="keyword" name="keyword" type="text" class="form-control" placeholder="검색어를 입력하세요" style="box-shadow: none !important;">
 			<input id="option" name="option" type="hidden" class="form-control" value="all" >
 			<input id="view" name="view" type="hidden" class="form-control" value="view1">
@@ -266,6 +256,24 @@ margin: 0 1% 0 1%;
 	</div><!-- section1 끝 -->
 	
 	<!-- section2 추천도서탭-->
+	<script>
+	function changeTab(opt) {
+		$.ajax({
+			url:"/index/",
+			data:{"opt":opt},
+			success:function(result){
+				if (opt=='opt2') {
+					$("#opt1").removeClass("active");
+					$("#opt2").addClass("active");
+				}else {
+					$("#opt2").removeClass("active");
+					$("#opt1").addClass("active");
+				}
+				$(".card-body").html(result);
+			}
+		});
+	}
+	</script>
 	<div id="section2">
 	
 	  <!-- recommend -->
@@ -273,24 +281,12 @@ margin: 0 1% 0 1%;
 		<!-- optionTab-header -->
 		<div id="optionTab" class="card-header" style="background-color:#f1d59838;">
 			<ul name="tabList"class="nav nav-tabs card-header-tabs">
-				<c:choose>
-				  <c:when test="${opt == 'opt1' || opt == null }">
 					<li class="nav-item" name="opt1" onclick="changeTab('opt1')">
-					  <a class="nav-link active" aria-current="true" href="#">대출이 많은 책</a>
+					  <a class="nav-link active" id="opt1" href="#">대출이 많은 책</a>
 					</li>
-					<li class="nav-item" name="opt1" onclick="changeTab('opt2')">
-					  <a class="nav-link" href="#">이달의 책</a>
+					<li class="nav-item" name="opt2" onclick="changeTab('opt2')">
+					  <a class="nav-link" id="opt2" href="#">이달의 책</a>
 					</li>
-				  </c:when>
-				  <c:when test="${opt == 'opt2' }">	
-					<li class="nav-item" name="opt1" onclick="changeTab('opt1')">
-					  <a class="nav-link" aria-current="true" href="#">대출이 많은 책</a>
-					</li>
-					<li class="nav-item" name="opt1" onclick="changeTab('opt2')">
-					  <a class="nav-link active" href="#">이달의 책</a>
-					</li>
-				  </c:when>
-				</c:choose>	
 				<c:if test="${sessionScope.mName == null && sessionScope.a_id != null}">
 					<li class="nav-item" id="btnOpen" name="btnOpen">
 					  <a class="nav-link" href="#" onclick="openModal()">EDIT<i class="bi bi-magic"></i></a>
@@ -307,7 +303,7 @@ margin: 0 1% 0 1%;
 				<div id="row" class="row"> <!-- row -->
 					<c:forEach var="dto" items="${list }">
 						<div class="col">
-							<a href="/syLibrary/search_servlet/bookInfo.do?b_id=${dto.b_id}">
+							<a href="/user/search/bookInfo/${dto.b_id}">
 							<div class="card" id="book" style="width: 10em">
 								<img src="${dto.b_url}" class="card-img" alt="준비중" title="more detail">
 								<div class="card-body" id="bookCover">
@@ -325,17 +321,7 @@ margin: 0 1% 0 1%;
 		</div> <!-- optionTab-body 끝 -->
 	  </div> <!-- recommend 끝-->
 	
-	<script>
-	function changeTab(opt) {
-		$.ajax({
-			url:"/index/",
-			data:{"opt":opt},
-			success:function(result){
-				$("#recommend").html(result);
-			}
-		});
-	}
-	</script>
+	
 	</div><!-- section2 끝-->
 
 </div><!-- section-main 끝 -->

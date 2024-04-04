@@ -1,32 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
-	type="image/x-icon">
+<meta http-equiv="Content-Type"content="text/html; charset=UTF-8">
+<!-- <link rel="icon" href="/syLibrary2/resources/images/icon.png"	type="image/x-icon">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- ========== All CSS files linkup ========= -->
-<link
-	rel="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
-<link rel="stylesheet"
-	href="/syLibrary/include/assets/bootstrap.min.css" />
-<link rel="stylesheet" href="/syLibrary/include/assets/lineicons.css" />
-<link rel="stylesheet"
-	href="/syLibrary/include/assets/materialdesignicons.min.css" />
 
+
+<link rel="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/syLibrary2/static/user.css">
+<link rel="stylesheet"
+	href="/syLibrary2/static/assets/bootstrap.min.css" />
+<link rel="stylesheet" href="/syLibrary/static/assets/lineicons.css" />
+<link rel="stylesheet"
+	href="/syLibrary2/static/assets/materialdesignicons.min.css" /> 
+ -->
 
 <script>
 	//아이디 중복 확인
 	function checkId() {
 		var mId = $("#mId").val();
 		$.ajax({
-			url : "/syLibrary/member_servlet/id_check.do",
+			url : "/syLibrary2/id_check.do",
 			type : "post",
 			data : {
 				mId : mId
@@ -105,7 +105,7 @@
 
 	//주소검색
 	function goP() {
-		var pop = window.open("../member/jusoPopup.jsp", "pop",
+		var pop = window.open("/syLibrary2/user/member/jusoPopup.jsp", "pop",
 				"width=570,height=420, scrollbars=yes, resizable=yes");
 	}
 	function jusoCallBack(zipNo, roadFullAddr, roadAddrPart1, roadAddrPart2,
@@ -126,21 +126,16 @@
 			document.getElementById('url').src = "";
 		}
 	}
-</script>
+</script> 
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
+		<form method="post" action="user/member/join.do">
 	<div class="container">
-		<h3 class="text-bold">
-			<img src="/syLibrary/resources/images/myLibrary/mem.png" width="35px"
-				height="35px"> 회원가입
-		</h3>
+		<h3 class="text-bold">회원가입</h3>
 		<hr>
 		<div class="container">
 			<div class="card-style mb-30" style="border-radius: 40px">
-				<form method="post" name="form1"
-					action="/syLibrary/member_servlet/join.do"
-					enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-3"
 							style="background-color: #ededed; border-radius: 40px;">
@@ -152,7 +147,7 @@
 									<input type="file" id="mImg" name="mImg"
 										onchange="readURL(this);" class="form-control" width="50px"
 										height="50px">
-								</div>
+								</div> 
 								<br> <br> <br>
 								<div style="margin-top: 30px;">
 									<input id="mName" type="text" name="mName" class="form-control"
@@ -207,10 +202,10 @@
 							</div>
 						</div>
 					</div>
-				</form>
 			</div>
 		</div>
 	</div>
+	</form>
 </body>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 </html>

@@ -16,5 +16,4 @@ public interface LoginDAO {
 
 	// 비밀번호-전화번호 찾기
 	String searchPwTel(String mTel, String mId, String mName, String mBirthDate);
-
 }

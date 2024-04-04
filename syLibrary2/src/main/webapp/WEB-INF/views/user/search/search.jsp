@@ -7,13 +7,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
-	type="image/x-icon">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/user.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/syLibrary/include/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 $(function() {
@@ -30,15 +29,15 @@ $(function() {
 	});
 	$("#btnDetail").click(function() {
 		let form2 = $("form[name=form2]");
-	    let b_name	= $("input[name=b_name]");
-	    let b_author= $("input[name=b_author]");
-	    let b_pub	= $("input[name=b_pub]");
-	    if(b_name.val()=="" && b_author.val()=="" && b_pub.val()==""){
-	    	myAlert("warning", "잠깐!", "검색어를 입력해주세요.");
-    		b_name.focus();
-    		return false;
-	    }
-	    form2.submit();
+		let b_name = $("input[name=b_name]");
+		let b_author= $("input[name=b_author]");
+		let b_pub = $("input[name=b_pub]");
+		if(b_name.val()=="" && b_author.val()=="" && b_pub.val()==""){
+			myAlert("warning", "잠깐!", "검색어를 입력해주세요.");
+			b_name.focus();
+			return false;
+		}
+		form2.submit();
 	}); 
 
 	// 상세검색창 토글버튼
@@ -245,7 +244,7 @@ heigh	t: 80%;
 		
 		<div class="card-body">
 			<div class="searchForm1" align="center" style="width: 100%;">
-				<form name="form1" method="post" action="/syLibrary/search_servlet/search.do">
+				<form name="form1" method="post" action="/user/search/result">
 				<div class="input-group mb-3">
 		  			<input name="keyword" id="keyword" value="${keyword}" type="text" class="form-control" placeholder="검색어를 입력하세요">
 		  			<button class="btn btn-light" type="button" id="btnSearch" style="background-color: #FEC5BB;">
@@ -256,7 +255,7 @@ heigh	t: 80%;
 			</div><!-- searchForm1 끝 -->
 	
 			<div class="searchForm2" style="display: none; padding: 0 3rem 1rem 3rem">
-				<form name="form2" method="post" action="/syLibrary/search_servlet/detailSearch.do" >
+				<form name="form2" method="post" action="/user/search/detailSearch" >
 					<div class="input-group input-group-md mb-3">
 						<span class="input-group-text" id="inputGroup-sizing-sm">&nbsp;&nbsp;제목&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" class="form-control" id="b_name" name="b_name" value="${b_name}" placeholder="예: 책제목">

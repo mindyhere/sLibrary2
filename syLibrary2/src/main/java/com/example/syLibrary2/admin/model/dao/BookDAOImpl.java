@@ -38,9 +38,8 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public List<BookDTO> select_cg() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> select_cg() {
+		return sqlSession.selectList("book.select_cg");
 	}
 
 	@Override
@@ -51,14 +50,19 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public BookDTO edit(int b_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("book.edit", b_id);
 	}
 
 	@Override
-	public String update(BookDTO dto, String dto_category) {
-		// TODO Auto-generated method stub
-		return null;
+	public String update(BookDTO dto) {
+		String result = "";
+		try {
+			sqlSession.update("book.update", dto);
+			result = "success";
+		} catch (Exception e) {
+			result = "fail";
+		}
+		return result;
 	}
 
 	@Override
@@ -75,8 +79,7 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public String url_cate(int b_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("book.url_cate", b_id);
 	}
 
 }
