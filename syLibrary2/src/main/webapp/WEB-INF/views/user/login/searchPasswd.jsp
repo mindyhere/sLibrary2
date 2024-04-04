@@ -5,17 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
-	type="image/x-icon">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
+<link type="text/css" rel="stylesheet" href="/resources/static/user.css">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-<link rel="stylesheet" href="/resources/static/user.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 	$(document).ready(function() {
 		$('ul.tabs li').click(function() {
+			 $("#mTel").val("");
+			 $("#mEmail").val("");
 			var tab_id = $(this).attr('data-tab');
 			$('ul.tabs li').removeClass('current');
 			$('.input-style-tab').removeClass('current');
@@ -23,7 +22,7 @@
 			$(this).addClass('current');
 			$(this).addClass('required');
 			$("#" + tab_id).addClass('current');
-		})
+		});
 	})
 
 	// 전화번호 형식 체크
@@ -34,51 +33,65 @@
 
 	// 비밀번호 찾기 버튼 클릭
 	function searchPwBtn() {
-		let mEmail = $("#mEmail").val();
-		let mTel = $("#mTel").val();
-		let mId = $("#mId").val();
-		let mName = $("#mName").val();
-		let mBirthDate = $("#mBirthDate").val();
+		const mEmail = $("#mEmail").val();
+		const mTel = $("#mTel").val();
+		const mId = $("#mId").val();
+		const mName = $("#mName").val();
+		const mBirthDate = $("#mBirthDate").val();
 		if ($('#mId').val() == "") {
-			swal('', '아이디를 입력해주세요.', 'warning');
+			Swal.fire({
+				icon : 'warning',
+				text : '아이디를 입력해주세요.',
+			});
 			return false;
 		}
 		if ($('#mName').val() == "") {
-			swal('', '이름을 입력해주세요.', 'warning');
+			Swal.fire({
+				icon : 'warning',
+				text : '이름을 입력해주세요.',
+			});
 			return false;
 		}
 		if ($('#mBirthDate').val() == "") {
-			swal('', '생년월일을 입력해주세요.', 'warning');
+			Swal.fire({
+				icon : 'warning',
+				text : '생년월일을 입력해주세요.',
+			});
 			return false;
 		}
-		let params = {
-			"mEmail" : mEmail,
-			"mTel" : mTel,
-			"mId" : mId,
-			"mName" : mName,
-			"mBirthDate" : mBirthDate
-		};
 		$.ajax({
-			url : "/syLibrary/login_servlet/searchPwd.do",
+			url : "/user/login/searchPwd.do",
 			type : "post",
-			data : params,
+			data : {
+				mEmail : $("#mEmail").val(),
+				mTel : $("#mTel").val(),
+				mId : $("#mId").val(),
+				mName : $("#mName").val(),
+				mBirthDate : $("#mBirthDate").val()
+			},
 			success : function(searchPwResult) {
-				let data = JSON.parse(searchPwResult);
-				if (data.status == 1) {
-					swal({
+				if (searchPwResult.status == 1) {
+					Swal.fire({
 						title : '',
-						text : '비밀번호는 "' + data.mPasswd + '" 입니다',
+						text : '비밀번호는 "' + searchPwResult.mPw + '" 입니다',
 						icon : 'info',
 						closeOnClickOutside : false
 					}).then(function() {
-						location.href = "/syLibrary/user/login/login.jsp";
+						location.href = "/user/login/login";
 					});
-				} else if (data.status == 2) {
-					swal('', '입력하신 정보에 해당하는 계정이 없습니다.', 'warning');
+				} else if (searchPwResult.status == 2) {
+					Swal.fire({
+						icon : 'warning',
+						text : '입력하신 정보에 해당하는 아이디가 없습니다.',
+					});
 				}
 			},
 			error : function() {
-				swal('에러 발생', '관리자에게 문의바랍니다.', 'error');
+				Swal.fire({
+					icon : 'error',
+					title : '에러 발생',
+					text : '관리자에게 문의바랍니다.',
+				});
 			}
 		});
 	}
