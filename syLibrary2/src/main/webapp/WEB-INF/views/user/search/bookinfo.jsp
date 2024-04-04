@@ -7,13 +7,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
-	type="image/x-icon">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/user.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/syLibrary/include/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <script>
@@ -76,7 +75,7 @@ $(function() {
 				cancelButtonText: "NO"
 				}).then((result) => {
 				if (result.isConfirmed) {
-					location.href="/syLibrary/user/login/login.jsp";
+					location.href="/user/login/login";
 				}
 			});
 		}
@@ -105,7 +104,7 @@ $(function() {
 		if(keyword != "" || keyword.trim().length !== 0){
 			let params={"searchOpt":searchOpt, "keyword":keyword};
 			$.ajax({
-				url: "/syLibrary/review_servlet/search.do",
+				url: "/user/review/search",
 				data:params,
 				success:function(txt){
 					$("#review-total").html(txt);
@@ -168,13 +167,13 @@ function checkOut(b_id){
 	let a_id = "${sessionScope.a_id}" != null? "${sessionScope.a_id}":"";
 	if(m_id != ""){
 		$.ajax({
-			url:"/syLibrary/checkout_servlet/checkout.do",
+			url:"/user/checkout/",
 			data:{"m_id":m_id,"b_id":b_id},
 			success: function(txt){
 				myConfirm(txt,
 						"나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
 						"info",
-						"/syLibrary/myLibrary_servlet/myLibray_info.do?mId="+m_id);
+						"/user/user/book/myLibray?mId="+m_id);
 			},
 			error: function(request, status, error){
 				myAlert("error", "Error", `"code= "+request.status+", msg= "+request.responseText+", error= "+error`);
@@ -194,7 +193,7 @@ function checkOut(b_id){
 			cancelButtonText: "NO"
 			}).then((result) => {
 			if (result.isConfirmed) {
-				location.href="/syLibrary/user/login/login.jsp";
+				location.href="/user/login/login";
 			}
 		});
 	}
@@ -203,7 +202,7 @@ function checkOut(b_id){
 function getReviews(){
 	let b_id=${dtoB.b_id};
 	$.ajax({
-		url:"/syLibrary/review_servlet/getReviews.do",
+		url:"/user/review/getReviews",
 		data:{"b_id":b_id},
 		success:function(txt){
 			$("#review-table").html(txt);
@@ -213,7 +212,7 @@ function getReviews(){
 function totalList() {
 	$.ajax({
 		type:"post",
-		url:"/syLibrary/review_servlet/totalList.do",
+		url:"/user/review/totalList",
 		success:function(txt){
 			$("#review-total").html(txt);
 		}
@@ -222,7 +221,7 @@ function totalList() {
 
 function insert(params){
 	$.ajax({
-		url:"/syLibrary/review_servlet/insert.do",
+		url:"/user/review/insert",
 		data:params,
 		success: function(txt){
 			myAlert("info", "Check", txt);
@@ -235,7 +234,7 @@ function insert(params){
 }
 function deleteReview(params) {
 	$.ajax({
-		url: "/syLibrary/review_servlet/delete.do",
+		url: "/user/review/delete",
 		data:params,
 		success:function(txt){
 			getReviews();
@@ -245,7 +244,7 @@ function deleteReview(params) {
 function search(keyword){
 	let params={"searchOpt":$("#searchOpt").val(), "keyword":keyword};
 	$.ajax({
-		url: "/syLibrary/review_servlet/search.do",
+		url: "/user/review/search",
 		data:params,
 		success:function(txt){
 			$("#review-total").html(txt);
