@@ -42,7 +42,7 @@ public class ReBookController {
 			map.put("search_option", search_option);
 			map.put("search", search);
 		}
-		//list =dao.list_search(search_option, search,start, end); //게시물 리스트
+		//list=dao.list_search(search_option, search,start, end); //게시물 리스트
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/l_book/re_search");
 		map.put("list", list);
@@ -61,14 +61,14 @@ public class ReBookController {
 		int start = page.getPageBegin();
 		int end = page.getPageEnd();
 		List<ReBookDTO> list =dao.list(start, end); //게시물 리스트
-		ModelAndView mav1 = new ModelAndView();
-		mav1.setViewName("admin/l_book/re_list");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/l_book/re_list");
 		Map<String,Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("count", count);
 		map.put("page", page);
-		mav1.addObject("map", map);
-		return mav1;
+		mav.addObject("map", map);
+		return mav;
 	}
 
 	
