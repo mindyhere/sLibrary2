@@ -102,7 +102,7 @@ Header {
 
 		
 		<div align="right" style="position: static;">
-			<a class="navbar-brand" href="./main/index">
+			<a class="navbar-brand" href="/">
 				<input type="button" value="이용자페이지" class="btn btn-outline-light">
 			</a>
 			<a class="navbar-brand"  href="#">
