@@ -8,9 +8,9 @@
 <title>3월에 만나요:)</title>
 <link rel="icon" href="/syLibrary/resources/images/icon.png"type="image/x-icon">
 <link rel="icon" href="../resources/images/sist.png" type="image/x-icon">
-<link rel="stylesheet" href="../include/css/bootstrap.css">
+<link rel="stylesheet" href="../resources/static/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<script src="/syLibrary/include/js/bootstrap.js"></script>
+<script src="/syLibrary2/resources/static/js/bootstrap.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
