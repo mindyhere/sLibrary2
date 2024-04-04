@@ -117,10 +117,10 @@ padding-bottom: 20px;
 </style>
 </head>
 <body>
-	<jsp:include page="./admin_header.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_header.jsp" />
 	<div id="body-wrapper">
 	<div id="body-content">
-	<jsp:include page="./menu.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
 	<div style="width:1000px;">
 	<div class="page-direction" style="padding: 20px; padding-left: 250px;">
 		<div class="navi">
@@ -213,7 +213,7 @@ padding-bottom: 20px;
 			<c:otherwise>
 				<c:forEach var="dto" items="${map.dto}">
 					<tr align="center">
-						<td><a style="color: black;" href="../book_servlet/edit.do?b_id=${dto.b_id}">${dto.b_id}</a></td>
+						<td><a style="color: black;" href="/book/edit.do?b_id=${dto.b_id}">${dto.b_id}</a></td>
 						<td>${dto.b_name}&nbsp;</td>
 						<td>${dto.b_author}</td>
 						<td>${dto.b_pub}</td>
@@ -249,7 +249,7 @@ padding-bottom: 20px;
 	</table>
 	</div>
 		</div>
-	<jsp:include page="./admin_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>
 </body>
 </html>
