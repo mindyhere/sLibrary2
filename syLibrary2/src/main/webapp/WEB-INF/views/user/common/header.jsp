@@ -105,7 +105,7 @@ body {
 								<a class="nav-link" href="/user/login/login">로그인</a>
 							</div>
 							<div class="nav-item">
-								<a class="nav-link" href="/syLibrary/user/member/join.jsp">회원가입</a>
+								<a class="nav-link" href="/user/member/join">회원가입</a>
 							</div>
 						</c:otherwise>
 					</c:choose>
