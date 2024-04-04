@@ -13,6 +13,8 @@
 <script>
 	$(document).ready(function() {
 		$('ul.tabs li').click(function() {
+			 $("#mTel").val("");
+			 $("#mEmail").val("");
 			var tab_id = $(this).attr('data-tab');
 			$('ul.tabs li').removeClass('current');
 			$('.input-style-tab').removeClass('current');
@@ -20,7 +22,7 @@
 			$(this).addClass('current');
 			$(this).addClass('required');
 			$("#" + tab_id).addClass('current');
-		})
+		});
 	});
 
 	// 전화번호 형식 체크
@@ -35,6 +37,10 @@
 		const mTel = $("#mTel").val();
 		const mName = $("#mName").val();
 		const mBirthDate = $("#mBirthDate").val();
+		console.log("mEmail " + mEmail);
+		console.log("mTel " + mTel);
+		console.log(mName);
+		console.log(mBirthDate);
 		if ($('#mName').val() == "") {
 			Swal.fire({
 				icon : 'warning',

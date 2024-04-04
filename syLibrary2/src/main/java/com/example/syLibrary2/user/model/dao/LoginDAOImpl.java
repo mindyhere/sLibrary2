@@ -52,15 +52,25 @@ public class LoginDAOImpl implements LoginDAO {
 
 	// 비밀번호-이메일 찾기
 	@Override
-	public String searchPwEmail(LoginDTO dto) {
-		String searchPw = sqlSession.selectOne("login.searchPwEmail", dto);
+	public String searchPwEmail(String mEmail, String mId, String mName, String mBirthDate) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("mEmail", mEmail);
+		map.put("mId", mId);
+		map.put("mName", mName);
+		map.put("mBirthDate", mBirthDate);
+		String searchPw = sqlSession.selectOne("login.searchPwEmail", map);
 		return searchPw;
 	}
 
 	// 비밀번호-전화번호 찾기
 	@Override
-	public String searchPwTel(LoginDTO dto) {
-		String searchPw = sqlSession.selectOne("login.searchPwTel", dto);
+	public String searchPwTel(String mTel, String mId, String mName, String mBirthDate) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("mTel", mTel);
+		map.put("mId", mId);
+		map.put("mName", mName);
+		map.put("mBirthDate", mBirthDate);
+		String searchPw = sqlSession.selectOne("login.searchPwTel", map);
 		return searchPw;
 	}
 }

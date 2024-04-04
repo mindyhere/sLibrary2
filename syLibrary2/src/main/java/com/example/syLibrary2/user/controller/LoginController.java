@@ -54,7 +54,7 @@ public class LoginController {
 
 	@PostMapping("searchId.do")
 	@ResponseBody
-	public Object searchIdForm(@RequestParam("mEmail") String mEmail, @RequestParam("mTel") String mTel,
+	public Map<String, Object> searchIdForm(@RequestParam("mEmail") String mEmail, @RequestParam("mTel") String mTel,
 			@RequestParam("mName") String mName, @RequestParam("mBirthDate") String mBirthDate) {
 		LoginDTO dto = new LoginDTO();
 		dto.setM_email(mEmail);
@@ -98,18 +98,46 @@ public class LoginController {
 		return "user/login/searchPasswd";
 	}
 
-	@PostMapping("searchPw.do")
-	public ModelAndView searchPwForm(@RequestParam(name = "mId", defaultValue = "") String mId,
-			@RequestParam(name = "mPasswd", defaultValue = "") String mPasswd, HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/main/index");
-		// mav.setViewName("user/login/searchId");
-		String mName = loginDao.loginChk(mId, mPasswd);
-		Map<String, Object> map = new HashMap<>();
-		session.setAttribute("mId", mId);
-		session.setAttribute("mName", mName);
-		mav.addObject("map", map);
-		return mav;
+	@PostMapping("searchPwd.do")
+	@ResponseBody
+	public Map<String, Object> searchPwForm(@RequestParam("mEmail") String mEmail, @RequestParam("mTel") String mTel,
+			@RequestParam(name = "mId") String mId, @RequestParam("mName") String mName,
+			@RequestParam("mBirthDate") String mBirthDate) {
+		LoginDTO dto = new LoginDTO();
+		dto.setM_email(mEmail);
+		dto.setM_tel(mTel);
+		dto.setM_id(mId);
+		dto.setM_name(mName);
+		String birthdate = mBirthDate;
+		// String → Date
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date mBirthDate2 = format.parse(birthdate);
+			dto.setM_birth_date(mBirthDate2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String mPw = "";
+		int status = 0;
+		if (dto.getM_email() != null && !dto.getM_email().equals("") && !dto.getM_email().equals("null")) {
+			mPw = loginDao.searchPwEmail(mEmail, mId, mName, mBirthDate);
+			if (mPw != null) {
+				status = 1;
+			} else {
+				status = 2;
+			}
+		} else {
+			mPw = loginDao.searchPwTel(mTel, mId, mName, mBirthDate);
+			if (mPw != null) {
+				status = 1;
+			} else {
+				status = 2;
+			}
+		}
+		Map<String, Object> result = new HashMap<>();
+		result.put("mPw", mPw);
+		result.put("status", status);
+		return result;
 	}
 
 	// 로그아웃
