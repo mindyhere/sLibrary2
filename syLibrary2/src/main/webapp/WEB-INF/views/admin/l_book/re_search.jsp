@@ -23,11 +23,11 @@ $(function() {
 	});
 	$("#btnAll").click(function() {
 		list(page){
-			location.href="/syLibrary/rebook_servlet/list.do?cur_page="+page;
+			location.href="/admin/rebook/list.do?cur_page="+page;
 	});
 });
 function list(page){
-	location.href="/syLibrary/rebook_servlet/search.do?cur_page="+page+"&search_option=${search_option}&search=${search}";
+	location.href="/admin/rebook/search.do?cur_page="+page+"&search_option=${search_option}&search=${search}";
 }
 </script>
 <style>
@@ -103,11 +103,11 @@ tbody tr:hover {
 </style>
 </head>
 <body>
-<%@ include file="../admin_header.jsp" %>
+<%@ include file="/WEB-INF/views/admin/admin_header.jsp" %>
 <div id="body-wrapper">
 	<div id="body-content">
 
-<%@ include file="../menu.jsp" %>
+<%@ include file="/WEB-INF/views/admin/menu.jsp" %>
 <div style="width:1000px;">
 <div class="page-direction" style="padding: 20px; padding-left: 250px;">
 	<div class="navi">
@@ -116,7 +116,7 @@ tbody tr:hover {
 	</div>
 </div>
 <nav style="position: static;">
-		<form class="dd" name="form1" method="post" action="/syLibrary/rebook_servlet/search.do">
+		<form class="dd" name="form1" method="post" action="/admin/rebook/search.do">
 		<div class="search">
 		<select id="search_option" name="search_option">
 			<c:choose>
@@ -204,7 +204,7 @@ tbody tr:hover {
 	</table>
 	</div>
 		</div>
-	<jsp:include page="/admin/admin_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>
 </body>
 </html>

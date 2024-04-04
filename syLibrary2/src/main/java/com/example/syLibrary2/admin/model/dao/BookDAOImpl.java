@@ -17,14 +17,15 @@ public class BookDAOImpl implements BookDAO {
 	
 	@Override
 	public int count(String search_option, String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
+		Map<String,Object> map=new HashMap<>();
+		map.put("search_option",search_option);
+		map.put("keyword",keyword);
+		return sqlSession.selectOne("book.count",map);
 	}
 
-	@Override
-	public int count() {
-		return sqlSession.selectOne("book.count");	
-	}
+	/*
+	 * @Override public int count() { return sqlSession.selectOne("book.count"); }
+	 */
 
 	@Override
 	public List<BookDTO> list(int start, int end, String search_option, String keyword) {

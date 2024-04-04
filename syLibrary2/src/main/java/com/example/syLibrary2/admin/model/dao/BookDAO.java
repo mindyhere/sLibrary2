@@ -6,7 +6,7 @@ import com.example.syLibrary2.admin.model.dto.BookDTO;
 
 public interface BookDAO {
 	int count(String search_option, String keyword);
-	int count();
+	// int count();
 	List<BookDTO> list(int start, int end, String search_option, String keyword);
 	List<BookDTO> select_cg();
 	String insert(BookDTO dto);

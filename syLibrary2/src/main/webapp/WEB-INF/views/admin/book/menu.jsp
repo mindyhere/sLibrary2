@@ -62,7 +62,7 @@ html, body {
 		<ul class="sub_menu">
 			<li><a id="menu_a" href="/syLibrary/record_servlet/list.do">대출/반납 목록</a><br>
 				<a id="menu_a" href="/syLibrary/loanBook_servlet/list.do">대출 도서 관리</a><br>
-				<a id="menu_a" href="/admin/rebook/list.do">예약 도서 목록</a><br></li>
+				<a id="menu_a" href="/syLibrary/rebook_servlet/list.do">예약 도서 목록</a><br></li>
 		</ul>
 		<ul class="big_menu">
 			<li><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16">
