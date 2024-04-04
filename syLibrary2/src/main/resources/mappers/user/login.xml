@@ -13,18 +13,18 @@
 	<select id="searchIdEmail" resultType="String">
 		SELECT m_id
 		FROM sl_member
-		WHERE m_email = #{m_email}
-		AND m_name = #{m_name}
-		AND m_birth_date = #{m_birth_date}
+		WHERE m_email = #{mEmail}
+		AND m_name = #{mName}
+		AND m_birth_date = #{mBirthDate}
 	</select>
 
 	<!-- 아이디 찾기(전화번호) -->
 	<select id="searchIdTel" resultType="String">
 		SELECT m_id
 		FROM sl_member
-		WHERE m_tel = #{m_tel}
-		AND m_name = #{m_name}
-		ND m_birth_date = #{m_birth_date}
+		WHERE m_tel = #{mTel}
+		AND m_name = #{mName}
+		AND m_birth_date = #{mBirthDate}
 	</select>
 
 	<!-- 비밀번호 찾기(이메일) -->
@@ -33,8 +33,7 @@
 		FROM sl_member
 		WHERE m_email = #{mEmail}
 		AND m_name = #{mName}
-		AND m_id =
-		#{mId}
+		AND m_id = #{mId}
 		AND m_birth_date = #{mBirthDate}
 	</select>
 

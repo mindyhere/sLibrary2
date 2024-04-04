@@ -30,13 +30,18 @@ public class SearchController {
 	
 	@Autowired
 	CheckoutDAO checkoutDao;
+	
+	@GetMapping("/")
+	public String search() {
+		return "/user/search/search";
+	}
 
-	@RequestMapping("search.do")
-	public ModelAndView search(@RequestParam(name = "page", defaultValue = "1") int page,
+	@PostMapping("result")
+	public ModelAndView searchResult(@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "option", defaultValue = "all") String option,
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "view", defaultValue = "view1") String view) {
-
+		System.out.println(page+", "+option+", "+", "+keyword+", "+view);
 		// 페이지 설정
 		int count = searchDao.resultCount(option, keyword);
 		PageUtil pageInfo = new PageUtil(count, page);
@@ -59,7 +64,7 @@ public class SearchController {
 		return mav;
 	}
 
-	@PostMapping("detailSearch.do")
+	@PostMapping("detailSearch")
 	public ModelAndView detailSearch(@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "option", defaultValue = "detail") String option,
 			@RequestParam(name = "b_name", defaultValue = "") String b_name,
@@ -91,7 +96,7 @@ public class SearchController {
 		return mav;
 	}
 
-	@RequestMapping("moveTo.do")
+	@RequestMapping("moveTo")
 	public ModelAndView moveTo(@RequestParam(name = "page") int page, @RequestParam(name = "option") String option,
 			@RequestParam(name = "view", defaultValue = "view1") String view, HttpServletRequest request) {
 
@@ -158,7 +163,7 @@ public class SearchController {
 		return mav;
 	}
 
-	@RequestMapping("searchBy.do")
+	@RequestMapping("searchBy")
 	public ModelAndView searchBy(@RequestParam(name = "searchOpt") String option,
 			@RequestParam(name = "b_name", defaultValue = "") String b_name,
 			@RequestParam(name = "b_author", defaultValue = "") String b_author,
@@ -195,7 +200,7 @@ public class SearchController {
 	}
 
 	@ResponseBody // return: 화면X, Data인 경우
-	@PostMapping("simpleSearch.do")
+	@PostMapping("simpleSearch")
 	public ResponseEntity<Object> simpleSearch(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
 		// 관리자, 추천도서 edit → 도서 검색
 		List<BookDTO> list = searchDao.totSearch(keyword);

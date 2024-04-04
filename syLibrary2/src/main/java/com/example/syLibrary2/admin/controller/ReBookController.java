@@ -18,7 +18,7 @@ import com.example.syLibrary2.util.PageUtil;
 @Controller
 @RequestMapping("admin/rebook/*")
 public class ReBookController {
-	
+
 	@Autowired
 	ReBookDAO dao;
 	
@@ -69,8 +69,5 @@ public class ReBookController {
 		map.put("page", page);
 		mav.addObject("map", map);
 		return mav;
-	}
-
-	
-	
+	} 
 }

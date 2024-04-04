@@ -30,31 +30,47 @@ public class LoginDAOImpl implements LoginDAO {
 
 	// 아이디-이메일 찾기
 	@Override
-	public String searchIdEmail(LoginDTO dto) {
-		System.out.println("이메일로 찾기 " + dto);
-		String searchId = sqlSession.selectOne("login.searchIdEmail", dto);
+	public String searchIdEmail(String mEmail, String mName, String mBirthDate) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("mEmail", mEmail);
+		map.put("mName", mName);
+		map.put("mBirthDate", mBirthDate);
+		String searchId = sqlSession.selectOne("login.searchIdEmail", map);
 		return searchId;
 	}
 
 	// 아이디-전화번호 찾기
 	@Override
-	public String searchIdTel(LoginDTO dto) {
-		System.out.println("전화번호로 찾기 " + dto);
-		String searchId = sqlSession.selectOne("login.searchIdTel", dto);
+	public String searchIdTel(String mTel, String mName, String mBirthDate) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("mTel", mTel);
+		map.put("mName", mName);
+		map.put("mBirthDate", mBirthDate);
+		String searchId = sqlSession.selectOne("login.searchIdTel", map);
 		return searchId;
 	}
 
 	// 비밀번호-이메일 찾기
 	@Override
-	public String searchPwEmail(LoginDTO dto) {
-		String searchPw = sqlSession.selectOne("login.searchPwEmail", dto);
+	public String searchPwEmail(String mEmail, String mId, String mName, String mBirthDate) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("mEmail", mEmail);
+		map.put("mId", mId);
+		map.put("mName", mName);
+		map.put("mBirthDate", mBirthDate);
+		String searchPw = sqlSession.selectOne("login.searchPwEmail", map);
 		return searchPw;
 	}
 
 	// 비밀번호-전화번호 찾기
 	@Override
-	public String searchPwTel(LoginDTO dto) {
-		String searchPw = sqlSession.selectOne("login.searchPwTel", dto);
+	public String searchPwTel(String mTel, String mId, String mName, String mBirthDate) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("mTel", mTel);
+		map.put("mId", mId);
+		map.put("mName", mName);
+		map.put("mBirthDate", mBirthDate);
+		String searchPw = sqlSession.selectOne("login.searchPwTel", map);
 		return searchPw;
 	}
 }

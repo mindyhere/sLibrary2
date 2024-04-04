@@ -10,7 +10,7 @@
 	<div id="row" class="row"> <!-- row -->
 		<c:forEach var="dto" items="${list }">
 			<div class="col">
-				<a href="/syLibrary/search_servlet/bookInfo.do?b_id=${dto.b_id}">
+				<a href="/user/search/bookInfo/${dto.b_id}">
 				<div class="card" id="book" style="width: 10em">
 					<img src="${dto.b_url}" class="card-img" alt="준비중" title="more detail">
 					<div class="card-body" id="bookCover">

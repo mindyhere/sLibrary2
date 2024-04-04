@@ -10,7 +10,7 @@
 	type="image/x-icon">
 <script src="http://code.jquery.com/jquery-3.6.1.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
+<link rel="stylesheet" href="/syLibrary2/resources/static/css/bootstrap.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 	
@@ -119,10 +119,10 @@ th {
 </style>
 </head>
 <body>
-<jsp:include page="../admin_header.jsp" />
+<jsp:include page="/WEB-INF/views/admin/admin_header.jsp" />
 <div id="body-wrapper">
 	<div id="body-content">
-<jsp:include page="../menu.jsp" />
+<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
 <div style="width:1150px;">
 <div class="page-direction" style="padding: 20px; padding-left: 250px;">
 	<div class="navi">
@@ -201,7 +201,7 @@ th {
 		</script>
 	</c:if>
 		</div>
-	<jsp:include page="/admin/admin_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>
 </body>
 </html>
