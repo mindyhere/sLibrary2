@@ -15,9 +15,9 @@
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
  <script>
- $(function() { 
+/*  $(function() { 
 		list('1');
-});
+}); */
 
 /*  function list(){
 		let params={"a_name": $("#a_name").val(), "me_memo":$("#me_memo").val(), "me_post_date":$("#me_post_date").val(),"page":$("#page").val()};
@@ -32,7 +32,7 @@
  function list(cur_page){
 		let param = {"cur_page":cur_page};
 		$.ajax({
-			url: "/syLibrary/memo_servlet/list.do",
+			url: "/admin/memo/list.do",
 			data: param,
 			success: function(txt){
 				$("#result").html(txt);

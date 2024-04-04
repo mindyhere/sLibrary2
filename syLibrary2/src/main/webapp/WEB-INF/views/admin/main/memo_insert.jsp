@@ -24,6 +24,13 @@
 				swal("메모를 입력하세요");
 				return false;
 			}
+			$.ajax({
+				type:"post",
+				url:"/admin/memo/insert.do",
+				data:params,
+				success:function(){
+				}
+			});
 			/* document.form1.action = "/syLibrary/memo_servlet/insert.do?me_a_id="+me_a_id;
 			document.form1.submit(); */
 		});
@@ -31,7 +38,7 @@
 </script>
 </head>
 <body>
-	<form method="post" name="form1" action="/syLibrary/memo_servlet/insert.do">
+	<form method="post" name="form1" action="admin/memo/insert.do">
 		<table border="1" style="width: 300px" class="table table-hover">
 			<tr align="center">
 				<td>
