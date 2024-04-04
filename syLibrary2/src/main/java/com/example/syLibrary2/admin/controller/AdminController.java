@@ -13,7 +13,7 @@ import com.example.syLibrary2.admin.model.dto.AdminDTO;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/admin_login/*")
+@RequestMapping("admin/admin_login/*")
 public class AdminController {
 	
 	@Autowired
@@ -21,7 +21,7 @@ public class AdminController {
 	
 	//관리자 로그인화면
 	@GetMapping("admin.do")
-	public String main(){
+	public String login(){
 		return "admin/admin_login";
 	}
 	
@@ -43,7 +43,13 @@ public class AdminController {
 	@GetMapping("adlogout.do")
 	public String logout(HttpSession session){
 		session.invalidate();
-		return "redirect:/admin/admin_login";
+		return "redirect:/admin/admin_login/admin.do";
+	}
+	
+	@GetMapping("main")
+	public ModelAndView main(ModelAndView mav) {
+		mav.setViewName("admin/admin_main");
+		return mav;
 	}
 	
 }

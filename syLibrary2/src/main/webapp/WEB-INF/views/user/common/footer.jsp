@@ -39,9 +39,9 @@ function loginCheck(){
 		let url="/syLibrary/login_servlet/logout.do"
 		swalConfirm(icon, title, msg, url);
 	}else if(a_id != ""){
-		location.href="/admin/admin.do";
+		location.href="/admin/admin_login/admin.do";
 	}else {
-		location.href="/admin/admin.do";
+		location.href="/admin/admin_login/admin.do";
 	}
 }	
 </script>

@@ -2,22 +2,16 @@
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>3월에 만나요:)</title>
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
-	type="image/x-icon">
-<link rel="stylesheet" href="../include/css/bootstrap.css">
+<link rel="icon" href="/syLibrary/resources/images/icon.png" type="image/x-icon">
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="../include/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- 폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto Sans Korean&display=swap"
-	rel="stylesheet">
 	
 <%-- <c:if test="${param.message=='error'}">
 	<script>
@@ -47,22 +41,25 @@ $(function() {
 <script>
 $(function(){
 	$("#btnLogin").click(function(){
-		const a_id = $("#a_id").val();
-		const a_passwd = $("#a_passwd").val();
-		if(a_id==""){
-			alert("아이디를 입력하세요.");
-			$("#a_id").focus();
-			return;
-		}
-		if(a_passwd==""){
-			alert("비밀번호를 입력하세요.");
-			$("#a_passwd").focus();
-			return;
-		}
-		document.form1.action="/admin/adlogin.do";
-		document.form1.submit();
+		login();
 	});
 });
+function login() {
+	const a_id = $("#a_id").val();
+	const a_passwd = $("#a_passwd").val();
+	if(a_id==""){
+		alert("아이디를 입력하세요.");
+		$("#a_id").focus();
+		return false;
+	}
+	if(a_passwd==""){
+		alert("비밀번호를 입력하세요.");
+		$("#a_passwd").focus();
+		return false;
+	}
+	document.form1.action="/admin/adlogin.do";
+	document.form1.submit();
+}
 </script>
 <style>
 
@@ -124,7 +121,7 @@ table {
 		</div>
 	</nav>
 		<div align="right" style="position: static;">
-			<a class="navbar-brand" href="/main/index/">
+			<a class="navbar-brand" href="./main/index/">
 				<input type="button" value="이용자페이지" class="btn btn-outline-light">
 			</a>
 		</div>
@@ -133,7 +130,7 @@ table {
 	<div id="body-content">
 <main id="login" class="form-signin">
 		<h2 align="center">관리자 로그인</h2>
-			<form method="post" name="form1" action="/admin/adlogin.do">
+			<form method="post" name="form1" action="/admin/admin_login/adlogin.do">
 				<table align="center">
 				<tr>
 					<td align="center" width="110px">아이디</td>
@@ -152,7 +149,7 @@ table {
 			</form>
 </main>
 	</div>
-	<jsp:include page="/admin/admin_footer.jsp" />
+	<jsp:include page="./admin_footer.jsp" />
 </div>
 </body>
 </html>

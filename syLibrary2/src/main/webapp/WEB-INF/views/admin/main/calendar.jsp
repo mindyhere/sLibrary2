@@ -110,7 +110,7 @@ function changeDate(){
 
 	var y=document.getElementById("y").value;
 	var m=document.getElementById("m").value;
-	var url="/syLibrary/admin/admin_main.jsp?y="+y+"&m="+m;
+	var url="/admin/admin_login/main?y="+y+"&m="+m;
 	location.href=url; //url이 가지고 있는 값으로 이동
 	
 }
