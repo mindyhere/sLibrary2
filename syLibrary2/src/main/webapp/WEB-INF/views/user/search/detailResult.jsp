@@ -7,13 +7,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
-	type="image/x-icon">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/user.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/syLibrary/include/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 $(function() {
@@ -102,7 +101,7 @@ function searchByName(page) {
     let params={"b_name":b_name, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
     if(count!==0){
     	$.ajax({
-			url:"/syLibrary/search_servlet/serachBy.do",
+			url:"/user/search/serachBy",
 			data:params,
 			success:function(txt){
 				$("#section-resultList").html(txt);
@@ -119,7 +118,7 @@ function searchByAuthor(page) {
     let params={"b_author":b_author, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
     if(count!==0){
     	$.ajax({
-			url:"/syLibrary/search_servlet/serachBy.do",
+			url:"/user/search/serachBy",
 			data:params,
 			success:function(txt){
 				$("#section-resultList").html(txt);
@@ -136,7 +135,7 @@ function searchByPub(page) {
     let params={"b_pub":b_pub, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
     if(count!==0){
     	$.ajax({
-			url:"/syLibrary/search_servlet/serachBy.do",
+			url:"/user/search/serachBy",
 			data:params,
 			success:function(txt){
 				$("#section-resultList").html(txt);
@@ -156,7 +155,7 @@ function moveTo(page){
     		"b_name":b_name, "b_author":b_author, "b_pub":b_pub, "view":view, "page":page, "option":option
     	};
     	$.ajax({
-    		url:"/syLibrary/search_servlet/moveTo.do",
+    		url:"/user/search/moveTo",
     		data:params,
     		success:function(txt){
     			$("#section-resultList").html(txt);
@@ -210,13 +209,13 @@ function checkOut(b_id){
 	let a_id = "${sessionScope.a_id}" != null? "${sessionScope.a_id}" : "";
 	if(m_id != ""){
 		$.ajax({
-			url:"/syLibrary/checkout_servlet/checkout.do",
+			url:"/user/checkout/",
 			data:{"m_id":m_id,"b_id":b_id},
 			success: function(txt){
 				myConfirm(txt, 
 						"나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
 						"info", 
-						"/syLibrary/myLibrary_servlet/myLibray_info.do?mId="+m_id);
+						"/user/user/book/myLibray?mId="+m_id);
 			},
 			error: function(request, status, error){
 				myAlert("error", "Error", `"code= "+request.status+", msg= "+request.responseText+", error= "+error`);
@@ -236,7 +235,7 @@ function checkOut(b_id){
 			cancelButtonText: "NO"
 			}).then((result) => {
 			if (result.isConfirmed) {
-				location.href="/syLibrary/user/login/login.jsp";
+				location.href="/user/login/login";
 			}
 		});
 	}
@@ -438,7 +437,7 @@ td > a{
 		
 		<div class="card-body">
 			<div class="searchForm1" align="center" style="width: 100%;">
-				<form name="form1" method="post" action="/syLibrary/search_servlet/search.do">
+				<form name="form1" method="post" action="/user/search/result">
 				<div class="input-group mb-3">
 		  			<input name="keyword" id="keyword" value="${keyword}" type="text" class="form-control"placeholder="검색어를 입력하세요" style="box-shadow: none !important;">
 		  			<button class="btn btn-light" type="button" id="btnSearch" style="background-color: #FEC5BB;">
@@ -450,7 +449,7 @@ td > a{
 	
 			<!-- 상세검색툴 -->
 			<div class="searchForm2" style="display: none; padding: 0 3rem 1rem 3rem">
-				<form name="form2" method="post" action="/syLibrary/search_servlet/detailSearch.do" style="border-color:FAE0E0 !important;">
+				<form name="form2" method="post" action="/user/search/detailSearch" style="border-color:FAE0E0 !important;">
 					<div class="input-group input-group-md mb-3" style="border-color:FAE0E0 !important;">
 						<span class="input-group-text" id="inputGroup-sizing-sm">&nbsp;&nbsp;제목&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" class="form-control" id="b_name" name="b_name" value="${b_name}" placeholder="예: 책제목">
@@ -506,7 +505,7 @@ td > a{
 		  <tr style="max-height:100px; background: #fbf7f5 !important;" align="center">
 			<td><img src="${dto.b_url}" alt="준비중" style="width: 100px; max-height: 150px"></td>
 			<td align="left">
-				<a href="/syLibrary/search_servlet/bookInfo.do?b_id=${dto.b_id}" style="text-decoration-line: none;">
+				<a href="/user/search/bookInfo/${dto.b_id}" style="text-decoration-line: none;">
 				<h4>${dto.b_name }</h4></a>
 				<br>${dto.b_author }
 				<br>${dto.b_pub}&nbsp;&nbsp;|&nbsp;&nbsp;${dto.b_year}

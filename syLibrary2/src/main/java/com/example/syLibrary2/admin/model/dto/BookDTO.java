@@ -22,4 +22,6 @@ public class BookDTO {
 	private int b_amount;
 	private String b_url;
 	private String b_description;
+	private String category;
+	private int ct_number;
 }
