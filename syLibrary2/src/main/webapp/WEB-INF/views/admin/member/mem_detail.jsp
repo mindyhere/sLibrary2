@@ -1,4 +1,4 @@
-<%@page import="com.itextpdf.text.log.SysoCounter"%>
+<%-- <%@page import="com.itextpdf.text.log.SysoCounter"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -46,10 +46,10 @@ th {
 </style>
 </head>
 <body>
-	<jsp:include page="/admin/admin_header.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_header.jsp" />
 <div id="body-wrapper">
 	<div id="body-content">
-			<jsp:include page="/admin/menu.jsp" />
+			<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
 
 	<div class="page-direction" style="padding: 20px; padding-left: 250px;">
 		<div class="navi">
@@ -63,69 +63,71 @@ th {
 				<form name="form1" method="post" enctype="multipart/form-data">
 					<table border="1" width="700px" style="position: static;">
 						<td rowspan="6"><c:choose>
-								<c:when test="${de_list.m_img == null }">
-									<img src="../resources/images/member/image_no.png"
+								<c:when test="${map.de_list.m_img == null }">
+									<img src="/resources/images/member/image_no.png"
 										width="250px" height="250px">
 								</c:when>
-								<c:when test="${de_list.m_img != null }">
-									<img src="../resources/images/member/${de_list.m_img}"
+								<c:when test="${map.de_list.m_img != null }">
+									<img src="/resources/images/member/${map.de_list.m_img}"
 										width="250px" height="250px">
 								</c:when>
 							</c:choose></td>
 						<tr>
 							<td style="text-align: center;">이름</td>
 							<td><input type="text" name="m_name" id="m_name" size="5"
-								class="form-control" readonly value="${de_list.m_name}"></td>
+								class="form-control" readonly value="${map.de_list.m_name}"></td>
+							<td><input type="text" name="le_name" id="le_name" size="2"
+								class="form-control" readonly value="${map.de_list.le_name}"></td>
 						</tr>
 
 						<tr>
 							<td style="text-align: center;">아이디</td>
 							<td><input type="text" name="m_id" id="m_id" size="5"
-								class="form-control" readonly value="${de_list.m_id}"></td>
+								class="form-control" readonly value="${map.de_list.m_id}"></td>
 						</tr>
 						<tr>
 							<td style="text-align: center;">생년월일</td>
 							<td><input type="text" name="m_birth_date" id="m_birth_date"
 								size="10" class="form-control" readonly
-								value="${de_list.m_birth_date}"></td>
+								value="${map.de_list.m_birth_date}"></td>
 						</tr>
 						<tr>
 							<td style="text-align: center;">전화번호</td>
 							<td><input type="tel" name="m_tel" id="m_tel" size="10"
-								class="form-control" readonly value="${de_list.m_tel}"></td>
+								class="form-control" readonly value="${map.de_list.m_tel}"></td>
 						</tr>
 						<tr>
 							<td style="text-align: center;">이메일</td>
 							<td><input type="text" name="m_email" id="m_email" size="20"
-								class="form-control" readonly value="${de_list.m_email}"></td>
+								class="form-control" readonly value="${map.de_list.m_email}"></td>
 						</tr>
 						<tr>
 							<td style="text-align: center;">주소</td>
 							<td><input type="text" name="m_zip_no" id="m_zip_no"
 								size="20" class="form-control" readonly
-								value="${de_list.m_zip_no}"></td>
+								value="${map.de_list.m_zip_no}"></td>
 							<td><input type="text" name="m_address" id="m_address"
 								size="90" class="form-control" readonly
-								value="${de_list.m_address}"></td>
+								value="${map.de_list.m_address}"></td>
 							<td><input type="text" name="m_detail_address"
 								id="m_detail_address" size="30" class="form-control" readonly
-								value="${de_list.m_detail_address}"></td>
+								value="${map.de_list.m_detail_address}"></td>
 						</tr>
 						<tr>
 							<td style="text-align: center;">가입일자</td>
 
 							<td colspan="2" width="70px"><input type="text"
 								name="m_year" id="m_year" class="form-control" readonly
-								value="${de_list.m_year}"></td>
+								value="${map.de_list.m_year}"></td>
 						</tr>
 						<tr>
 							<td style="text-align: center;">대출가능권수</td>
-							<td><input type="text" name="loan_y" id="loan_y" size="3"
-								class="form-control" readonly value="${loan_y.l_y}"></td>
+							<td><input type="text" name="loan_y" id="loan_y" size="2"
+								class="form-control" readonly value="${map.loan_y.l_y}"></td>
 
 							<td style="text-align: center;">예약가능권수</td>
-							<td><input type="text" name="reser_y" id="reser_y" size="3"
-								class="form-control" readonly value="${reser_y.r_y}"></td>
+							<td><input type="text" name="reser_y" id="reser_y" size="2"
+								class="form-control" readonly value="${map.reser_y.r_y}"></td>
 						</tr>
 						<tr>
 							<td colspan="4" align="center" height="30px">대출현황</td>
@@ -140,13 +142,13 @@ th {
 									<th>대출일</th>
 									<th>반납기한</th>
 									<c:choose>
-										<c:when test="${mem_list.size()==0}">
+										<c:when test="${map.mem_list.size()==0}">
 											<tr height="100px" align="center">
 												<td colspan="4"> 대출 현황이 없습니다.</td>
 											</tr>
 										</c:when>
 										<c:otherwise>
-											<c:forEach var="mem_list" items="${mem_list}">
+											<c:forEach var="mem_list" items="${map.mem_list}">
 												<tr align="center">
 													<td height="38px">&nbsp;&nbsp;${mem_list.b_name}&nbsp;&nbsp;</td>
 													<td height="38px">&nbsp;${mem_list.b_author}&nbsp;</td>
@@ -168,7 +170,7 @@ th {
 		</div>
 	</nav>
 		</div>
-	<jsp:include page="/admin/admin_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>
 </body>
 </html>

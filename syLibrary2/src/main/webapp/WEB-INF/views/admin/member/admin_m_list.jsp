@@ -18,11 +18,8 @@ $(function() {
 	$("#btnSearch").click(function() {
 		if ($("#search").val() == "") {
 			swal("검색어를 입력하세요");
-			return;
+			return false;
 		}
-	});
-	$("#btnAll").click(function() {
-		location.href="/admin/admember/list.do?cur_page="+page;
 	});
 });
 function slist(m_no){
@@ -31,7 +28,7 @@ function slist(m_no){
 
 
 function list(page){
-	location.href="/admin/admember/list.do?cur_page="+page+"&search_option=${map.search_option}&search=${map.search}";
+	location.href="/admin/admember/list.do?curPage="+page+"&search_option=${map.search_option}&search=${map.search}";
 }
 </script>
 <style>
@@ -116,61 +113,23 @@ tbody tr:hover {
 </div>
 
 <nav style="position: static; padding-left: 300px;">
-		<form name="form1" method="post" action="/admin/admember/search.do">
+		<form name="form1" method="post" action="/admin/admember/list.do">
 		<div class="search">
 		<select id="search_option" name="search_option">
-			<c:choose>
-				<c:when test="${map.search_option=='all'||map.search_option==null}">
-					<option value="all" selected>전체검색</option>
-					<option value="m_name">이름</option>
-					<option value="m_birth_date">생년월일</option>
-					<option value="m_id">아이디</option>
-					<option value="m_tel">전화번호</option>
-					<option value="m_year">가입일</option>
-				</c:when>
-				<c:when test="${map.search_option=='m_name'}">
-					<option value="all">전체검색</option>
-					<option value="m_name" selected>이름</option>
-					<option value="m_birth_date">생년월일</option>
-					<option value="m_id">아이디</option>
-					<option value="m_tel">전화번호</option>
-					<option value="m_year">가입일</option>
-				</c:when>
-				<c:when test="${map.search_option=='m_birth_date'}">
-					<option value="all">전체검색</option>
-					<option value="m_name">이름</option>
-					<option value="m_birth_date" selected>생년월일</option>
-					<option value="m_id">아이디</option>
-					<option value="m_tel">전화번호</option>
-					<option value="m_year">가입일</option>
-				</c:when>
-				<c:when test="${map.search_option=='m_id'}">
-					<option value="all">전체검색</option>
-					<option value="m_name">이름</option>
-					<option value="m_birth_date">생년월일</option>
-					<option value="m_id" selected>아이디</option>
-					<option value="m_tel">전화번호</option>
-					<option value="m_year">가입일</option>
-				</c:when>
-				<c:when test="${map.search_option=='m_tel'}">
-					<option value="all">전체검색</option>
-					<option value="m_name">이름</option>
-					<option value="m_birth_date">생년월일</option>
-					<option value="m_id">아이디</option>
-					<option value="m_tel" selected>전화번호</option>
-					<option value="m_year">가입일</option>
-				</c:when>
-				<c:when test="${map.search_option=='m_year'}">
-					<option value="all">전체검색</option>
-					<option value="m_name">이름</option>
-					<option value="m_birth_date">생년월일</option>
-					<option value="m_id">아이디</option>
-					<option value="m_tel">전화번호</option>
-					<option value="m_year" selected>가입일</option>
-				</c:when>
-			</c:choose>
+			<option value="all"
+			<c:out value="${map.search_option =='all' ? 'selected' : '' }" /> >전체검색</option>
+				<option value="m_name"
+			<c:out value="${map.search_option =='m_name' ? 'selected' : '' }" /> >이름</option>
+				<option value="m_birth_date"
+			<c:out value="${map.search_option =='m_birth_date' ? 'selected' : '' }" /> >생년월일</option>
+				<option value="m_id"
+			<c:out value="${map.search_option =='m_id' ? 'selected' : '' }" /> >아이디</option>
+				<option value="m_tel"
+			<c:out value="${map.search_option =='m_tel' ? 'selected' : '' }" /> >전화번호</option>
+				<option value="m_year"
+			<c:out value="${map.search_option =='m_year' ? 'selected' : '' }" /> >가입일</option>
 		</select>
-			<input id="search" name="search" value="${map.search}">
+			<input type="text" id="search" name="search" value="${map.search}">
 			<div class="icon">
 			<input type="submit" id="btnSearch" style="display: none;">
 			<label for="btnSearch"><svg
@@ -214,7 +173,7 @@ tbody tr:hover {
 			<c:if test="${map.page.curBlock > 1}">
 				<a id="hr" href="#" onclick="javascript:list('${map.page.prevPage}')">[이전]</a>
 			</c:if>
-			<c:forEach var="num" begin="${map.page.blockBegin}" end="${map.page.blockEnd}">
+			<c:forEach var="num" begin="${map.page.blockStart}" end="${map.page.blockEnd}">
 				<c:choose>
 					<c:when test="${num == map.page.curPage}">
 						<span style="color:blue">${num}</span>
