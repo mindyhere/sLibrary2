@@ -18,12 +18,6 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<Map<String, Object>> totalList() {
-		List<Map<String, Object>> reviews = sqlSession.selectList("review.searchAll", "");
-		return reviews;
-	}
-
-	@Override
 	public String insert(Map<String, Object> map) {
 		String result = "";
 		try {
@@ -50,7 +44,8 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<Map<String, Object>> search(Map<String, Object> map) {
 		return sqlSession.selectList("review.search", map);
 	}
-	
+
+	@Override
 	public List<Map<String, Object>> searchAll(String keyword) {
 		return sqlSession.selectList("review.searchAll", keyword);
 	}

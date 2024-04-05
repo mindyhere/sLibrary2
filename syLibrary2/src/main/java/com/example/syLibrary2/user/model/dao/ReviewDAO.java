@@ -8,7 +8,7 @@ public interface ReviewDAO {
 	List<Map<String, Object>> getReviews(int b_id);
 
 	// 리뷰 테이블 전체 목록 조회
-	List<Map<String, Object>> totalList();
+	//List<Map<String, Object>> totalList();
 
 	String insert(Map<String, Object> map);
 
@@ -19,6 +19,5 @@ public interface ReviewDAO {
 	void delete(int idx);
 
 	List<Map<String, Object>> search(Map<String, Object> map);
-
 	List<Map<String, Object>> searchAll(String keyword);
 }

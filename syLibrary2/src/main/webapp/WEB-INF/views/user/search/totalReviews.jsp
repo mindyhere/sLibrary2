@@ -40,7 +40,7 @@
 	</thead>
 	<tbody class="table-group-divider" style="border-color:#FAE0E0;" id="tbody">
 		<c:choose>
-		  <c:when test="${map.reviews.size() !=0 }">
+		  <c:when test="${reviews.size() !=0 }">
 			<c:forEach var="item" items="${reviews}">
 			  <tr class="align-middle">
 				<th scope="row">${item.ROWNUM}</th>
@@ -86,7 +86,6 @@ $(function() {
 		}
 
 		if(cnt==0){
-			myAlert("warning","잠깐!", "삭제할 항목을 선택해주세요.");
 			return;
 		}else{
 			let	params={"option":"user", "arr":values};
@@ -110,7 +109,6 @@ $(function() {
 		}
 
 		if(cnt==0){
-			myAlert("warning","잠깐!", "삭제할 항목을 선택해주세요.");
 			return;
 		}else{
 			let	params={"option":"admin", "arr":values};
@@ -123,7 +121,5 @@ $(function() {
 			}); 
 		}
 	});
-	
-	
 });
 </script>

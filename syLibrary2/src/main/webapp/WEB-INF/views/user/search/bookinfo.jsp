@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -49,7 +48,6 @@ $(function() {
 	});
 	
 	$("#btnConfirm").click(function(){
-		//let b_id = ${map.B_ID};
 		let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}" : "";
 		let a_id = "${sessionScope.a_id}" != null? "${sessionScope.a_id}" : "";
 		let contents =  $("#textarea");
@@ -90,7 +88,7 @@ $(function() {
 	$("#btnClose").click(function(){
 		$('.modal-bg').removeClass("visible");
 		$('.modal-bg').addClass("invisible");
-		getReviews();
+		getReviews(${map.B_ID});
 	});
 	$(document).mouseup(function (e){
 		if($(".modal-bg").has(e.target).length === 0){
@@ -103,25 +101,13 @@ $(function() {
 		const keyword = $("#autoKey").val();
 		const searchOpt = $("#searchOpt :selected").val();
 		
-		
 		if(keyword != "" || keyword.trim().length !== 0){
 			const params={"searchOpt":searchOpt, "keyword":keyword};
 			$.ajax({
 				url: "/user/search/bookinfo/search",
 				data:params,
 				success:function(data){
-					console.log(data.reviews);
-					let reviews=data.reviews;
-					table_data='';
-					$.each(reviews, function(index, value) {      
-						//console.log(index + " : " + value);
-						table_data+="<tr><td>"+value.ROWNUM+"</td><td>"+value.WRITER+"</td><td>고양이</td><td>해결사 깜냥</td><td>리뷰테스트222</td><td>2024-04-05</td></tr>";		
-					});
-					
-					
-					$('#table1').append(table_data);
-					//$("#tbody").html(reviews);
-					//$("#review-total").html(data);
+					$("#review-total").html(data);
 				}
 			});
 		} else {

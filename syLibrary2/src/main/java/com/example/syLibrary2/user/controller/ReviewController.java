@@ -24,8 +24,9 @@ public class ReviewController {
 
 	@GetMapping("totalList/")
 	public ModelAndView totalList(ModelAndView mav) {
+		String keyword="";
 		mav.setViewName("user/search/totalReviews");
-		mav.addObject("reviews", reviewDao.totalList());
+		mav.addObject("reviews", reviewDao.searchAll(keyword)); // 전체 리뷰글 찾기
 		return mav;
 	}
 
@@ -79,42 +80,19 @@ public class ReviewController {
 		}
 	}
 	
-	
-	@ResponseBody
 	@GetMapping("search")
-	public Map<String, Object> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
-			@RequestParam(name = "searchOpt", defaultValue = "all") String searchOpt) {
-		//mav.setViewName("user/search/bookinfo");
-		Map<String, Object> map=new HashMap<>();
+	public ModelAndView search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
+			@RequestParam(name = "searchOpt", defaultValue = "all") String searchOpt, ModelAndView mav) {
+		mav.setViewName("user/search/totalReviews");
 		if (searchOpt.equals("all")) {
-			map.put("reviews", reviewDao.searchAll(keyword));
+			mav.addObject("reviews", reviewDao.searchAll(keyword));
 		}else {
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("searchOpt", searchOpt);
 			m.put("keyword", keyword);
-			map.put("reviews", reviewDao.search(m));
+			mav.addObject("reviews", reviewDao.search(m));
 		}
-		System.out.println(map);
-		return map;
+		return mav;
 	}
-	
-//	@PostMapping("search")
-//	public ModelAndView search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
-//			@RequestParam(name = "searchOpt", defaultValue = "all") String searchOpt, ModelAndView mav) {
-//		mav.setViewName("user/search/bookinfo");
-//		//mav.addObject("list", reviewDao.search(searchOpt, keyword));
-//		Map<String, Object> map=new HashMap<>();
-//		if (searchOpt.equals("all")) {
-//			map.put("reviews", reviewDao.searchAll(keyword));
-//		}else {
-//			Map<String, Object> m = new HashMap<String, Object>();
-//			m.put("searchOpt", searchOpt);
-//			m.put("keyword", keyword);
-//			map.put("reviews", reviewDao.search(m));
-//		}
-//		mav.setViewName("user/search/bookinfo");
-//		mav.addObject("reviews", map);
-//		return mav;
-//	}
 
 }
