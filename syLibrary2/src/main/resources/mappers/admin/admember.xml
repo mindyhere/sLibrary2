@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admember">
-
-	<!-- 관리자회원분류검색리스트 -->
-	<select id="ad_search_list" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
+	
+	<select id="list" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
 		select * 
 		from (
 			select rownum as rn, A.*
@@ -22,16 +21,15 @@
 		where rn between #{start} and #{end}
 	</select>
 	
-	<!-- 관리자회원검색 개수 -->
-	<select id="ad_search_count" resultType="int">
-		select count(*)
-		from sl_member
+	<select id="count" resultType="int">
+		select count(*) from sl_member
 		<include refid="search" />
 	</select>
 	
+	<!-- 검색조건 -->
 	<sql id="search">
 		<choose>
-			<when test="search_option == 'all">
+			<when test="search_option == 'all'">
 				where m_name like '%' || #{search} || '%'
 					or m_birth_date like '%' || #{search} || '%'
 					or m_id like '%' || #{search} || '%'
@@ -42,7 +40,6 @@
 				where ${search_option} like '%' || #{search} || '%'
 			</otherwise>
 		</choose>
-	
 	</sql>
 	
 	<!-- 관리자회원상세 -->
@@ -59,32 +56,43 @@
 		m_address,
 		m_detail_address,
 		m_img,
-		to_char(m_year, 'yyyy-mm-dd') m_year
-		from sl_member
-		where m_no=#{m_no}
+		to_char(m_year, 'yyyy-mm-dd') m_year,
+		le_name
+		from sl_member m, sl_level l
+		where m.m_level = l.le_no
+		and m_no=#{m_no}
 	</select>
 	
-	<!-- 관리자회원목록 -->
-	<select id="ad_p_list" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
-		select *
-		from (
-			select rownum as rn, A.*
-			from ( 
-				select m_no,
-				m_name,
-				to_char(m_birth_date, 'yyyy-mm-dd') m_birth_date,
-				m_id,
-				m_tel,
-				to_char(m_year, 'yyyy-mm-dd') m_year
-				from sl_member order by m_no
-				)
-			A )
-		where rn between #{start} and #{end}
+	<!--  회원대출현황리스트(회원상세)  -->
+	<select id="lo_memlist" resultType="com.example.syLibrary2.admin.model.dto.LoanDTO">
+		select b_name,
+		b_author,
+		to_char(l_lodate, 'yyyy-mm-dd') l_lodate,
+		to_char(l_retdate, 'yyyy-mm-dd') l_retdate
+		from lo_book l, sl_book b , sl_member m
+		where l.l_bookid = b.b_id
+		and l.l_memno = m.m_no
+		and l_return_yn = 'N'
+		and m_no = #{m_no}
+		order by l_lodate
 	</select>
 	
-	<!-- 관리자회원수(페이지나누기) -->
-	<select id="ad_p_count" resultType="int">
-		select count(*) from sl_member
+	<!-- 대출가능 횟수(회원상세) -->
+	<select id="loan_y" resultType="com.example.syLibrary2.admin.model.dto.LoanDTO">
+		select (5-count(*)) l_y
+		from sl_member m, sl_book b, lo_book l
+		where l.l_bookid = b.b_id
+		and l.l_memno = m.m_no
+		and l_return_yn = 'N'
+		and m_no=#{m_no}
 	</select>
-
+	
+	<!-- 예약가능 횟수(회원상세) -->
+	<select id="reser_y" resultType="com.example.syLibrary2.admin.model.dto.LoanDTO">
+		select (3-count(*)) r_y
+		from sl_member m, sl_book b, re_book r
+		where r.r_bookid = b.b_id and r.r_memno = m.m_no
+		and <![CDATA[ r.r_reservation >= 0 ]]>
+		and m_no=#{m_no}
+	</select>
 </mapper>
