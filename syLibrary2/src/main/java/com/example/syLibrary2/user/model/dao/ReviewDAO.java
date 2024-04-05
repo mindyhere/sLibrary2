@@ -18,5 +18,7 @@ public interface ReviewDAO {
 	// 관리자가 삭제할경우
 	void delete(int idx);
 
-	List<Map<String, Object>> search(String searchOpt, String keyword);
+	List<Map<String, Object>> search(Map<String, Object> map);
+
+	List<Map<String, Object>> searchAll(String keyword);
 }

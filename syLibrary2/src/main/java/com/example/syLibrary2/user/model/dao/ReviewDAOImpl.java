@@ -1,6 +1,5 @@
 package com.example.syLibrary2.user.model.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ReviewDAOImpl implements ReviewDAO {
-	@Autowired // 의존관계주입. 스프링 객체생성&연결
+	@Autowired
 	SqlSession sqlSession;
 
 	@Override
@@ -48,17 +47,12 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<Map<String, Object>> search(String searchOpt, String keyword) {
-		List<Map<String, Object>> list = null;
-		if (searchOpt.equals("all")) {
-			list = sqlSession.selectList("review.searchAll", keyword);
-		} else {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("searchOpt", searchOpt);
-			map.put("keyword", keyword);
-			list = sqlSession.selectList("review.search", map);
-		}
-		return list;
+	public List<Map<String, Object>> search(Map<String, Object> map) {
+		return sqlSession.selectList("review.search", map);
+	}
+	
+	public List<Map<String, Object>> searchAll(String keyword) {
+		return sqlSession.selectList("review.searchAll", keyword);
 	}
 
 }

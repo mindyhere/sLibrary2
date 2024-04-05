@@ -43,7 +43,7 @@ $(function() {
 			$('body').html = initBody;
 			$('.navbar-toggler').show();
 			$('#info4').show();
-		}
+		};
 		window.print();
 		return false;
 	});
@@ -100,18 +100,31 @@ $(function() {
 	});
 	
 	$("#autoKey").keyup(function(){
-		let keyword=$("#autoKey").val();
-		let searchOpt=$("#searchOpt :selected").val();
+		const keyword = $("#autoKey").val();
+		const searchOpt = $("#searchOpt :selected").val();
+		
+		
 		if(keyword != "" || keyword.trim().length !== 0){
-			let params={"searchOpt":searchOpt, "keyword":keyword};
+			const params={"searchOpt":searchOpt, "keyword":keyword};
 			$.ajax({
-				url: "/user/review/search",
+				url: "/user/search/bookinfo/search",
 				data:params,
-				success:function(txt){
-					$("#review-total").html(txt);
+				success:function(data){
+					console.log(data.reviews);
+					let reviews=data.reviews;
+					table_data='';
+					$.each(reviews, function(index, value) {      
+						//console.log(index + " : " + value);
+						table_data+="<tr><td>"+value.ROWNUM+"</td><td>"+value.WRITER+"</td><td>고양이</td><td>해결사 깜냥</td><td>리뷰테스트222</td><td>2024-04-05</td></tr>";		
+					});
+					
+					
+					$('#table1').append(table_data);
+					//$("#tbody").html(reviews);
+					//$("#review-total").html(data);
 				}
 			});
-		}else {
+		} else {
 			totalList();
 		}
 	});
@@ -220,11 +233,11 @@ function totalList() {
 
 function insert(params){
 	$.ajax({
-		url:"/user/review/insert",
+		url:"/user/search/bookinfo/insert",
 		data:params,
 		success: function(txt){
 			myAlert("info", "Check", txt);
-			getReviews();
+			getReviews(params.b_id);
 		},
 		error: function(request, status, error){
 			alert("code= "+request.status+", msg= "+request.responseText+", error= "+error);
@@ -232,11 +245,12 @@ function insert(params){
 	});
 }
 function deleteReview(params) {
+	console.log(params);
 	$.ajax({
-		url: "/user/review/delete",
+		url: "/user/search/bookinfo/delete",
 		data:params,
 		success:function(txt){
-			getReviews();
+			getReviews(${map.B_ID});
 		}
 	}); 
 }

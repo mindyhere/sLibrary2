@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +24,6 @@ public class ReviewController {
 
 	@GetMapping("totalList/")
 	public ModelAndView totalList(ModelAndView mav) {
-		System.out.println("111");
 		mav.setViewName("user/search/totalReviews");
 		mav.addObject("reviews", reviewDao.totalList());
 		return mav;
@@ -33,13 +31,7 @@ public class ReviewController {
 
 	@GetMapping("getReviews/")
 	public ModelAndView getReviews(@RequestParam(name = "b_id") int b_id, ModelAndView mav) {
-		System.out.println("222 : " + b_id);
-//		Map<String, Object> map= new HashMap<>();
-		if (b_id != 0) {
-			mav.setViewName("user/search/reviews");
-		} else {
-			mav.setViewName("user/search/totalReviews");
-		}
+		mav.setViewName("user/search/reviews");
 		mav.addObject("reviews", reviewDao.getReviews(b_id));
 		return mav;
 	}
@@ -63,8 +55,8 @@ public class ReviewController {
 
 	@Transactional
 	@ResponseBody
-	@GetMapping("delete/{option}")
-	public void delete(@PathVariable(name = "option") String option, @RequestParam(name = "arr") String arr,
+	@GetMapping("delete")
+	public void delete(@RequestParam(name = "option") String option, @RequestParam(name = "arr") String arr,
 			HttpSession session) {
 		String[] values = arr.split(",");
 		switch (option) {
@@ -86,13 +78,43 @@ public class ReviewController {
 			break;
 		}
 	}
-
+	
+	
+	@ResponseBody
 	@GetMapping("search")
-	public ModelAndView search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
-			@RequestParam(name = "searchOpt", defaultValue = "all") String searchOpt, ModelAndView mav) {
-		mav.setViewName("user/search/totalReviews");
-		mav.addObject("list", reviewDao.search(searchOpt, keyword));
-		return mav;
+	public Map<String, Object> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
+			@RequestParam(name = "searchOpt", defaultValue = "all") String searchOpt) {
+		//mav.setViewName("user/search/bookinfo");
+		Map<String, Object> map=new HashMap<>();
+		if (searchOpt.equals("all")) {
+			map.put("reviews", reviewDao.searchAll(keyword));
+		}else {
+			Map<String, Object> m = new HashMap<String, Object>();
+			m.put("searchOpt", searchOpt);
+			m.put("keyword", keyword);
+			map.put("reviews", reviewDao.search(m));
+		}
+		System.out.println(map);
+		return map;
 	}
+	
+//	@PostMapping("search")
+//	public ModelAndView search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
+//			@RequestParam(name = "searchOpt", defaultValue = "all") String searchOpt, ModelAndView mav) {
+//		mav.setViewName("user/search/bookinfo");
+//		//mav.addObject("list", reviewDao.search(searchOpt, keyword));
+//		Map<String, Object> map=new HashMap<>();
+//		if (searchOpt.equals("all")) {
+//			map.put("reviews", reviewDao.searchAll(keyword));
+//		}else {
+//			Map<String, Object> m = new HashMap<String, Object>();
+//			m.put("searchOpt", searchOpt);
+//			m.put("keyword", keyword);
+//			map.put("reviews", reviewDao.search(m));
+//		}
+//		mav.setViewName("user/search/bookinfo");
+//		mav.addObject("reviews", map);
+//		return mav;
+//	}
 
 }
