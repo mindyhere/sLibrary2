@@ -17,7 +17,8 @@
 
 <script>
 $(function() {
-	getReviews();
+	const b_id=${map.B_ID};
+	getReviews(b_id);
 	
 	$("#btnShow").click(function() {
 		$("#review").slideDown("fast");
@@ -48,7 +49,7 @@ $(function() {
 	});
 	
 	$("#btnConfirm").click(function(){
-		let b_id = ${dtoB.b_id};
+		//let b_id = ${map.B_ID};
 		let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}" : "";
 		let a_id = "${sessionScope.a_id}" != null? "${sessionScope.a_id}" : "";
 		let contents =  $("#textarea");
@@ -199,10 +200,9 @@ function checkOut(b_id){
 	}
 }
 
-function getReviews(){
-	let b_id=${dtoB.b_id};
+function getReviews(b_id){
 	$.ajax({
-		url:"/user/review/getReviews",
+		url:"/user/search/bookinfo/getReviews/",
 		data:{"b_id":b_id},
 		success:function(txt){
 			$("#review-table").html(txt);
@@ -211,8 +211,7 @@ function getReviews(){
 }
 function totalList() {
 	$.ajax({
-		type:"post",
-		url:"/user/review/totalList",
+		url:"/user/search/bookinfo/totalList/",
 		success:function(txt){
 			$("#review-total").html(txt);
 		}
@@ -478,23 +477,23 @@ white-space:nowrap;
 
 	<div class="card-body">
 		<div class="container d-flex-col" name="info1">
-		  <input type="hidden" name="b_id" value="${dtoB.b_id }">
+		  <input type="hidden" name="b_id" value="${b_id }">
 		  <div class="row g-0">
 			<div class="col-md-2" style="padding: 1%;">
-				<img src="${dtoB.b_url}" class="img-fluid rounded card-1" alt="준비중">
+				<img src="${map.B_URL}" class="img-fluid rounded card-1" alt="준비중">
 			</div>
 			<div class="col-md-10">
 				<div class="card-body" align="left" style="padding: 2em 0 2em 2em;">
 					<caption>
-						<h4 class="card-title" style="font-weight: bold">${dtoB.b_name }
+						<h4 class="card-title" style="font-weight: bold">${map.B_NAME }
 						</h4>
 					</caption>
 				<hr style="border:solid 1px #FAE0E0;">
 					<button type="button" class="btn btn-light" id="btnPrint">
 						<i class="bi bi-printer-fill"></i></button>
-					<p class="card-text">${dtoB.b_author }&nbsp;&nbsp;|&nbsp;&nbsp;${dtoB.b_pub}&nbsp;&nbsp;|&nbsp;&nbsp;${dtoB.b_year}</p>
-					<p class="card-text">분류 : ${dtoB.b_category}</p>
-					<p class="card-text">ISBN : ${dtoB.b_isbn}</p>
+					<p class="card-text">${map.B_AUTHOR }&nbsp;&nbsp;|&nbsp;&nbsp;${map.B_PUB}&nbsp;&nbsp;|&nbsp;&nbsp;${map.B_YEAR}</p>
+					<p class="card-text">분류 : ${map.B_CT_NUM} | ${map.B_CATEGORY}</p>
+					<p class="card-text">ISBN : ${map.B_ISBN}</p>
 				</div> <!-- card-body 끝  -->
 			</div>
 		  </div>
@@ -512,7 +511,7 @@ white-space:nowrap;
 			</thead>
 			<tbody class="table-group-divider" style="border-color:#FAE0E0; background: #fbf7f5 !important;">
 			  <tr>
-				<th scope="row">${dtoB.b_id }</th>
+				<th scope="row">${map.B_ID }</th>
 			  <td>
 				<c:choose>
 				  <c:when test="${state == 'y' }">대출가능<br>(비치중)</c:when>
@@ -535,12 +534,12 @@ white-space:nowrap;
 			    <div class="btn-group-vertical btn-group-sm" style="padding:0.5rem" role="group" aria-label="Vertical button group">
 				<c:choose>
 					<c:when test="${state == 'y' }">
-						<button type="button" class="btn btn-light btnChkout" id="btnChkout" name="btnChkout" onclick="checkOut('${dtoB.b_id}')" style="background-color:#FEC5BB;"><strong>도서대출하기</strong></button>
+						<button type="button" class="btn btn-light btnChkout" id="btnChkout" name="btnChkout" onclick="checkOut('${map.B_ID}')" style="background-color:#FEC5BB;"><strong>도서대출하기</strong></button>
 						<button type="button" class="btn btn-light btnChkout" style="color:crimson;" disabled>도서예약불가</button>
 					</c:when>
 					<c:otherwise>
 						<button type="button" class="btn btn-light btnReserv" style="color:crimson;" disabled>도서대출불가</button>
-						<button type="button" class="btn btn-light btnReserv" id="btnReserv" name="btnReserv"  onclick="reserve('${dtoB.b_id}')" style="background-color:#FEC5BB;"><strong>도서예약하기</strong></button>
+						<button type="button" class="btn btn-light btnReserv" id="btnReserv" name="btnReserv"  onclick="reserve('${map.B_ID}')" style="background-color:#FEC5BB;"><strong>도서예약하기</strong></button>
 					</c:otherwise>
 				</c:choose>	
 				</div>
@@ -552,7 +551,7 @@ white-space:nowrap;
 
 		<div class="container" name="info3" align="left">
 			<h4>책소개</h4>
-			<p>${dtoB.b_description }</p>
+			<p>${map.B_DESCRIPTION}</p>
 		</div> <!-- info3(책소개 끝) -->
 
 		<div class="container" id="info4" name="info4">
@@ -573,7 +572,6 @@ white-space:nowrap;
 					
 		  <div class="review d-flex-col" id="review">
 			<div class="review-table d-flex" id="review-table">
-	 			<%@ include file="./reviews.jsp"%> 
 			</div><!-- .review-table 끝 -->
 		
 		  <div class="review-write d-flex">

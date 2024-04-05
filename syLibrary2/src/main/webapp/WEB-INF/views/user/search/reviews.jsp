@@ -1,5 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script>
+$(function() {
+	$("#deleteU").click(function(){
+		console.log("클릭테스트");
+		/* let arr=$("input[name=checkIdx]:checked");
+		let cnt=0;
+		let values='';
+		for(i=0; i<arr.length; i++){
+			if(arr[i].checked==true) cnt++;
+			values += arr[i].value+",";
+		}
+
+		if(cnt==0){
+			myAlert("warning","잠깐!", "삭제할 항목을 선택해주세요.");
+			return;
+		}else{
+			let	params={"option":"user", "arr":values, "m_id":"${mId}" };
+			Swal.fire({
+				title: "잠깐!",
+				text: '선택항목을 삭제할까요?',
+				icon: "question",
+				showCancelButton: true,
+				reverseButtons: true,
+				cancelButtonColor: "#C6C7C8",
+				confirmButtonText: "YES",
+				cancelButtonText: "NO"
+				}).then((result) => {
+				if (result.isConfirmed) {
+					deleteReview(params);
+				}
+			});
+		} */
+	});
+	
+	$("#deleteA").click(function() {
+		let arr=$("input[name=checkIdx]:checked");
+		let cnt=0;
+		let values='';
+		for(i=0; i<arr.length; i++) {
+			if(arr[i].checked==true) cnt++;
+			values += arr[i].value+",";
+		}
+
+		if(cnt==0){
+			myAlert("warning","잠깐!", "삭제할 항목을 선택해주세요.");
+			return;
+		}else{
+			let	params={"option":"admin", "arr":values};
+			
+			Swal.fire({
+				title: "잠깐!",
+				text: '선택항목을 삭제할까요?',
+				icon: "question",
+				showCancelButton: true,
+				reverseButtons: true,
+				cancelButtonColor: "#C6C7C8",
+				confirmButtonText: "YES",
+				cancelButtonText: "NO"
+				}).then((result) => {
+				if (result.isConfirmed) {
+					deleteReview(params);
+				}
+			});
+		}
+	});
+});
+</script>
+
   <table class="table table-sm table-hover align-middle text-center">
 	<colgroup>
 		<col width=5%>
@@ -16,17 +84,17 @@
 		<th scope="col"><strong>Date</strong></th>
 		<th scope="col">
 		 <c:choose>
-			<c:when test="${sessionScope.mId !=null}">
+			<c:when test="${session.mId !=null}">
 				<input type="checkbox" id="deleteU" name="deleteU" checked="false">
 				<label class="btn" for="deleteU"><i class="bi bi-eraser-fill"></i></label>
 			</c:when>
-			<c:when test="${sessionScope.a_id !=null}">
+			<c:when test="${session.a_id !=null}">
 				<input type="checkbox" id="deleteA" name="deleteA" checked="false">
 				<label class="btn" for="deleteA"><i class="bi bi-eraser-fill"></i></label>
 			</c:when>
 			<c:otherwise>
 				<input type="checkbox" id="none" checked="false" disabled>
-				<label class="btn" for="none" style="cursor:none;" disabled><i class="bi bi-eraser-fill"></i></label>
+				<label class="btn" for="none" disabled><i class="bi bi-eraser-fill"></i></label>
 			</c:otherwise>
 		  </c:choose>
 		</th>
@@ -66,70 +134,3 @@
 		</c:choose>	
 	</tbody>
   </table>
-  
-<script>
-$(function() {
-	$("#deleteU").click(function(){
-		let arr=$("input[name=checkIdx]:checked");
-		let cnt=0;
-		let values='';
-		for(i=0; i<arr.length; i++){
-			if(arr[i].checked==true) cnt++;
-			values += arr[i].value+",";
-		}
-
-		if(cnt==0){
-			myAlert("warning","잠깐!", "삭제할 항목을 선택해주세요.");
-			return;
-		}else{
-			let	params={"option":"user", "arr":values, "m_id":"${mId}" };
-			Swal.fire({
-				title: "잠깐!",
-				text: '선택항목을 삭제할까요?',
-				icon: "question",
-				showCancelButton: true,
-				reverseButtons: true,
-				cancelButtonColor: "#C6C7C8",
-				confirmButtonText: "YES",
-				cancelButtonText: "NO"
-				}).then((result) => {
-				if (result.isConfirmed) {
-					deleteReview(params);
-				}
-			});
-		}
-	});
-	
-	$("#deleteA").click(function() {
-		let arr=$("input[name=checkIdx]:checked");
-		let cnt=0;
-		let values='';
-		for(i=0; i<arr.length; i++) {
-			if(arr[i].checked==true) cnt++;
-			values += arr[i].value+",";
-		}
-
-		if(cnt==0){
-			myAlert("warning","잠깐!", "삭제할 항목을 선택해주세요.");
-			return;
-		}else{
-			let	params={"option":"admin", "arr":values};
-			
-			Swal.fire({
-				title: "잠깐!",
-				text: '선택항목을 삭제할까요?',
-				icon: "question",
-				showCancelButton: true,
-				reverseButtons: true,
-				cancelButtonColor: "#C6C7C8",
-				confirmButtonText: "YES",
-				cancelButtonText: "NO"
-				}).then((result) => {
-				if (result.isConfirmed) {
-					deleteReview(params);
-				}
-			});
-		}
-	});
-});
-</script>

@@ -211,7 +211,7 @@ public class SearchController {
 	public ModelAndView detail(@PathVariable(name = "b_id") int b_id, ModelAndView mav) {
 		// 도서 상세정보 페이지
 		mav.setViewName("user/search/bookinfo");
-		mav.addObject("dtoB", searchDao.showDetails(b_id));
+		mav.addObject("map", searchDao.showDetails(b_id));
 		mav.addObject("l_retdate", searchDao.fastRetdate(b_id));
 		mav.addObject("state", checkoutDao.isAvailable(b_id));
 		return mav;
