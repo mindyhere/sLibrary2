@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <!-- ========== All CSS files ========= -->
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/webapp/resources/static/user.css">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <!-- <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script> -->
 <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
