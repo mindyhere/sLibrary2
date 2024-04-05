@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -7,18 +6,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
-	type="image/x-icon">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/user.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/syLibrary/include/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <script>
 $(function() {
-	getReviews();
+	const b_id=${map.B_ID};
+	getReviews(b_id);
 	
 	$("#btnShow").click(function() {
 		$("#review").slideDown("fast");
@@ -43,13 +42,12 @@ $(function() {
 			$('body').html = initBody;
 			$('.navbar-toggler').show();
 			$('#info4').show();
-		}
+		};
 		window.print();
 		return false;
 	});
 	
 	$("#btnConfirm").click(function(){
-		let b_id = ${dtoB.b_id};
 		let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}" : "";
 		let a_id = "${sessionScope.a_id}" != null? "${sessionScope.a_id}" : "";
 		let contents =  $("#textarea");
@@ -76,7 +74,7 @@ $(function() {
 				cancelButtonText: "NO"
 				}).then((result) => {
 				if (result.isConfirmed) {
-					location.href="/syLibrary/user/login/login.jsp";
+					location.href="/user/login/login";
 				}
 			});
 		}
@@ -90,7 +88,7 @@ $(function() {
 	$("#btnClose").click(function(){
 		$('.modal-bg').removeClass("visible");
 		$('.modal-bg').addClass("invisible");
-		getReviews();
+		getReviews(${map.B_ID});
 	});
 	$(document).mouseup(function (e){
 		if($(".modal-bg").has(e.target).length === 0){
@@ -100,18 +98,19 @@ $(function() {
 	});
 	
 	$("#autoKey").keyup(function(){
-		let keyword=$("#autoKey").val();
-		let searchOpt=$("#searchOpt :selected").val();
+		const keyword = $("#autoKey").val();
+		const searchOpt = $("#searchOpt :selected").val();
+		
 		if(keyword != "" || keyword.trim().length !== 0){
-			let params={"searchOpt":searchOpt, "keyword":keyword};
+			const params={"searchOpt":searchOpt, "keyword":keyword};
 			$.ajax({
-				url: "/syLibrary/review_servlet/search.do",
+				url: "/user/search/bookinfo/search",
 				data:params,
-				success:function(txt){
-					$("#review-total").html(txt);
+				success:function(data){
+					$("#review-total").html(data);
 				}
 			});
-		}else {
+		} else {
 			totalList();
 		}
 	});
@@ -167,17 +166,22 @@ function checkOut(b_id){
 	let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}":"";
 	let a_id = "${sessionScope.a_id}" != null? "${sessionScope.a_id}":"";
 	if(m_id != ""){
+		//console.log(b_id+", "+m_id);
 		$.ajax({
-			url:"/syLibrary/checkout_servlet/checkout.do",
-			data:{"m_id":m_id,"b_id":b_id},
-			success: function(txt){
-				myConfirm(txt,
+			url:'../../../checkout/'+b_id,
+			success: function(result){
+				myConfirm(result,
 						"나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
 						"info",
-						"/syLibrary/myLibrary_servlet/myLibray_info.do?mId="+m_id);
+						"/user/user/book/myLibray?mId="+m_id);
 			},
-			error: function(request, status, error){
-				myAlert("error", "Error", `"code= "+request.status+", msg= "+request.responseText+", error= "+error`);
+			error: function(err){
+				console.log(err);
+				console.log("**"+err.error);
+				myConfirm("Not possible",
+						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
+						"error", 
+						"/user/user/book/myLibray?mId="+m_id);
 			}
 		});
 	}else if(a_id != ""){
@@ -194,16 +198,15 @@ function checkOut(b_id){
 			cancelButtonText: "NO"
 			}).then((result) => {
 			if (result.isConfirmed) {
-				location.href="/syLibrary/user/login/login.jsp";
+				location.href="/user/login/login";
 			}
 		});
 	}
 }
 
-function getReviews(){
-	let b_id=${dtoB.b_id};
+function getReviews(b_id){
 	$.ajax({
-		url:"/syLibrary/review_servlet/getReviews.do",
+		url:"/user/search/bookinfo/getReviews/",
 		data:{"b_id":b_id},
 		success:function(txt){
 			$("#review-table").html(txt);
@@ -212,8 +215,7 @@ function getReviews(){
 }
 function totalList() {
 	$.ajax({
-		type:"post",
-		url:"/syLibrary/review_servlet/totalList.do",
+		url:"/user/search/bookinfo/totalList/",
 		success:function(txt){
 			$("#review-total").html(txt);
 		}
@@ -222,11 +224,11 @@ function totalList() {
 
 function insert(params){
 	$.ajax({
-		url:"/syLibrary/review_servlet/insert.do",
+		url:"/user/search/bookinfo/insert",
 		data:params,
 		success: function(txt){
 			myAlert("info", "Check", txt);
-			getReviews();
+			getReviews(params.b_id);
 		},
 		error: function(request, status, error){
 			alert("code= "+request.status+", msg= "+request.responseText+", error= "+error);
@@ -234,18 +236,19 @@ function insert(params){
 	});
 }
 function deleteReview(params) {
+	console.log(params);
 	$.ajax({
-		url: "/syLibrary/review_servlet/delete.do",
+		url: "/user/search/bookinfo/delete",
 		data:params,
 		success:function(txt){
-			getReviews();
+			getReviews(${map.B_ID});
 		}
 	}); 
 }
 function search(keyword){
 	let params={"searchOpt":$("#searchOpt").val(), "keyword":keyword};
 	$.ajax({
-		url: "/syLibrary/review_servlet/search.do",
+		url: "/user/review/search",
 		data:params,
 		success:function(txt){
 			$("#review-total").html(txt);
@@ -479,23 +482,23 @@ white-space:nowrap;
 
 	<div class="card-body">
 		<div class="container d-flex-col" name="info1">
-		  <input type="hidden" name="b_id" value="${dtoB.b_id }">
+		  <input type="hidden" name="b_id" value="${b_id }">
 		  <div class="row g-0">
 			<div class="col-md-2" style="padding: 1%;">
-				<img src="${dtoB.b_url}" class="img-fluid rounded card-1" alt="준비중">
+				<img src="${map.B_URL}" class="img-fluid rounded card-1" alt="준비중">
 			</div>
 			<div class="col-md-10">
 				<div class="card-body" align="left" style="padding: 2em 0 2em 2em;">
 					<caption>
-						<h4 class="card-title" style="font-weight: bold">${dtoB.b_name }
+						<h4 class="card-title" style="font-weight: bold">${map.B_NAME }
 						</h4>
 					</caption>
 				<hr style="border:solid 1px #FAE0E0;">
 					<button type="button" class="btn btn-light" id="btnPrint">
 						<i class="bi bi-printer-fill"></i></button>
-					<p class="card-text">${dtoB.b_author }&nbsp;&nbsp;|&nbsp;&nbsp;${dtoB.b_pub}&nbsp;&nbsp;|&nbsp;&nbsp;${dtoB.b_year}</p>
-					<p class="card-text">분류 : ${dtoB.b_category}</p>
-					<p class="card-text">ISBN : ${dtoB.b_isbn}</p>
+					<p class="card-text">${map.B_AUTHOR }&nbsp;&nbsp;|&nbsp;&nbsp;${map.B_PUB}&nbsp;&nbsp;|&nbsp;&nbsp;${map.B_YEAR}</p>
+					<p class="card-text">분류 : ${map.B_CT_NUM} | ${map.B_CATEGORY}</p>
+					<p class="card-text">ISBN : ${map.B_ISBN}</p>
 				</div> <!-- card-body 끝  -->
 			</div>
 		  </div>
@@ -513,7 +516,7 @@ white-space:nowrap;
 			</thead>
 			<tbody class="table-group-divider" style="border-color:#FAE0E0; background: #fbf7f5 !important;">
 			  <tr>
-				<th scope="row">${dtoB.b_id }</th>
+				<th scope="row">${map.B_ID }</th>
 			  <td>
 				<c:choose>
 				  <c:when test="${state == 'y' }">대출가능<br>(비치중)</c:when>
@@ -536,12 +539,12 @@ white-space:nowrap;
 			    <div class="btn-group-vertical btn-group-sm" style="padding:0.5rem" role="group" aria-label="Vertical button group">
 				<c:choose>
 					<c:when test="${state == 'y' }">
-						<button type="button" class="btn btn-light btnChkout" id="btnChkout" name="btnChkout" onclick="checkOut('${dtoB.b_id}')" style="background-color:#FEC5BB;"><strong>도서대출하기</strong></button>
+						<button type="button" class="btn btn-light btnChkout" id="btnChkout" name="btnChkout" onclick="checkOut('${map.B_ID}')" style="background-color:#FEC5BB;"><strong>도서대출하기</strong></button>
 						<button type="button" class="btn btn-light btnChkout" style="color:crimson;" disabled>도서예약불가</button>
 					</c:when>
 					<c:otherwise>
 						<button type="button" class="btn btn-light btnReserv" style="color:crimson;" disabled>도서대출불가</button>
-						<button type="button" class="btn btn-light btnReserv" id="btnReserv" name="btnReserv"  onclick="reserve('${dtoB.b_id}')" style="background-color:#FEC5BB;"><strong>도서예약하기</strong></button>
+						<button type="button" class="btn btn-light btnReserv" id="btnReserv" name="btnReserv"  onclick="reserve('${map.B_ID}')" style="background-color:#FEC5BB;"><strong>도서예약하기</strong></button>
 					</c:otherwise>
 				</c:choose>	
 				</div>
@@ -553,7 +556,7 @@ white-space:nowrap;
 
 		<div class="container" name="info3" align="left">
 			<h4>책소개</h4>
-			<p>${dtoB.b_description }</p>
+			<p>${map.B_DESCRIPTION}</p>
 		</div> <!-- info3(책소개 끝) -->
 
 		<div class="container" id="info4" name="info4">
@@ -574,7 +577,6 @@ white-space:nowrap;
 					
 		  <div class="review d-flex-col" id="review">
 			<div class="review-table d-flex" id="review-table">
-	 			<%@ include file="./reviews.jsp"%> 
 			</div><!-- .review-table 끝 -->
 		
 		  <div class="review-write d-flex">

@@ -30,7 +30,8 @@ public interface SearchDAO {
 	List<Map<String, Object>> listState(List<BookDTO> list);
 
 	// 도서 상세정보 가져오기
-	BookDTO showDetails(int b_id);
+	//BookDTO showDetails(int b_id);
+	Map<String, Object> showDetails(int b_id);
 
 	// 가장 빠른 반납예정일
 	String fastRetdate(int b_id);
