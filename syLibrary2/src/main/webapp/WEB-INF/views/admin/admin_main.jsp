@@ -42,26 +42,26 @@ float: left;
 }
 </style>
 <body>
-	<jsp:include page="./admin_header.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_header.jsp" />
 	
 <div id="body-wrapper">
 	<div id="body-content">
-			<jsp:include page="./menu.jsp" />
+			<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
 			<div style="padding-top: 30px; left: 250px; position: absolute; width: 2000px;">
 				<div class="dd" style="width: 350px;">
-					<%@ include file="./main/calendar.jsp" %>
+					<%@ include file="/WEB-INF/views/admin/main/calendar.jsp" %>
 				</div>
 				
 				<div class="ddm" style="width: 350px; ">	
-					<%@ include file="./main/memo_insert.jsp" %>
+					<%@ include file="/WEB-INF/views/admin/main/memo_insert.jsp" %>
 				</div>
 				
 				<div class="ddm" style="width: 550px;">	
-					<%@ include file="./main/memo_main.jsp" %>
+					<%@ include file="/WEB-INF/views/admin/main/memo_main.jsp" %>
 				</div>
 			</div>
 	</div>
-	<jsp:include page="./admin_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>
 </body>
 </html>
