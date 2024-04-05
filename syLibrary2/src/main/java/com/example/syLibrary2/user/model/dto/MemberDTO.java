@@ -18,6 +18,7 @@ public class MemberDTO {
 	private String m_birth_date;
 	private String m_img;
 	private String m_year;
+	private int m_level;
 	private int m_loan;
 	private int le_no;
 	private String le_name;
