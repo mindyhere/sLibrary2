@@ -162,8 +162,8 @@ public class SearchDAOImpl implements SearchDAO {
 	}
 
 	@Override
-	public BookDTO showDetails(int b_id) {
-		return sqlSession.selectOne("book.edit", b_id);
+	public Map<String, Object> showDetails(int b_id) {
+		return sqlSession.selectOne("search.bookinfo", b_id);
 	}
 	
 	@Override

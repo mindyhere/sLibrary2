@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <table class="table table-sm table-hover align-middle text-center">
+  <table class="table table-sm table-hover align-middle text-center" id="table1">
 	<colgroup>
 		<col width=5%>
 		<col width=10%>
@@ -38,10 +38,10 @@
 		</th>
 	  </tr>
 	</thead>
-	<tbody class="table-group-divider" style="border-color:#FAE0E0;">
+	<tbody class="table-group-divider" style="border-color:#FAE0E0;" id="tbody">
 		<c:choose>
 		  <c:when test="${reviews.size() !=0 }">
-			<c:forEach var="item" items="${reviews }">
+			<c:forEach var="item" items="${reviews}">
 			  <tr class="align-middle">
 				<th scope="row">${item.ROWNUM}</th>
 				<td>${item.WRITER}</td>
@@ -86,12 +86,11 @@ $(function() {
 		}
 
 		if(cnt==0){
-			myAlert("warning","잠깐!", "삭제할 항목을 선택해주세요.");
 			return;
 		}else{
-			let	params={"option":"user", "arr":values, "m_id":"${mId}" };
+			let	params={"option":"user", "arr":values};
 			$.ajax({
-				url: "/syLibrary/review_servlet/delete.do",
+				url: "/user/search/bookinfo/delete",
 				data:params,
 				success:function(txt){
 					totalList();
@@ -110,12 +109,11 @@ $(function() {
 		}
 
 		if(cnt==0){
-			myAlert("warning","잠깐!", "삭제할 항목을 선택해주세요.");
 			return;
 		}else{
 			let	params={"option":"admin", "arr":values};
 			$.ajax({
-				url: "/syLibrary/review_servlet/delete.do",
+				url: "/user/search/bookinfo/delete",
 				data:params,
 				success:function(txt){
 					totalList();

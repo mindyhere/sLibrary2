@@ -1,6 +1,5 @@
 package com.example.syLibrary2.user.model.dao;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class CheckoutDAOImpl implements CheckoutDAO {
 	@Autowired
 	SqlSession sqlSession;
-	
+
 	@Override
 	public String isAvailable(int b_id) {
 		String state = "";
@@ -26,53 +25,38 @@ public class CheckoutDAOImpl implements CheckoutDAO {
 	}
 
 	@Override
-	public int checkMloan(String m_id, int b_id) {
-		int check = 1; // 초기화. 1(대출가능) or 0(대출불가)
-		try {
-			// 회원의 대출가능여부: 1(대출가능) or 0(대출불가=패널티 or 대출가능한 책 수=0)
-			int m_loan = sqlSession.selectOne("checkout.check_mLoan", m_id);
-			switch (m_loan) {
-			case 1: // 대출 중복신청 여부 확인
-				Map<String, Object> map = new HashMap<>();
-				map.put("m_id", m_id);
-				map.put("b_id", b_id);
-				int duplicate = sqlSession.selectOne("checkout.check_duplicate", map);
-				check = duplicate > 0 ? 0 : 1;
-				break;
-			case 0:
-				check = 0;
-				break;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			check = 0;
-		}
-		return check;
+	public int checkMloan(String m_id) {
+		// 회원의 대출가능여부: 1(대출가능) or 0(대출불가=패널티 or 대출가능한 책 수=0)
+		return sqlSession.selectOne("checkout.check_mLoan", m_id);
 	}
 
 	@Override
-	public int cntUserLo(String m_id) {
-		int cnt = 5;
-		return cnt - Integer.parseInt(sqlSession.selectOne("checkout.cntUserLo", m_id));
+	public int duplicate(Map<String, Object> map) {
+		return sqlSession.selectOne("checkout.check_duplicate", map);
 	}
 
+//	@Override
+//	public int cntUserLo(String m_id) {
+//		int m_level = Integer.parseInt(sqlSession.selectOne("checkout.mlevel_check", m_id));
+//		int cnt = 0; // 1인당 대출 가능 도서 권수
+//		switch (m_level) {
+//		case 1:
+//			cnt = 3;
+//			break;
+//		case 2:
+//			cnt = 5;
+//			break;
+//		case 3:
+//			cnt = 7;
+//			break;
+//		}
+//		return cnt - Integer.parseInt(sqlSession.selectOne("checkout.cntUserLo", m_id));
+//	}
+
 	@Override
-	public String checkout(String m_id, int b_id) {
-		// TODO Auto-generated method stub
-		String result = "";
-		try {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("m_id", m_id);
-			map.put("b_id", b_id);
-			sqlSession.insert("checkout.insert_Lobook", map); // 대출 Lo_book insert
-			sqlSession.update("checkout.call_CheckLoan", m_id);
-			sqlSession.commit();
-			result = "신청이 완료되었습니다";
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = "Not possible";
-		}
-		return null;
+	public void insert(Map<String, Object> map) {
+		sqlSession.insert("checkout.insert_Lobook", map); // 대출 Lo_book insert
+		sqlSession.update("checkout.call_CheckLoan", map.get("m_id"));
 	}
 
 }

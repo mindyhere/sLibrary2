@@ -82,7 +82,7 @@ $(function() {
 			myAlert("warning","잠깐!", "삭제할 항목을 선택해주세요.");
 			return;
 		}else{
-			let	params={"option":"user", "arr":values, "m_id":"${mId}" };
+			let	params={"option":"user", "arr":values};
 			Swal.fire({
 				title: "잠깐!",
 				text: '선택항목을 삭제할까요?',
@@ -93,9 +93,9 @@ $(function() {
 				confirmButtonText: "YES",
 				cancelButtonText: "NO"
 				}).then((result) => {
-				if (result.isConfirmed) {
-					deleteReview(params);
-				}
+					if (result.isConfirmed) {
+						deleteReview(params);
+					}
 			});
 		}
 	});
@@ -125,9 +125,9 @@ $(function() {
 				confirmButtonText: "YES",
 				cancelButtonText: "NO"
 				}).then((result) => {
-				if (result.isConfirmed) {
-					deleteReview(params);
-				}
+					if (result.isConfirmed) {
+						deleteReview(params);
+					}
 			});
 		}
 	});
