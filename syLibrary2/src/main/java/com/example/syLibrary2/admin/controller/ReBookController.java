@@ -18,58 +18,76 @@ import com.example.syLibrary2.util.PageUtil;
 @Controller
 @RequestMapping("admin/rebook/*")
 public class ReBookController {
-   
-   @Autowired
-   ReBookDAO dao;
-   
-   @GetMapping("search.do")
-   public ModelAndView search(@RequestParam(name="curPage", defaultValue="1") int curPage, @RequestParam(name="search_option", defaultValue="") String search_option, @RequestParam(name="search", defaultValue="") String search) {
-      int count = dao.count(search_option, search); //레코드 개수
-      PageUtil page = new PageUtil(count, curPage);
-      int start = page.getPageBegin();
-      int end = page.getPageEnd();
-      if (search_option == "" || search == "") {
-         count = dao.count();
-      } else {
-         count = dao.count(search_option, search);
-      }
-      List<ReBookDTO> list = null;
-      Map<String,Object> map = new HashMap<>();
-       if (search_option == "" || search == "") {
-          list = dao.list(start, end);
-      } else {
-         list = dao.list_search(search_option,search,start,end);
-         map.put("search_option", search_option);
-         map.put("search", search);
-      }
-      //list=dao.list_search(search_option, search,start, end); //게시물 리스트
-      ModelAndView mav = new ModelAndView();
-      mav.setViewName("admin/l_book/re_search");
-      map.put("list", list);
-      map.put("count", count);
-      map.put("search_option", search_option);
-      map.put("search", search);
-      map.put("page", page);
-      mav.addObject("map", map);
-      return mav;
-   }
-   
-   @GetMapping("list.do")
-   public ModelAndView list(@RequestParam(name="curPage", defaultValue="1") int curPage) {
-      int count = dao.count(); //레코드 개수
-      PageUtil page = new PageUtil(count, curPage);
-      int start = page.getPageBegin();
-      int end = page.getPageEnd();
-      List<ReBookDTO> list =dao.list(start, end); //게시물 리스트
-      ModelAndView mav = new ModelAndView();
-      mav.setViewName("admin/l_book/re_list");
-      Map<String,Object> map = new HashMap<>();
-      map.put("list", list);
-      map.put("count", count);
-      map.put("page", page);
-      mav.addObject("map", map);
-      return mav;
-   }
 
-  
+	@Autowired
+	ReBookDAO dao;
+	@GetMapping("list.do")
+	public ModelAndView list(@RequestParam(name="curPage", defaultValue="1") int curPage, @RequestParam(name="search_option", defaultValue="all") String search_option, @RequestParam(name="search", defaultValue="") String search) {
+		int count = dao.count(search_option, search); //레코드 개수
+		PageUtil page = new PageUtil(count, curPage);
+		int start = page.getPageBegin();
+		int end = page.getPageEnd();
+		List<ReBookDTO> list = dao.list(search_option, search,start, end); //게시물 리스트
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/l_book/re_list");
+		Map<String,Object> map = new HashMap<>();
+		map.put("search_option", search_option);
+		map.put("search", search);
+		map.put("list", list);
+		map.put("count", count);
+		map.put("page", page);
+		mav.addObject("map", map);
+		System.out.println("검색결과:"+list);
+		return mav;
+	}
+	
+	
+//	@GetMapping("search.do")
+//	public ModelAndView search(@RequestParam(name="curPage", defaultValue="1") int curPage, @RequestParam(name="search_option", defaultValue="") String search_option, @RequestParam(name="search", defaultValue="") String search) {
+//		int count = dao.count(search_option, search); //레코드 개수
+//		PageUtil page = new PageUtil(count, curPage);
+//		int start = page.getPageBegin();
+//		int end = page.getPageEnd();
+//		if (search_option == "" || search == "") {
+//			count = dao.count();
+//		} else {
+//			count = dao.count(search_option, search);
+//		}
+//		List<ReBookDTO> list = null;
+//		Map<String,Object> map = new HashMap<>();
+//    	if (search_option == "" || search == "") {
+//    		list = dao.list(start, end);
+//		} else {
+//			list = dao.list_search(search_option,search,start,end);
+//			map.put("search_option", search_option);
+//			map.put("search", search);
+//		}
+//		//list=dao.list_search(search_option, search,start, end); //게시물 리스트
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("admin/l_book/re_search");
+//		map.put("list", list);
+//		map.put("count", count);
+//		map.put("search_option", search_option);
+//		map.put("search", search);
+//		map.put("page", page);
+//		mav.addObject("map", map);
+//		return mav;
+//	}
+//	
+//	@GetMapping("list.do")
+//	public ModelAndView list(@RequestParam(name="curPage", defaultValue="1") int curPage) {
+//		int count = dao.count(); //레코드 개수
+//		PageUtil page = new PageUtil(count, curPage);
+//		int start = page.getPageBegin();
+//		int end = page.getPageEnd();
+//		List<ReBookDTO> list =dao.list(start, end); //게시물 리스트
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("admin/l_book/re_list");
+//		Map<String,Object> map = new HashMap<>();
+//		map.put("list", list);
+//		map.put("count", count);
+//		map.put("page", page);
+//		mav.addObject("map", map);
+//		return mav;
+//	} 
 }

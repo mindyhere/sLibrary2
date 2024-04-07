@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +25,7 @@ public class RecommendController {
 	@Autowired
 	SearchDAO searchDao;
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String index() {
 		return "redirect:index/";
 	}
@@ -45,7 +45,7 @@ public class RecommendController {
 		return mav;
 	}
 
-	@RequestMapping("index/recommendList")
+	@GetMapping("index/recommendList")
 	public ModelAndView recommendList(ModelAndView mav) {
 		List<Map<String, Object>> list = recommendDao.getList();
 		mav.setViewName("user/book/modal1");
@@ -62,14 +62,16 @@ public class RecommendController {
 		return mav;
 	}
 
+	@Transactional
 	@ResponseBody
-	@RequestMapping("index/insert")
+	@GetMapping("index/insert")
 	public String insert(@RequestParam(name = "a_id") String a_id, @RequestParam(name = "b_id") int b_id) {
 		return recommendDao.insert(a_id, b_id);
 	}
 
+	@Transactional
 	@ResponseBody
-	@RequestMapping("index/delete")
+	@GetMapping("index/delete")
 	public Map<String, Object> delete(@RequestParam(name = "cnt") int cnt, @RequestParam(name = "arr") String arr) {
 		Map<String, Object> map = new HashMap<>();
 		String option = "";

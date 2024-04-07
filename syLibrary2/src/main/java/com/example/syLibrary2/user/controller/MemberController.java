@@ -33,6 +33,11 @@ public class MemberController {
 	@Autowired
 	MemberDAO memberDao;
 	
+	@GetMapping("join")
+	public String join() {
+		return "user/member/join";
+	}
+	
 		    @GetMapping("join.do")
 		    public String join(
 		            @RequestParam("mname") String m_name,

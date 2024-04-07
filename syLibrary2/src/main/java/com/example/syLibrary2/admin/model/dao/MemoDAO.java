@@ -10,5 +10,5 @@ public interface MemoDAO {
 	void delete(int me_rownum);
 	void update(MemoDTO dto);
 	int count();
-	MemoDTO search(int me_rownum);
+	MemoDTO search(MemoDTO dto);
 }
