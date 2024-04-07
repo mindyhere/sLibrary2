@@ -63,6 +63,13 @@ where
 order by B_id desc, B_name
 </select>
 
+<resultMap type="java.util.Map" id="result">
+	<result property="B_DESCRIPTION" column="B_DESCRIPTION" jdbcType="CLOB" javaType="java.lang.String" />
+</resultMap>
+
+<select id="bookinfo" resultType="java.util.Map" resultMap="result">
+	select * from sl_book where b_id=#{b_id}
+</select>
 
 <!-- 검색결과 → 레코드 개수 -->
 <select id="resultCount" resultType="int">
