@@ -5,19 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/resources/images/icon.png"
-	type="image/x-icon">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="/resources/static/user.css">
 <c:if test="${param.message == 'join'}">
 	<script>
-	$(function() {
-		swal('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
-	});
+		$(function() {
+			swal('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
+		});
 	</script>
 </c:if>
 <c:if test="${param.message == 'error'}">
@@ -45,12 +42,18 @@
 			let mPasswd = $("#mPasswd").val();
 
 			if (mId == "") {
-				swal('', '아이디를 입력하세요', 'warning');
+				Swal.fire({
+					icon : 'warning',
+					text : '아이디를 입력하세요.',
+				});
 				$("#mId").focus();
 				return;
 			}
 			if (mPasswd == "") {
-				swal('', '비밀번호를 입력하세요', 'warning');
+				Swal.fire({
+					icon : 'warning',
+					text : '비밀번호를 입력하세요.',
+				});
 				$("#mPasswd").focus();
 				return;
 			}
@@ -107,16 +110,15 @@
 	<%@ include file="../common/header.jsp"%>
 	<div class="container min-vh-100">
 		<h3 class="text-bold">
-			<img src="/resources/images/login.png" width="35px"
-				height="35px"> 로그인
+			<img src="/resources/images/login.png" width="35px" height="35px">
+			로그인
 		</h3>
 		<hr>
 		<p class="text-sm text-gray">로그인을 하시면 보다 더 많은 정보와 서비스를 이용하실 수
 			있습니다.</p>
 		<!--  로그인 입력창 -->
 		<div class="card-style mb-30">
-			<form name="loginForm" method="post"
-				action="/user/login/login.do">
+			<form name="loginForm" method="post" action="/user/login/login.do">
 				<div>
 					<div class="input-style-1">
 						<label>아이디</label> <input type="text" name="mId" id="mId"
@@ -130,8 +132,8 @@
 						<input type="checkbox" id="saveId" class="form-check-input">
 						<label for="saveId" class="form-check-label">아이디 저장</label>
 					</div>
-					<br>
-					<input type="button" value="로그인" id="main-btn" class="btnLogin">
+					<br> <input type="button" value="로그인" id="main-btn"
+						class="btnLogin">
 				</div>
 			</form>
 		</div>

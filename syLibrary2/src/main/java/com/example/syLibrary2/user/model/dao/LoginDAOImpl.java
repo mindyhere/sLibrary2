@@ -13,7 +13,6 @@ import com.example.syLibrary2.user.model.dto.LoginDTO;
 
 @Repository
 public class LoginDAOImpl implements LoginDAO {
-	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	SqlSession sqlSession;
 
@@ -23,7 +22,6 @@ public class LoginDAOImpl implements LoginDAO {
 		Map<String, String> map = new HashMap<>();
 		map.put("mId", mId);
 		map.put("mPasswd", mPasswd);
-		log.info("map : " + map);
 		String m_name = sqlSession.selectOne("login.login_check", map);
 		return m_name;
 	}
