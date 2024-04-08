@@ -15,18 +15,18 @@
 <script src="/syLibrary/include/js/bootstrap.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-	$(function() {
-		$("#btnSearch").click(function() {
-			if ($("#search").val() == "") {
-				swal("검색어를 입력하세요");
-				return false;
-			}
-		});
+$(function() {
+	$("#btnSearch").click(function() {
+		if ($("#search").val() == "") {
+			swal("검색어를 입력하세요");
+			return false;
+		}
 	});
-	function list(page) {
-		location.href = "/admin/rebook/list.do?curPage=" + page
-				+ "&search_option=${map.search_option}&search=${map.search}";
-	}
+});
+function list(page) {
+	location.href = "/admin/rebook/list.do?curPage=" + page
+			+ "&search_option=${map.search_option}&search=${map.search}";
+}
 </script>
 <style>
 .search {
@@ -120,7 +120,7 @@ tbody tr:hover {
 
 	<nav style="position: static;">
 		<form name="form1" method="post"
-			action="/admin/rebook/search.do">
+			action="/admin/rebook/list.do">
 			<div class="search">
 				<select id="search_option" name="search_option">
 					<option value="all"
