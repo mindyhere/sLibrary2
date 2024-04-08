@@ -61,7 +61,7 @@ html, body {
 		</ul>
 		<ul class="sub_menu">
 			<li><a id="menu_a" href="/record/list.do">대출/반납 목록</a><br>
-				<a id="menu_a" href="/syLibrary/loanBook_servlet/list.do">대출 도서 관리</a><br>
+				<a id="menu_a" href="/loan/list.do">대출 도서 관리</a><br>
 				<a id="menu_a" href="/admin/rebook/list.do">예약 도서 목록</a><br></li>
 		</ul>
 		<ul class="big_menu">

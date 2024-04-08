@@ -45,6 +45,7 @@ select *
           select rownum as rn, A.*
           from (
             select * from lo_all_book
+            <include refid="search"/>
             order by decode(l_return_yn, 'N', 1),
             l_over desc
           ) A

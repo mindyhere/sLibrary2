@@ -53,10 +53,8 @@
 		$('.select').selectpicker();
 	});
 
-	function list(page) {
-		var lineValue = document.getElementById("hr").getAttribute('data-value');
-		console.log(lineValue);
-		location.href = "/record/list.do?cur_page="+page
+	function order(page) {
+		location.href = "/record/order.do?cur_page="+page
 		+ "&search_option=${map.search_option}&keyword=${map.keyword}";
 	}
 
@@ -83,7 +81,6 @@
 			}
 		});
 	}
-	
 </script>
 <style>
 html, body {
@@ -258,7 +255,7 @@ tbody tr:hover {
 		</div>
 		</div>
 		
-		<form name="form1" method="post" action="/record/list.do">
+		<form name="form1" method="post" action="/record/order.do">
 			<div class="search">
 				<select id="s_list" id="search_option" name="search_option">
 					<c:choose>
@@ -336,7 +333,7 @@ tbody tr:hover {
 				<th>반납일</th>
 				<th>반납 여부</th>
 				<th><a style="text-decoration: under; color: white;"
-					href="/record/order.do">연체일</a></th>
+					href="/record/list.do">연체일</a></th>
 			</tr>
 			<c:choose>
 				<c:when test="${map.count==0}">
@@ -371,9 +368,9 @@ tbody tr:hover {
 					</c:forEach>
 					<tr align="center">
 						<td colspan="10"><c:if test="${map.page.curPage>1}">
-								<a id="hr" href="#" onclick="list('1')">[처음]</a>
+								<a id="hr" href="#" onclick="order('1')">[처음]</a>
 							</c:if> <c:if test="${page.curBlock>1}">
-								<a id="hr" href="#" onclick="list('${map.page.prevPage}')">[이전]</a>
+								<a id="hr" href="#" onclick="order'${map.page.prevPage}')">[이전]</a>
 							</c:if> <c:forEach var="num" begin="${map.page.blockStart}"
 								end="${map.page.blockEnd}">
 								<c:choose>
@@ -381,13 +378,13 @@ tbody tr:hover {
 										<span style="color: blue">${num}</span>
 									</c:when>
 									<c:otherwise>
-										<a id="hr" href="#" onclick="list('${num}')">${num} </a>
+										<a id="hr" href="#" onclick="order('${num}')">${num} </a>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach> <c:if test="${map.page.curBlock<map.page.totBlock}">
-								<a id="hr" href="#" onclick="list('${map.page.nextPage}')">[다음]</a>
+								<a id="hr" href="#" onclick="order('${map.page.nextPage}')">[다음]</a>
 							</c:if> <c:if test="${map.page.curPage<map.page.totPage}">
-								<a id="hr" href="#" onclick="list('${map.page.totPage}')">[마지막]</a>
+								<a id="hr" href="#" onclick="order('${map.page.totPage}')">[마지막]</a>
 							</c:if></td>
 					</tr>
 
@@ -402,7 +399,7 @@ tbody tr:hover {
 			</div>
 			<div class="close-area" id="ca">X</div><hr/>
 			<div class="content">
-				<form id="m_form" method="post" action="/email/send.do">
+				<form id="m_form" method="post">
 					<span style="color: #26262b">받는 사람</span> <input type="text" id="receiveMail" name="receiveMail"><br>
 					<span style="color: #26262b">제목</span> <input type="text" id="subject" name="subject"><br><br>
 					<textarea rows="5" cols="40" id="message" name="message"

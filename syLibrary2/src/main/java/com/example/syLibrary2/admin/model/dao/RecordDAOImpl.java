@@ -35,14 +35,17 @@ public class RecordDAOImpl implements RecordDAO {
 
 	@Override
 	public List<RecordDTO> order(int start, int end, String search_option, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String,Object> map=new HashMap<>();
+		map.put("search_option",search_option);
+		map.put("keyword",keyword);
+		map.put("start",start);
+		map.put("end",end);
+		return sqlSession.selectList("record.order",map);
 	}
 
 	@Override
 	public String member_email(int l_num) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("record.email", l_num);
 	}
 
 }
