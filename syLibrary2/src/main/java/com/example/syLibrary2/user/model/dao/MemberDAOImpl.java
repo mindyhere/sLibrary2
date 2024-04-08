@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.example.syLibrary2.user.model.dto.MemberDTO;
 
 
-
 @Repository
 public class MemberDAOImpl implements MemberDAO {
 
@@ -17,7 +16,8 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override	// 회원가입
 	public void insert_join(MemberDTO dto) {
 		sqlSession.insert("member.insert_join", dto);		
-		
+		sqlSession.commit();
+		sqlSession.close();		
 	}
 
 	@Override // 회원 조회
@@ -30,12 +30,9 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.update("member.edit_memberInfo", dto);		
 	} 
 	
-@Override // 아이디 중복체크 
-public int checkId(String m_Id) {
-	int  cnt = sqlSession.selectOne("member.id_check", m_Id);
-	return cnt;    
-
+	@Override  // 아이디 중복체크
+	public int id_check(String m_Id) {
+		return 0;
+		/* return sqlSession.selectOne("member.id_check", m_Id); */
 	}
 }
-
-
