@@ -61,11 +61,18 @@ public class MyLibraryDAOImpl implements MyLibraryDAO {
 		return sqlSession.selectOne("myLibrary.checkReservation", bId);
 	}
 
+	
 	// 동일도서 연장여부 확인(연장신청)
 	@Override
 	public String checkRenewYn(Map<String, Object> map) {
 		String renewYn = sqlSession.selectOne("myLibrary.checkRenewYn", map);
 		return renewYn;
+	}
+
+	// 연체 여부 확인 (연장신청)
+	@Override
+	public int checkOverReturn(int mNo) {
+		return sqlSession.selectOne("myLibrary.checkOverReturn", mNo);
 	}
 
 	// 연장신청

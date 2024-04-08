@@ -28,6 +28,9 @@ public interface MyLibraryDAO {
 	// 연장 여부 확인
 	String checkRenewYn(Map<String, Object> map);
 	
+	// 연체 여부 확인
+	int checkOverReturn(int mNo);
+	
 	// 연장 신청
 	void updateReturn(Map<String, Object> map);
 
