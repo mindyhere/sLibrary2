@@ -33,7 +33,7 @@ public class AdminController {
 			session.setAttribute("a_name", a_name);
 			session.setAttribute("result", a_name+"님 로그인중");
 			mav.setViewName("admin/admin_main");
-		} //로그인 실패시 알람창
+		}
 		return mav;
 	}
 	
