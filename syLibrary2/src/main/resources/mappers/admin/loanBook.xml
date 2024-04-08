@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="loanBook">
+<select id="list" resultType="com.example.syLibrary2.admin.model.dto.LoanDTO">
+select *
+	from (
+		select rownum as rn, A.*
+		from (
+			select * from loan_book
+			<include refid="search"/>
+			order by l_retdate
+		) A
+	) where rn between #{start} and #{end}
+</select>
+
+<select id="count" resultType="int">
+	select count(*) from loan_book
+	<include refid="search"/>
+</select>
+
+<select id="re_book" statementType="CALLABLE">
+	<!-- update lo_book set l_return_yn = 'Y' where l_num = #{l_num} -->
+	{call com_book(#{l_num})}
+</select>
+<select id ="re_book_check" statementType="CALLABLE">
+	{call check_loan_1(#{l_num})}
+</select>
+
+<sql id="search">
+	<choose>
+		<when test="search_option == 'none' ">
+			where l_bookid like '%' || #{keyword} || '%'
+			or b_name like '%' || #{keyword} || '%'
+			or m_name like '%' || #{keyword} || '%'
+			or l_lodate like '%' || #{keyword} || '%'
+			or l_retdate like '%' || #{keyword} || '%'
+		</when>
+		<otherwise>
+			where ${search_option} like '%' || #{keyword} || '%'
+		</otherwise>
+	</choose>
+</sql>
+</mapper>

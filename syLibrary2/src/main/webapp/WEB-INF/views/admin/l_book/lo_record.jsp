@@ -54,8 +54,6 @@
 	});
 
 	function list(page) {
-		var lineValue = document.getElementById("hr").getAttribute('data-value');
-		console.log(lineValue);
 		location.href = "/record/list.do?cur_page="+page
 		+ "&search_option=${map.search_option}&keyword=${map.keyword}";
 	}
@@ -372,7 +370,7 @@ tbody tr:hover {
 					<tr align="center">
 						<td colspan="10"><c:if test="${map.page.curPage>1}">
 								<a id="hr" href="#" onclick="list('1')">[처음]</a>
-							</c:if> <c:if test="${page.curBlock>1}">
+							</c:if> <c:if test="${map.page.curBlock>1}">
 								<a id="hr" href="#" onclick="list('${map.page.prevPage}')">[이전]</a>
 							</c:if> <c:forEach var="num" begin="${map.page.blockStart}"
 								end="${map.page.blockEnd}">

@@ -14,26 +14,10 @@ select *
       where rn between #{start} and #{end}
 </select>
 
-<!-- <select id="list_search" resultType="admin.l_book.RecordDTO">
-	select *
-	from (
-		select rownum as rn, A.*
-		from (
-			select * from lo_all_book
-			where ${search_option} like '%' || #{keyword} || '%'
-		) A
-	) where rn between #{start} and #{end}
-</select> -->
-
 <select id="count" resultType="int">
 	select count(*) from lo_all_book
 	<include refid="search"/>
 </select>
-
-<!-- <select id="search_count" resultType="int">
-	select count(*) from lo_all_book
-	where ${search_option} like '%' || #{keyword} || '%'
-</select> -->
 
 <select id="email" resultType="String">
 	select m_email from sl_member where m_id = (select m_id from lo_all_book where lo_all_book.l_num=#{l_num})
