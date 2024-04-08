@@ -35,24 +35,6 @@ public class CheckoutDAOImpl implements CheckoutDAO {
 		return sqlSession.selectOne("checkout.check_duplicate", map);
 	}
 
-//	@Override
-//	public int cntUserLo(String m_id) {
-//		int m_level = Integer.parseInt(sqlSession.selectOne("checkout.mlevel_check", m_id));
-//		int cnt = 0; // 1인당 대출 가능 도서 권수
-//		switch (m_level) {
-//		case 1:
-//			cnt = 3;
-//			break;
-//		case 2:
-//			cnt = 5;
-//			break;
-//		case 3:
-//			cnt = 7;
-//			break;
-//		}
-//		return cnt - Integer.parseInt(sqlSession.selectOne("checkout.cntUserLo", m_id));
-//	}
-
 	@Override
 	public void insert(Map<String, Object> map) {
 		sqlSession.insert("checkout.insert_Lobook", map); // 대출 Lo_book insert

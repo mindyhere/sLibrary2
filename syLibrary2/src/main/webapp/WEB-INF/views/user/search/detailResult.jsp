@@ -101,7 +101,7 @@ function searchByName(page) {
     let params={"b_name":b_name, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
     if(count!==0){
     	$.ajax({
-			url:"/user/search/serachBy",
+    		url:"/user/search/searchBy",
 			data:params,
 			success:function(txt){
 				$("#section-resultList").html(txt);
@@ -118,7 +118,7 @@ function searchByAuthor(page) {
     let params={"b_author":b_author, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
     if(count!==0){
     	$.ajax({
-			url:"/user/search/serachBy",
+    		url:"/user/search/searchBy",
 			data:params,
 			success:function(txt){
 				$("#section-resultList").html(txt);
@@ -135,7 +135,7 @@ function searchByPub(page) {
     let params={"b_pub":b_pub, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
     if(count!==0){
     	$.ajax({
-			url:"/user/search/serachBy",
+    		url:"/user/search/searchBy",
 			data:params,
 			success:function(txt){
 				$("#section-resultList").html(txt);
@@ -215,7 +215,7 @@ function checkOut(b_id){
 				myConfirm(txt, 
 						"나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
 						"info", 
-						"/user/user/book/myLibray?mId="+m_id);
+						"/user/book/myLibrary/${mId}");
 			},
 			error: function(err){
 				console.log(err);
@@ -223,7 +223,7 @@ function checkOut(b_id){
 				myConfirm("Not possible",
 						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
 						"error", 
-						"/user/user/book/myLibray?mId="+m_id);
+						"/user/book/myLibrary/${mId}");
 			}
 		});
 	}else if(a_id != ""){
