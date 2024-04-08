@@ -63,7 +63,7 @@ body {
 				<div class="navbar-nav">
 					<c:choose>
 						<c:when
-							test="${mName != null && session.a_id == null}">
+							test="${mName != null && sessionScope.a_id == null}">
 							<div class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" role="button"
 									data-bs-toggle="dropdown" aria-expanded="false">마이 페이지</a>
@@ -76,7 +76,7 @@ body {
 									<div class="dropdown-divider"></div>
 									<div>
 										<a class="dropdown-item"
-											href="/user/book/myLibrary?mId=${mId}">나의 서재</a>
+											href="/user/book/myLibrary/${mId}">나의 서재</a>
 									</div>
 									<div class="dropdown-divider"></div>
 									<div>
@@ -88,14 +88,9 @@ body {
 						</c:when>
 
 						<c:when
-							test="${mName == null && session.a_id != null}">
+							test="${mName == null && sessionScope.a_id != null}">
 							<div class="nav-item">
-								<a class="nav-link" href="/syLibrary/admin/admin_main.jsp"
-									title="사서 통합관리시스템">${sessionScope.a_name }
-									님&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-							</div>
-							<div class="nav-item">
-								<a class="nav-link" href="/syLibrary/login_servlet/logout.do">관리자계정
+								<a class="nav-link" href="/admin/admin_login/adlogout.do">관리자계정
 									로그아웃</a>
 							</div>
 						</c:when>
