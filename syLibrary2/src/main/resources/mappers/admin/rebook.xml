@@ -1,31 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="rebook">
+
 	<select id="list" resultType="com.example.syLibrary2.admin.model.dto.ReBookDTO">
 		select * 
 		from (
 			select rownum as rn, A.*
 			from (
-				select * from rbook order by b_name, r_reservation
+				select
+				r_num,
+				r_bookid,
+				b_name, 
+				b_author, 
+				m_id, 
+				m_name, 
+				r_reservation, 
+				to_char(r_regdate, 'yyyy-MM-dd') r_regdate
+				from re_book r, sl_book b, sl_member m
+				<include refid="search" />
+				order by b_name, r_reservation
 				) A
 			)
 		where rn between #{start} and #{end}
 	</select>
 	
 	<select id="count" resultType="int">
-		select count(*) from rbook
+		select count(*) from re_book r, sl_book b, sl_member m
+		<include refid="search" />
 	</select>
 	
-	<select id="search_list" resultType="com.example.syLibrary2.admin.model.dto.ReBookDTO">
-		select *
-		from (
-			select rownum as rn, A.*
-			from (
-				select * from rbook
-				where ${search_option} like '%' || #{search} || '%' order by r_reservation
-				) A
-			)
-		where rn between #{start} and #{end}
-	</select>
-
+	<!-- 검색조건 -->
+	<sql id="search">
+		<choose>
+			<when test="search_option == 'all'">
+				where r.r_bookid = b.b_id and r.r_memno = m.m_no
+					and <![CDATA[ r.r_reservation >= 0 ]]>
+					and (b_name like '%' || #{search} || '%'
+						or m_id like '%' || #{search} || '%'
+						or m_name like '%' || #{search} || '%')
+			</when>
+			<otherwise>
+				where r.r_bookid = b.b_id and r.r_memno = m.m_no
+					and <![CDATA[ r.r_reservation >= 0 ]]>
+					and ${search_option} like '%' || #{search} || '%'
+			</otherwise>
+		</choose>
+	</sql>
 </mapper>
