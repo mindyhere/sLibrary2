@@ -5,16 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
+<link rel="icon" href="/resources/images/icon.png"
 	type="image/x-icon">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/user.css">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
 	<div class="container min-vh-100">
 		<h3 class="text-bold">
-			<img src="/syLibrary/resources/images/myLibrary/history.png"
+			<img src="/resources/images/myLibrary/history.png"
 				width="35px" height="35px"> 대출 이력
 		</h3>
 		<hr>
@@ -34,7 +34,7 @@
 									<div class="col detail" style="margin-right: 30px; margin-left: 10px;">
 										<p>
 											<a
-												href="/syLibrary/search_servlet/bookInfo.do?b_id=${myHistory.l_bookid}">${myHistory.b_name}</a>
+												href="/user/search/bookInfo/${myHistory.l_bookid}">${myHistory.b_name}</a>
 										</p>
 										<p>
 											<span>작가 : ${myHistory.b_author} </span> <span>출판사 :
