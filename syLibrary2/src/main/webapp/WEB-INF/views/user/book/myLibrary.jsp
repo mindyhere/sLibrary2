@@ -5,29 +5,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
+<link rel="icon" href="/resources/images/icon.png"
 	type="image/x-icon">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="/syLibrary/include/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link rel="stylesheet" href="/resources/static/user.css">
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
 <script>
 function createChart(type) {
 	let category=[];
 	let cnt =[];
 	let title = '';
 	$.ajax({
-		url: "/syLibrary/myLibrary_servlet/createChart.do",
-		type : "get",
-		data : {mNo : ${myLibrary.m_no}, type : type},
-		dataType: "json",
-		contentType: 'text/html;charset=utf-8',
+		url: "/user/book/createChart",
+		type : "POST",
+		dataType : "json",
+		data : {m_no : ${myLibrary.m_no}, type : type},
 		success: function (data) {
 			if(data.length > 0){
 				var chartContent = document.getElementById("myChart");
@@ -90,12 +89,12 @@ function createChart(type) {
 
 // 대출현황으로 이동
 function goLoBookList(m_no) {
-	location.href = '/syLibrary/myLibrary_servlet/myLoanBook.do?mNo=' + m_no;
+	location.href = '/user/book/myLoanBook/' + m_no;
 }
 
 // 대출이력으로 이동
 function goHisList(m_no) {
-	location.href = '/syLibrary/myLibrary_servlet/myHistory.do?mNo=' + m_no;
+	location.href = '/user/book/myHistory/' + m_no;
 }
 </script>
 </head>
@@ -109,7 +108,7 @@ function goHisList(m_no) {
 			<div class="col-2">
 				<input type="button" value="회원정보 수정" style="float: left;"
 					id="main-btn"
-					onclick="location.href='/syLibrary/member_servlet/detail_memberInfo.do?mId=${myLibrary.m_id}'">
+					onclick="location.href='/user/member/detail_memberInfo/${myLibrary.m_id}'">
 			</div>
 		</div>
 		<hr>
@@ -117,12 +116,12 @@ function goHisList(m_no) {
 		<div class="card-style mb-30">
 			<div class="row ">
 				<h4>
-					<img src="../resources/images/myLibrary/mem_info.png" width="45px"
+					<img src="/resources/images/myLibrary/mem_info.png" width="45px"
 						height="40px"> 회원정보
 				</h4>
 				<div class="col-4" style="align-self: center;">
 					<img class="mx-auto d-block"
-						src="../resources/images/member/${myLibrary.m_img}" width="150px"
+						src="/resources/images/member/${myLibrary.m_img}" width="150px"
 						height="150px">
 				</div>
 				<div class="col-8">
@@ -156,7 +155,7 @@ function goHisList(m_no) {
 							</tr>
 							<tr>
 								<th>도서대출현황</th>
-								<td>${myLibrary.lo_book_cnt} / 5 (대출 중인 권수 / 대출 가능 권수)</td>
+								<td>${myLibrary.lo_book_cnt}/5 (대출 중인 권수 / 대출 가능 권수)</td>
 							</tr>
 						</tbody>
 					</table>
@@ -169,14 +168,14 @@ function goHisList(m_no) {
 		<div class="row ">
 			<div class="card-style mb-30">
 				<h4>
-					<img src="../resources/images/myLibrary/mem.png" width="45px"
+					<img src="/resources/images/myLibrary/mem.png" width="45px"
 						height="40px"> 서비스 이용현황
 				</h4>
 				<br>
 				<div class="row text-center">
 					<div class="col">
 						<h5 style="margin-bottom: 10px;">
-							<img src="../resources/images/myLibrary/loan.png" width="25px"
+							<img src="/resources/images/myLibrary/loan.png" width="25px"
 								height="25px"> 대출 중인 도서
 						</h5>
 						<input type="button" class="form-control"
@@ -185,17 +184,17 @@ function goHisList(m_no) {
 					</div>
 					<div class="col">
 						<h5 style="margin-bottom: 10px;">
-							<img src="../resources/images/myLibrary/reserv.png" width="25px"
+							<img src="/resources/images/myLibrary/reserv.png" width="25px"
 								height="25px"> 예약 중인 도서
 						</h5>
 						<input type="button" class="form-control"
-							onclick="location.href='/syLibrary/res_book_servlet/myReBook.do?mId=${myLibrary.m_id}'"
+							onclick="location.href='/user/book/myReBook?mId=${myLibrary.m_id}'"
 							;
 							value="${myLibrary.re_book_cnt}">
 					</div>
 					<div class="col">
 						<h5 style="margin-bottom: 10px;">
-							<img src="../resources/images/myLibrary/history.png" width="30px"
+							<img src="/resources/images/myLibrary/history.png" width="30px"
 								height="30px"> 대출 이력
 						</h5>
 						<input type="button" class="form-control"
@@ -211,7 +210,7 @@ function goHisList(m_no) {
 		<div class="row">
 			<div class="card-style mb-30">
 				<h4 style="margin-bottom: 20px;">
-					<img src="../resources/images/myLibrary/chart.png" width="35px"
+					<img src="/resources/images/myLibrary/chart.png" width="35px"
 						height="30px"> 나의 독서 통계
 				</h4>
 				<div style="text-align: center;">

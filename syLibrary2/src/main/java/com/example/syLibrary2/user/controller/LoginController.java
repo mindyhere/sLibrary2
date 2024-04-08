@@ -40,9 +40,14 @@ public class LoginController {
 			@RequestParam(name = "mPasswd", defaultValue = "") String mPasswd, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String mName = loginDao.loginChk(mId, mPasswd);
-		session.setAttribute("mId", mId);
-		session.setAttribute("mName", mName);
-		mav.setViewName("redirect:/");
+
+		if (mName != "" && mName != null) {
+			session.setAttribute("mId", mId);
+			session.setAttribute("mName", mName);
+			mav.setViewName("redirect:/");
+		} else {
+			mav.addObject("message", "로그인실패");
+		}
 		return mav;
 	}
 

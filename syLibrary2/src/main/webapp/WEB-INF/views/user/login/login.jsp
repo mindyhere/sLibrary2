@@ -17,13 +17,6 @@
 		});
 	</script>
 </c:if>
-<c:if test="${param.message == 'error'}">
-	<script>
-		$(function() {
-			swal('회원정보 불일치', '아이디 또는 비밀번호를 확인해주세요.', 'warning');
-		});
-	</script>
-</c:if>
 <script>
 	$(function() {
 		var mId = getCookie("Cookie_userid");
@@ -72,13 +65,13 @@
 	@ param value : 값
 	@ param exdays : 만료일
 	 */
-	function setCookie(name, value, exdays) {
-		var today = new Date();
-		today.setDate(today.getDate() + exdays);
-		var cookie = escape(value)
-				+ ((exdays == null) ? "" : ";expires=" + today.toGMTString());
-		document.cookie = name + "=" + cookie;
-	}
+		function setCookie(name, value, exdays) {
+			var today = new Date();
+			today.setDate(today.getDate() + exdays);
+			var cookie = escape(value)
+					+ ((exdays == null) ? "" : ";expires=" + today.toGMTString());
+			document.cookie = name + "=" + cookie;
+		}
 
 	/* 쿠키 가져오기
 	@ param name : 쿠키명
@@ -104,6 +97,17 @@
 		exprieDate.setDate(exprieDate.getDate() - 1);
 		document.cookie = name + "=" + "; expires=" + exprieDate.toGMTString();
 	}
+	
+	$(function(){
+		var responseMsg = "<c:out value="${message}" />";
+		if(responseMsg == '로그인실패'){
+			Swal.fire({
+				icon : 'warning',
+				title : '회원정보 불일치',
+				text : '아이디 또는 비밀번호를 확인해주세요.',
+			});
+		}
+	});
 </script>
 </head>
 <body>
