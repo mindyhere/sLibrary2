@@ -108,7 +108,7 @@ function goHisList(m_no) {
 			<div class="col-2">
 				<input type="button" value="회원정보 수정" style="float: left;"
 					id="main-btn"
-					onclick="location.href='/user/member/detail_memberInfo/${myLibrary.m_id}'">
+					onclick="location.href='/user/member/detail_memberInfo'">
 			</div>
 		</div>
 		<hr>

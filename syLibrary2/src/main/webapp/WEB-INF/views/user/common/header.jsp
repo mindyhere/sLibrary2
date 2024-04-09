@@ -70,7 +70,7 @@ body {
 								<div class="dropdown-menu dropdown-menu-end">
 									<div>
 										<a class="dropdown-item"
-											href="/user/member/detail_memberInfo?mId=${session.mId}">회원정보
+											href="/user/member/detail_memberInfo">회원정보
 											수정</a>
 									</div>
 									<div class="dropdown-divider"></div>
