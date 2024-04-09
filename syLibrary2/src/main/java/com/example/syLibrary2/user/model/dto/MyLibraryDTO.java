@@ -9,6 +9,7 @@ public class MyLibraryDTO {
 	private int m_no;
 	private String m_id;
 	private String m_name;
+	private String le_name;
 	private String m_tel;
 	private String m_email;
 	private String m_img;
