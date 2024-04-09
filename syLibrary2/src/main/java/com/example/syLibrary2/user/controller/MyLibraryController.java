@@ -89,21 +89,26 @@ public class MyLibraryController {
 		int reCnt = myLibraryDao.checkReservation(b_id);
 		// 연장여부 확인절차
 		String renewYn = myLibraryDao.checkRenewYn(map);
+		// 연체상태 확인절차
+		int overReturnYn = myLibraryDao.checkOverReturn(m_no);
 		// 상태코드
 		int status = 0;
 		if (reCnt == 0) {
 			if (renewYn.equals("N")) {
-				myLibraryDao.updateReturn(map);
-				status = 0;
+				if (overReturnYn < 0) {
+					myLibraryDao.updateReturn(map);
+					status = 0;
+				} else { // 연체상태
+					status = 1;
+				}
 			} else if (renewYn.equals("Y")) {
-				status = 1;
+				status = 2;
 			}
 		} else if (reCnt > 0) {
-			status = 2;
-		}
+			status = 3;
+		} 
 		return status;
 	}
-
 	// 예약 중인 도서
 
 	// 대출 이력

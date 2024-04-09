@@ -5,42 +5,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
-<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/resources/static/user.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/resources/static/js/bootstrap.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<meta http-equiv="Content-Type"content="text/html; charset=UTF-8">
+<!-- <link rel="icon" href="/syLibrary2/resources/images/icon.png"	type="image/x-icon">
+<script src="http://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<link rel="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/syLibrary2/static/user.css">
+<link rel="stylesheet"
+	href="/syLibrary2/static/assets/bootstrap.min.css" />
+<link rel="stylesheet" href="/syLibrary/static/assets/lineicons.css" />
+<link rel="stylesheet"
+	href="/syLibrary2/static/assets/materialdesignicons.min.css" /> 
+ -->
 
 <script>
-/* function checkId(){
-	var mId = $("#mId").val();
-	$.ajax({
-		url : "../../member/id_check",
-		type : "post",
-		data : {mId : mId	},
-		dataType : 'json',
-		success : function(result) {
-			if (id_check ==1 ) {
-				$("#checkId").html('이미 사용중인 아이디입니다.');
-				$("#checkId").attr('color', 'red');
-			} else {
-				$("#checkId").html('사용할 수 있는 아이디입니다.');
-				$("#checkId").attr('color', 'blue');
+	//아이디 중복 확인
+	function checkId() {
+		var mId = $("#mId").val();
+		$.ajax({
+			url : "/syLibrary2/id_check.do",
+			type : "post",
+			data : {
+				mId : mId
+			},
+			success : function(result) {
+				if (result == 1) {
+					$("#checkId").html('이미 사용중인 아이디입니다.');
+					$("#checkId").attr('color', 'red');
+				} else {
+					$("#checkId").html('사용할 수 있는 아이디입니다.');
+					$("#checkId").attr('color', 'blue');
+				}
+			},
+			error : function() {
+				alert("에러발생");
 			}
-		},
-		error : function() {
-			alert("에러발생");
-		}
-	})
-} */
-
-//널값 체크
-$(function() {
+		})
+	}
+	// 널값 체크
+	$(function() {
 		$(".btnJoin").click(function() {
 			let mName = $("#mName").val();
 			let mId = $("#mId").val();
@@ -51,54 +57,44 @@ $(function() {
 			let mAddress = $("#mAddress").val();
 
 			if (mName == "") {
-				myAlert("warning","이름을 입력하세요!");
+				swal("이름을 입력하세요!");
 				$("#mName").focus();
 				return false;
 			}
 
 			if (mId == "") {
-				myAlert("warning","아이디를 입력하세요!");
+				swal("아이디를 입력하세요!");
 				$("#mId").focus();
 				return false;
 			}
 
 			if (mPasswd == "") {
-				myAlert("warning","비밀번호를 입력하세요!");
+				swal("비밀번호를 입력하세요!");
 				$("#mPasswd").focus();
 				return false;
 			}
 			if (mTel == "") {
-				myAlert("warning","전화번호를 입력하세요!");
+				swal("전화번호를 입력하세요!");
 				$("#mTel").focus();
 				return false;
 			}
 			if (mBirthDate == "") {
-				myAlert("warning","생년월일을 선택해주세요!");
+				swal("생년월일을 선택해주세요!");
 				return false;
 			}
 			if (mEmail == "") {
-				myAlert("warning","이메일을 입력하세요!");
+				swal("이메일을 입력하세요!");
 				$("#mEmail").focus();
 				return false;
 			}
 
 			if (mAddress == "") {
-				myAlert("warning","주소를 입력하세요!");
+				swal("주소를 입력하세요!");
 				$("#mAddress").focus();
 				return false;
 			}
 		});
 	});
-	
-function myAlert(icon, title, msg){
-	Swal.fire({
-		icon: "warning",
-		title: title,
-		text: msg,
-		confirmButtonColor: "#FEC5BB",
-		confirmButtonText: "OK"
-	});
-}
 
 	//전화번호 자동 하이픈 생성
 	function oninputPhone(mTel) {
@@ -107,16 +103,17 @@ function myAlert(icon, title, msg){
 						"$1-$2-$3");
 	}
 
-	 //주소검색
-/*  function goP() {
-		var pop = window.open("../../member/jusoPopup", "pop",
+	//주소검색
+	function goP() {
+		var pop = window.open("/syLibrary2/user/member/jusoPopup.jsp", "pop",
 				"width=570,height=420, scrollbars=yes, resizable=yes");
-	} 
-	function jusoCallBack(zipNo, roadFullAddr, roadAddrPart1, roadAddrPart2, mDetailAddress) {
+	}
+	function jusoCallBack(zipNo, roadFullAddr, roadAddrPart1, roadAddrPart2,
+			mDetailAddress) {
 		document.form1.mZipNo.value = zipNo; //상세 주소
 		document.form1.mAddress.value = roadAddrPart1 + roadAddrPart2; //도로명 주소
-		document.form1.mDetailAddress.value = mDetailAddress; //상세 주소 
-	} */
+		document.form1.mDetailAddress.value = mDetailAddress; //상세 주소
+	}
 	//이미지 화면출력
 	function readURL(input) {
 		if (input.files && input.files[0]) {
@@ -128,24 +125,12 @@ function myAlert(icon, title, msg){
 		} else {
 			document.getElementById('url').src = "";
 		}
-	} 
-</script>
-
-<style type="text/css">
-/* alert 커스텀 */
-.swal2-confirm {
-	background-color: #FEC5BB !important;
-	border: 1px solid #FEC5BB !important;
-	box-shadow: none !important;
-	outline:none !important;
-	height: 44px;
-}
-</style>
-
+	}
+</script> 
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
-		<form method="post" action="/user/member/join" enctype="multipart/form-data">
+		<form method="post" action="user/member/join">
 	<div class="container">
 		<h3 class="text-bold">회원가입</h3>
 		<hr>
@@ -157,8 +142,8 @@ function myAlert(icon, title, msg){
 							<div style="text-align: -webkit-center;">
 								<br> <br>
 								<div class="profile-image" style="width: 100px; height: 100px">
-									<br> <img id="url" src="../../resources/images/member/image_no.png"
-											width="100px" height="100px"> 프로필 사진<br>
+									<br> <img id="url" src="../resources/images/member"
+										width="100px" height="100px"> 프로필 사진<br>
 									<input type="file" id="mImg" name="mImg"
 										onchange="readURL(this);" class="form-control" width="50px"
 										height="50px">
@@ -173,14 +158,13 @@ function myAlert(icon, title, msg){
 						<div class="col-9"
 							style="background-color: white; border-radius: 20px; padding: 30px 50px 30px 50px;">
 							<div class="input-style-1">
-								<label>아이디</label>
-									<input type="text" class="form-control" id="mId" name="mId" placeholder="아이디 입력" >
-									<!-- <input type="text" class="form-control" id="mId" name="mId" oninput="checkId()" placeholder="아이디 입력" >
-									<font id="checkId" size="2"></font> -->
+								<label>아이디</label> <input type="text" class="form__input"
+									name="mId" id="mId" oninput="checkId()" placeholder="아이디 입력">
+								<font id="checkId" size="2"></font>
 							</div>
 							<div class="input-style-1">
 								<label>비밀번호</label> <input type="password" name="mPasswd"
-									id="mPasswd" class="form-control" placeholder="비밀번호 입력" autoComplete="on" />
+									id="mPasswd" class="form-control" placeholder="비밀번호 입력">
 							</div>
 							<div class="input-style-1">
 								<label>전화번호</label> <input type="text" name="mTel" id="mTel"
@@ -214,7 +198,7 @@ function myAlert(icon, title, msg){
 									class="form-control">
 							</div>
 							<div style="text-align: center;">
-						<input type="submit" value=" 회원가입" id="main-btn" class="btnJoin"> 
+								<input type="submit" value=" 회원가입" id="main-btn" class="btnJoin">
 							</div>
 						</div>
 					</div>
@@ -222,8 +206,6 @@ function myAlert(icon, title, msg){
 		</div>
 	</div>
 	</form>
-	
 </body>
-
 <jsp:include page="../common/footer.jsp"></jsp:include>
 </html>

@@ -165,7 +165,7 @@ text-decoration-line: none !important;
 				  <li><a href="#" onclick="location.href='/syLibrary/user/login/searchPasswd.jsp'"><p>- 비밀번호찾기</p></a></li>
 				  <c:choose>
 				  	<c:when test="${sessionScope.mName != null}">
-				  		<li><a href="#" onclick="location.href='/syLibrary/member_servlet/detail_memberInfo.do?mId=${sessionScope.mId}'"><p>- 회원정보수정</p></a></li>
+				  		<li><a href="#" onclick="location.href='/user/member/detail_memberInfo'"><p>- 회원정보수정</p></a></li>
 				  	</c:when>
 				  	<c:otherwise>
 				 		<li><p>- 회원정보수정</p></li>

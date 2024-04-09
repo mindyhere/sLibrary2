@@ -28,12 +28,12 @@ $(function() {
 		let form1 = $("form[name=form1]");
         let keyword	= $("input[name=keyword]");
 		let view= $("input[name=viewOpt]:checked").val();
-		/*if(keyword.val()=="" || keyword.val().trim().length==0 ){
+		if(keyword.val()=="" || keyword.val().trim().length==0 ){
 			myAlert("warning", "잠깐!", "검색어를 입력해주세요.");
 			$('#keyword').val("");
 			keyword.focus();
 			return false;
-		} */
+		} 
 		form1.submit();
 	});
 	$("#btnDetail").click(function() {
@@ -101,7 +101,7 @@ function myAlert(icon, title, msg){
 	});
 }
 
-function searchByName(page, ) {
+function searchByName(page) {
     let b_name = $("input[name=keyword]").val();
     let searchOpt="name";
     let view= $("input[name=viewOpt]:checked").val();
@@ -110,7 +110,7 @@ function searchByName(page, ) {
     let params={"b_name":b_name, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
     if(count!==0){
     	$.ajax({
-			url:"/user/search/searchBy",
+			url:"/user/search/serachBy",
 			data:params,
 			success:function(txt){
 				$("#section-resultList").html(txt);
@@ -127,7 +127,7 @@ function searchByAuthor(page) {
     let params={"b_author":b_author, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
     if(count!==0){
     	$.ajax({
-    		url:"/user/search/searchBy",
+			url:"/user/search/serachBy",
 			data:params,
 			success:function(txt){
 				$("#section-resultList").html(txt);
@@ -144,7 +144,7 @@ function searchByPub(page) {
     let params={"b_pub":b_pub, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
     if(count!==0){
     	$.ajax({
-    		url:"/user/search/searchBy",
+			url:"/user/search/serachBy",
 			data:params,
 			success:function(txt){
 				$("#section-resultList").html(txt);
@@ -221,7 +221,7 @@ function checkOut(b_id){
 				myConfirm(result,
 						"나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
 						"info", 
-						"/user/book/myLibrary/${mId}");
+						"/user/user/book/myLibray?mId="+m_id);
 			},
 			error: function(err){
 				console.log(err);
@@ -229,7 +229,7 @@ function checkOut(b_id){
 				myConfirm("Not possible",
 						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
 						"error", 
-						"/user/book/myLibrary/${mId}");
+						"/user/user/book/myLibray?mId="+m_id);
 			}
 		});
 	}else if(a_id != ""){
@@ -424,7 +424,7 @@ td > a{
 			</button>
 			<div class="content" id="internal">
 				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchByName(1, 'name')">제목(<b>${cntRec.cntName}</b>)</a></li>
+					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchByName(1)">제목(<b>${cntRec.cntName}</b>)</a></li>
 					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchByAuthor(1)">저자(<b>${cntRec.cntAuthor}</b>)</a></li>
 					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchByPub(1)">발행처(<b>${cntRec.cntPub}</b>)</a></li>
 				</ul>
