@@ -37,8 +37,23 @@ body {
 .nav-item {
 	margin-right: 15px;
 }
-
 </style>
+<script>
+function logout() {
+	Swal.fire({
+		icon : "question",
+		text : "로그아웃 하시겠습니까?",
+		showCancelButton : true,
+		confirmButtonText : "YES",
+	}).then((result) => {
+		if (result.isConfirmed) {
+			location.href = '/user/login/logout';
+		} else {
+			location.reload();
+		}
+	})
+}
+</script>
 <body>
 	<nav class="navbar navbar-expand-lg" style="background-color: #FBFBFD;">
 		<div class="container-fluid">
@@ -58,33 +73,29 @@ body {
 				id="navbarNavDropdown">
 				<div class="navbar-nav">
 					<c:choose>
-						<c:when
-							test="${mName != null && sessionScope.a_id == null}">
+						<c:when test="${mName != null && sessionScope.a_id == null}">
 							<div class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" role="button"
 									data-bs-toggle="dropdown" aria-expanded="false">마이 페이지</a>
 								<div class="dropdown-menu dropdown-menu-end">
 									<div>
-										<a class="dropdown-item"
-											href="/user/member/detail_memberInfo">회원정보
+										<a class="dropdown-item" href="/user/member/detail_memberInfo">회원정보
 											수정</a>
 									</div>
 									<div class="dropdown-divider"></div>
 									<div>
-										<a class="dropdown-item"
-											href="/user/book/myLibrary/${mId}">나의 서재</a>
+										<a class="dropdown-item" href="/user/book/myLibrary/${mId}">나의
+											서재</a>
 									</div>
 									<div class="dropdown-divider"></div>
 									<div>
-										<a class="dropdown-item"
-											href="/user/login/logout">로그아웃</a>
+										<a class="dropdown-item" onclick="logout()">로그아웃</a>
 									</div>
 								</div>
 							</div>
 						</c:when>
 
-						<c:when
-							test="${mName == null && sessionScope.a_id != null}">
+						<c:when test="${mName == null && sessionScope.a_id != null}">
 							<div class="nav-item">
 								<a class="nav-link" href="/admin/admin_login/adlogout.do">관리자계정
 									로그아웃</a>

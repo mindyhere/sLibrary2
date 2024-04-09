@@ -6,8 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/resources/images/icon.png"
-	type="image/x-icon">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <link type="text/css" rel="stylesheet" href="/resources/static/user.css">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -40,23 +39,16 @@
 						} else if (status == 1) {
 							Swal.fire({
 								icon : 'warning',
-<<<<<<< HEAD
 								text : '현재 연체 중으로 이용 불가 상태입니다.',
-=======
-								text : '도서당 연장신청은 1번만 가능합니다.',
->>>>>>> branch 'master' of https://github.com/mindyhere/syLibrary2.git
 							});
 						}	else if (status == 2) {
 							Swal.fire({
 								icon : 'warning',
-<<<<<<< HEAD
 								text : '도서당 연장신청은 1번만 가능합니다.',
 							});
 						}	else if (status == 3) {
 							Swal.fire({
 								icon : 'warning',
-=======
->>>>>>> branch 'master' of https://github.com/mindyhere/syLibrary2.git
 								text : '예약된 책으로 연장이 불가합니다.',
 							});
 						}
