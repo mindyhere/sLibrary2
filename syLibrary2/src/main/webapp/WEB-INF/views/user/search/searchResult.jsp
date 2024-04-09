@@ -214,18 +214,24 @@ function checkOut(b_id){
 	let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}":"";
 	let a_id = "${sessionScope.a_id}" !=null? "${sessionScope.a_id}":"";
 	if(m_id != ""){
-		console.log(b_id+", "+m_id);
 		$.ajax({
 			url:'/checkout/'+b_id,
 			success: function(result){
-				myConfirm(result,
-						"나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
-						"info", 
-						"/user/book/myLibrary/${mId}");
+				console.log("success : result=" + result);
+				if(result=="Not possible"){
+					myConfirm(result,
+							"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
+							"error", 
+							"/user/book/myLibrary/${mId}");
+				} else {
+					myConfirm(result,
+							"나의서재에서 신청내역을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
+							"success",
+							"/user/book/myLibrary/${mId}");
+				}
 			},
 			error: function(err){
-				console.log(err);
-				console.log("**"+err.error);
+				console.log("**err : "+err);
 				myConfirm("Not possible",
 						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
 						"error", 

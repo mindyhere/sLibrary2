@@ -25,10 +25,9 @@ public class CheckoutDAOImpl implements CheckoutDAO {
 	}
 
 	@Override
-	public int checkMloan(String m_id) {
-		// 회원의 대출가능여부: 1(대출가능) or 0(대출불가=패널티 or 대출가능한 책 수=0)
-//		return sqlSession.selectOne("checkout.check_mLoan", m_id);
-		return sqlSession.update("checkout.check_mLoan", m_id);
+	public void checkMloan(Map<String, Object> param) {
+		sqlSession.selectOne("checkout.check_mLoan", param);
+		System.out.println("111 impl => "+param);
 	}
 
 	@Override
@@ -39,8 +38,5 @@ public class CheckoutDAOImpl implements CheckoutDAO {
 	@Override
 	public void insert(Map<String, Object> map) {
 		sqlSession.insert("checkout.insert_Lobook", map); // 대출 Lo_book insert
-		//sqlSession.update("checkout.call_CheckLoan", map.get("m_id"));
 	}
-
 }
-
