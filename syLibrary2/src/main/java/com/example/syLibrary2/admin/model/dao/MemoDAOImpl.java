@@ -44,7 +44,7 @@ public class MemoDAOImpl implements MemoDAO {
 		return sqlSession.selectOne("memo.count");
 	}
 
-	public MemoDTO search(MemoDTO dto) {
+	public MemoDTO search(int me_rownum) {
 //		MemoDTO dto = new MemoDTO();
 //		try {
 //			dto = session.selectOne("memo.search", me_rownum);
@@ -55,6 +55,6 @@ public class MemoDAOImpl implements MemoDAO {
 //				session.close();
 //		}
 //		return dto;
-		return sqlSession.selectOne("memo.search", dto);
+		return sqlSession.selectOne("memo.search", me_rownum);
 	}
 }

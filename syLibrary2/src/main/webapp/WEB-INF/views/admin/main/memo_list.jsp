@@ -40,7 +40,7 @@ $(function() {
 	});
 
 });
-function memo_del(me_rownum) {
+/* function memo_del(me_rownum) {
 	swal({
         text: "정말 삭제하시겠습니까?",
         buttons: ["취소", "확인"],
@@ -49,6 +49,27 @@ function memo_del(me_rownum) {
         	location.href = "/admin/memo/delete.do?me_rownum=" + me_rownum;
         } 
     });
+} */
+function memo_del(me_rownum) {
+	swal({
+        text: "정말 삭제하시겠습니까?",
+        buttons: ["취소", "확인"],
+	}).then(function(isConfirmed) {
+		if (isConfirmed) {
+			$.ajax({
+				url : "/admin/memo/delete.do",
+				type : "post",
+				data : {
+					"me_rownum" : me_rownum
+				},
+				success : function(data) {
+					location.reload();
+				}
+			});
+			document.form1.submit();
+		}
+		
+	})
 }
 function modal() {
 	const modal = document.getElementById("modal")
@@ -70,6 +91,59 @@ $(document).mouseup(function (e){
 });
 //수정모달
 function onModal(me_rownum) {
+	const a_name = "${dto.a_name}";
+	const me_post_date = "${dto.me_post_date}";
+	const me_memo = "${dto.me_memo}";
+	const me_rownum = "${dto.me_rownum}";
+	$.ajax({
+		type : "post",
+		url : "/admin/memo/search.do",
+		data : {
+			"me_rownum" : me_rownum,
+			"a_name" : a_name,
+			"me_post_date" : me_post_date,
+			"me_memo" : me_memo
+		},
+		dataType : "json",
+		success : function(data) {
+			console.log(data);
+			modal();
+			document.getElementById("writer").value=data.a_name;
+			document.getElementById("date").value=data.me_post_date;
+			document.getElementById("message").value=data.me_memo;
+			document.getElementById("rownum").value=data.me_rownum;
+		}
+	});
+}
+//상세모달
+function onModal2(me_rownum) {
+	const a_name = "${dto.a_name}";
+	const me_post_date = "${dto.me_post_date}";
+	const me_memo = "${dto.me_memo}";
+	const me_rownum = "${dto.me_rownum}";
+	$.ajax({
+		type : "post",
+		url : "/admin/memo/search.do",
+		data : {
+			"me_rownum" : me_rownum,
+			"a_name" : a_name,
+			"me_post_date" : me_post_date,
+			"me_memo" : me_memo
+		},
+		dataType : "json",
+		success : function(data) {
+			console.log(data);
+			modal2();
+			document.getElementById("writer2").value=data.a_name;
+			document.getElementById("date2").value=data.me_post_date;
+			document.getElementById("message2").value=data.me_memo;
+			document.getElementById("rownum2").value=data.me_rownum;
+		}
+	});
+}
+
+//수정모달
+/* function onModal(me_rownum) {
 	const me_rownum = $("#me_rownum").val();
 	$.ajax({
 		type : "post",
@@ -86,9 +160,9 @@ function onModal(me_rownum) {
 			document.getElementById("rownum").value=data.me_rownum;
 		}
 	});
-}
+} */
 //상세모달
-function onModal2(me_rownum) {
+/* function onModal2(me_rownum) {
 	const me_rownum = $("#me_rownum").val();
 	$.ajax({
 		type : "post",
@@ -104,7 +178,7 @@ function onModal2(me_rownum) {
 			document.getElementById("rownum2").value=data.me_rownum;
 		}
 	});
-}
+} */
 </script>
 <style>
 .modal-overlay {
