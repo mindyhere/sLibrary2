@@ -38,10 +38,6 @@ body {
 	margin-right: 15px;
 }
 
-/* .nav-item:hover .dropdown-menu .dropdown-menu-end {
-	display: block;
-	margin-top: 0; 
-} */
 </style>
 <body>
 	<nav class="navbar navbar-expand-lg" style="background-color: #FBFBFD;">

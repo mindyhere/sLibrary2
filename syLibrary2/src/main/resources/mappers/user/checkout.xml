@@ -13,10 +13,6 @@ select count(*) from re_book
 		and r_reservation <![CDATA[>=]]> 0
 </select>
 
-<select id="call_CheckLoan" statementType="CALLABLE">
-	{call check_loan(#{m_id})}
-</select>
-
 <!-- b_id → 가장 빠른 대출예정일 조회 -->
 <select id="retDate" resultType="String">
 select A.*
@@ -27,7 +23,6 @@ from
 where be_return > sysdate and rownum=1
 </select>
 
-
 <!-- 대출내역리스트(lo_book)에 데이터 추가 -->
 <insert id="insert_Lobook" parameterType="map">
 insert into lo_book(l_num, l_memno, l_bookid)
@@ -36,22 +31,13 @@ values (lo_book_seq.nextval,
 	#{b_id})
 </insert>
 
-<!-- 회원등급 확인 -->
-<!-- <select id="mlevel_check" resultType="int">
-select m_level from sl_member where m_id=#{m_id}
-</select> -->
-
-<!-- 사용자가 현재 대출중인 책 권수 -->
-<!-- <select id="cntUserLo">
-select count(L_BOOKID)
-from (select * from lo_book
-      where L_RETURN_YN='N')
-where L_MEMNO=(select m_no from sl_member where m_id=#{m_id})
-</select>
- -->
-
-<select id="check_mLoan" resultType="int">
-select m_loan from sl_member where m_id=#{m_id}
+<select id="check_mLoan" statementType="CALLABLE" resultType="int">
+DECLARE
+	p_result number;
+BEGIN
+	check_loan_0('KM', P_RESULT);
+	DBMS_OUTPUT.PUT_LINE(P_RESULT);
+END;
 </select>
 
 <!-- 동일한 책을 기존에 대출중인지 확인 -->

@@ -6,20 +6,26 @@ function loginCheck(){
 	let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}" : "";
 	let a_id = "${sessionScope.a_id}" != null? "${sessionScope.a_id}" : "";
 	if (m_id != ""){
-		swal({
-			text : "통합관리시스템 이용권한이 없습니다. 로그아웃 후 이동할까요?",
-			buttons : [ "NO", "YES" ],
-		}).then(function(isConfirmed) {
-			if (isConfirmed) {
+		Swal.fire({
+			title: "잠깐!",
+			html: "본 계정은 통합관리시스템 이용권한이 없습니다.<br>로그아웃 후 이동할까요?",
+			icon: "question",
+			showCancelButton: true,
+			reverseButtons: true,
+			cancelButtonColor: "#C6C7C8",
+			confirmButtonText: "YES",
+			cancelButtonText: "NO"
+			}).then((result) => {
+			if (result.isConfirmed) {
 				location.href="/user/login/logout";
-				location.href="/admin/admin_login/admin.do";	
+				location.href="/admin/admin_login/admin.do";
 			}
 		});
-	} else if(a_id != "") {
+	}else if(a_id != ""){
 		location.href="/admin/admin_login/main";
-	} else {
+	}else {
 		location.href="/admin/admin_login/admin.do";
-	}	
+	}
 }	
 </script>
 <style>
