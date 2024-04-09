@@ -30,56 +30,53 @@ public class MemberController {
 	@GetMapping("join")
 	public String join() {
 		return "user/member/join";
-	} 
+	}
 
 	@PostMapping("join")
-	public String join(@RequestParam("mname") String m_name, @RequestParam("mId") String m_Id,
-			@RequestParam("mPasswd") String m_Passwd, @RequestParam("mTel") String m_Tel,
-			@RequestParam("mAddress") String m_Address, @RequestParam("mEmail") String m_Email,
-			@RequestParam("mZipNo") String m_ZipNo, @RequestParam("mBirthDate") String m_BirthDate,
-			@RequestParam("mDetailAddress") String m_DetailAddress,
-			@RequestParam(value = "mImg", required = false) MultipartFile m_Img, HttpServletRequest request,
-			Model model) {
-
-		ServletContext application = request.getSession().getServletContext();
-		String mImgPath = application.getRealPath("/webapp/resources/images/member/");
-		String fileName = m_Img != null ? m_Img.getOriginalFilename() : null;
-
-		try {
-			if (fileName != null && !fileName.trim().isEmpty()) {
-				File file = new File(mImgPath, fileName);
-				m_Img.transferTo(file);
-			} else {
-				fileName = "image_no.png";
-			}
-
-			System.out.println("mname:" + m_name);
-			System.out.println("mId:" + m_Id);
-			System.out.println("mPasswd:" + m_Passwd);
-			System.out.println("mTel:" + m_Tel);
-
-			MemberDTO dto = new MemberDTO();
-			dto.setM_name(m_name);
-			dto.setM_id(m_Id);
-			dto.setM_passwd(m_Passwd);
-			dto.setM_tel(m_Tel);
-			dto.setM_address(m_Address);
-			dto.setM_email(m_Email);
-			dto.setM_zip_no(m_ZipNo);
-			dto.setM_birth_date(m_BirthDate);
-			dto.setM_detail_address(m_DetailAddress);
-			dto.setM_img(fileName);
-
-			memberDao.insert_join(dto);
-			model.addAttribute("message", "join");
-
-			return "redirect:user/main";
-		} catch (IOException e) {
-			e.printStackTrace();
-			model.addAttribute("error");
-			return "error";
-		}
-	}
+	public ModelAndView join(HttpServletRequest request, @RequestParam("mImg") MultipartFile mImgFile)
+			throws IOException {
+	  String mName = request.getParameter("mName");
+	  String mId = request.getParameter("mId"); 
+	  String mPasswd = request.getParameter("mPasswd"); 
+	  String mTel = request.getParameter("mTel");
+	  String mAddress = request.getParameter("mAddress"); 
+	  String mEmail =  request.getParameter("mEmail"); 
+	  String mZipNo =  request.getParameter("mZipNo"); 
+	  String birthdate =  request.getParameter("mBirthDate"); 
+	  String mDetailAddress =  request.getParameter("mDetailAddress");
+	  
+	  // 회원 이미지 db 저장 
+	  String mImg = "image_no.png"; 
+	  if (!mImgFile.isEmpty()) { 
+		  try	{ 
+			  String mImgPath = "/resources/images/member/"; 
+			  String realPath = request.getSession().getServletContext().getRealPath(mImgPath); 
+			  mImg = mImgFile.getOriginalFilename();
+			  mImgFile.transferTo(new File(realPath +  mImg)
+					  ); 
+			  } catch (IOException e) { 
+				  e.printStackTrace(); 
+			  } 
+		  }
+	  
+	  MemberDTO dto = new MemberDTO(); 
+	  dto.setM_name(mName); 
+	  dto.setM_id(mId);
+	  dto.setM_passwd(mPasswd); 
+	  dto.setM_tel(mTel);
+	  dto.setM_address(mAddress);
+	  dto.setM_email(mEmail); 
+	  dto.setM_zip_no(mZipNo);
+	  dto.setM_birth_date(birthdate); 
+	  dto.setM_detail_address(mDetailAddress);
+	  dto.setM_img(mImg);
+	  
+	  memberDao.insert_join(dto);
+	  
+	  ModelAndView mav = new ModelAndView(); 
+	  mav.setViewName("redirect:/"); 
+	  return  mav;
+ }
 
 	// 회원정보 상세페이지
 	@GetMapping("detail_memberInfo")
