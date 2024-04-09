@@ -24,7 +24,6 @@ import jakarta.servlet.http.Part;
 @Controller
 @RequestMapping("user/member/*")
 public class MemberController {
-
 	@Autowired
 	MemberDAO memberDao;
 
@@ -33,7 +32,7 @@ public class MemberController {
 		return "user/member/join";
 	}
 
-	@GetMapping("join.do")
+	@PostMapping("join")
 	public String join(@RequestParam("mname") String m_name, @RequestParam("mId") String m_Id,
 			@RequestParam("mPasswd") String m_Passwd, @RequestParam("mTel") String m_Tel,
 			@RequestParam("mAddress") String m_Address, @RequestParam("mEmail") String m_Email,

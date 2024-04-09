@@ -15,5 +15,5 @@ public interface MemberDAO {
 	void edit_memberInfo(MemberDTO dto);
 
 	// 회원아이디 중복 체크
-	int checkId(String m_id);
+	int id_check(String m_id);
 }

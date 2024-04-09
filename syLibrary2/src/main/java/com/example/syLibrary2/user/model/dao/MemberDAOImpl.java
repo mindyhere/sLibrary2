@@ -18,7 +18,8 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override // 회원가입
 	public void insert_join(MemberDTO dto) {
 		sqlSession.insert("member.insert_join", dto);
-
+		sqlSession.commit();
+		sqlSession.close();
 	}
 
 	@Override // 회원 상세페이지
@@ -28,19 +29,11 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override // 회원정보 수정
 	public void edit_memberInfo(MemberDTO dto) {
-		System.out.println("업데이트 쿼리 실행");
-		System.out.println(dto);
-		System.out.println(dto.getM_id());
-		System.out.println(dto.getM_address());
-		System.out.println(dto.getM_passwd());
-		System.out.println(dto.getM_tel());
 		sqlSession.update("member.edit_memberInfo", dto);
 	}
 
-	@Override // 아이디 중복체크
-	public int checkId(String m_Id) {
-		int cnt = sqlSession.selectOne("member.id_check", m_Id);
-		return cnt;
-
+	@Override  // 아이디 중복체크
+	public int id_check(String m_Id) {
+		return 0;
 	}
 }

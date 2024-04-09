@@ -167,15 +167,14 @@
 		lo_book
 		WHERE
 		l_memno =#{mNo}
-		AND l_return_yn =
-		'N'
-		AND l_bookid =
-		#{bId}
+		AND l_return_yn = 'N'
+		AND l_bookid = #{bId}
 	</select>
 
 	<!-- 연체 여부 확인 -->
 	<select id="checkOverReturn" resultType="int">
-		SELECT COUNT(*) FROM lo_book
+		SELECT COUNT(*) FROM
+		lo_book
 		WHERE L_MEMNO = #{mNo}
 		AND SYSDATE > L_RETDATE
 		AND L_RETURN_YN = 'N'
