@@ -70,8 +70,8 @@ html, body {
 				</svg>&nbsp;도서 통계</li>
 		</ul>
 		<ul class="sub_menu">
-			<li><a id="menu_a" href="/syLibrary/admin/loan_chart.jsp">주간 도서 대출량</a><br></li>
-			<li><a id="menu_a" href="/admin/chart/ct_chart.do">월간 분류별 대출량</a><br></li>
+			<li><a id="menu_a" href="/admin/chart/chart.do">주간 도서 대출량</a><br></li>
+			<li><a id="menu_a" href="/admin/chart/ct.do">월간 분류별 대출량</a><br></li>
 		</ul>
 		<ul class="big_menu">
 			<li><a style="text-decoration: none; color: black; font-weight:bold;" href="/admin/admember/list.do"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">

@@ -39,16 +39,18 @@
 
 		$.ajax({
 					url : "/admin/chart/ct_chart.do",
-					type : "post",
-					dataType : "json",
-					//contentType : "text/html;charset=utf-8",
+					type : "get",
+					// dataType : "json",
+					contentType : "text/html;charset=utf-8",
 					//async:false,
 					success : function(data) {
-						for (let j = 0; j < data.length; j++) {
-							category.push(data[j].category);
-							cnt.push(data[j].cnt);
-							console.log(categoty);
-							console.log(cnt);
+						// alert(data);
+						// console.log(data);
+						for (let j = 0; j < 7; j++) {
+							category.push(data[j].CATEGORY);
+							cnt.push(data[j].CNT);
+							// console.log(category);
+							// console.log(cnt);
 						}
 						const ctx = document.getElementById('myChart')
 								.getContext('2d');

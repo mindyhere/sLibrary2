@@ -5,4 +5,4 @@ import java.util.Map;
 
 public interface ChartDAO {
 	List<Map<String, Object>> ct_chart();
-}
+	List<Map<String, Object>> loChart(); }
