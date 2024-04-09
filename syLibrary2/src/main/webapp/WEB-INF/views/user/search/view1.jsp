@@ -10,7 +10,7 @@
 	<tr style="max-height:100px;" align="center">
 		<td><img src="${dto.b_url}" alt="준비중" style="width: 100px; max-height: 150px"></td>
 		<td align="left">
-			<a href="/user/search/bookInfo/${dto.b_id}" style="text-decoration-line: none;">
+			<a href="/syLibrary/search_servlet/bookInfo.do?b_id=${dto.b_id}" style="text-decoration-line: none;">
 			<h4>${dto.b_name }</h4></a>
 			<br>${dto.b_author }
 			<br>${dto.b_pub}&nbsp;&nbsp;|&nbsp;&nbsp;${dto.b_year}

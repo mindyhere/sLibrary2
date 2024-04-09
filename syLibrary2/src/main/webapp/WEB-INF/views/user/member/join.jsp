@@ -5,39 +5,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
-<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/resources/static/user.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/resources/static/js/bootstrap.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<meta http-equiv="Content-Type"content="text/html; charset=UTF-8">
+<!-- <link rel="icon" href="/syLibrary2/resources/images/icon.png"	type="image/x-icon">
+<script src="http://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<link rel="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/syLibrary2/static/user.css">
+<link rel="stylesheet"
+	href="/syLibrary2/static/assets/bootstrap.min.css" />
+<link rel="stylesheet" href="/syLibrary/static/assets/lineicons.css" />
+<link rel="stylesheet"
+	href="/syLibrary2/static/assets/materialdesignicons.min.css" /> 
+ -->
 
 <script>
-/* function checkId(){
-	var mId = $("#mId").val();
-	$.ajax({
-		url : "../../member/id_check",
-		type : "post",
-		data : {mId : mId	},
-		dataType : 'json',
-		success : function(result) {
-			if (id_check ==1 ) {
-				$("#checkId").html('이미 사용중인 아이디입니다.');
-				$("#checkId").attr('color', 'red');
-			} else {
-				$("#checkId").html('사용할 수 있는 아이디입니다.');
-				$("#checkId").attr('color', 'blue');
-			}
-		},
-		error : function() {
-			alert("에러발생");
-		}
-	})
-} */
 
 //널값 체크
 $(function() {
@@ -108,15 +92,15 @@ function myAlert(icon, title, msg){
 	}
 
 	 //주소검색
-/*  function goP() {
-		var pop = window.open("../../member/jusoPopup", "pop",
+  function goP() {
+		var pop = window.open("/jusoPopup.jsp", "pop",
 				"width=570,height=420, scrollbars=yes, resizable=yes");
 	} 
 	function jusoCallBack(zipNo, roadFullAddr, roadAddrPart1, roadAddrPart2, mDetailAddress) {
 		document.form1.mZipNo.value = zipNo; //상세 주소
 		document.form1.mAddress.value = roadAddrPart1 + roadAddrPart2; //도로명 주소
 		document.form1.mDetailAddress.value = mDetailAddress; //상세 주소 
-	} */
+	} 
 	//이미지 화면출력
 	function readURL(input) {
 		if (input.files && input.files[0]) {
@@ -222,8 +206,6 @@ function myAlert(icon, title, msg){
 		</div>
 	</div>
 	</form>
-	
 </body>
-
 <jsp:include page="../common/footer.jsp"></jsp:include>
 </html>

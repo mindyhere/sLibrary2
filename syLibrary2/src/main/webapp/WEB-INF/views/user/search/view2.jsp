@@ -83,7 +83,7 @@ width: 10rem;
 			  </div>
 			  <div calss="card-body" style="height:20%; padding-bottom:1%">
 				<div class="btn-group-sm" role="group">
-				  <button type="button" class="btn btn-outline-light btnInfo" onclick="location.href='/user/search/bookInfo/${dto.b_id}'"><i class="bi bi-info-lg"></i></button>
+				  <button type="button" class="btn btn-outline-light btnInfo" onclick="location.href='/syLibrary/search_servlet/bookInfo.do?b_id=${dto.b_id}'"><i class="bi bi-info-lg"></i></button>
 					<c:choose>
 					  <c:when test="${stateinfo[vst.index].state == 'y' }">
 						<button type="button" class="btn btn-outline-light btnChkout" name="btnChkout" onclick="checkOut('${dto.b_id}')"><i class="bi bi-check2-square"></i></button>
