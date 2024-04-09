@@ -69,7 +69,7 @@
 		where rn
 		between #{start} and #{end}
 	</select>
-
+ 
 	<!-- 관리자회원검색 개수 -->
 	<select id="ad_search_count" resultType="int">
 		select count(*) from

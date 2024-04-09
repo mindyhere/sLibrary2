@@ -217,7 +217,7 @@ function goHisList(m_no) {
 					<input type="button" value="연도별 차트" id="main-btn"
 						onclick="createChart('year')">
 				</div>
-			</div>
+			</div> 
 			<div id="myChart" class="card-style"
 				style="position: relative; height: 400px; display: none;">
 				<canvas id="chartResult"></canvas>

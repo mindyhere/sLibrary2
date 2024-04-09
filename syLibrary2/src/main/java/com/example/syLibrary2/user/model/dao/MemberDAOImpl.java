@@ -21,7 +21,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.commit();
 		sqlSession.close();
 	}
-
+ 
 	@Override // 회원 상세페이지
 	public MemberDTO detailMember(String mId) {
 		return sqlSession.selectOne("member.detail_member", mId);

@@ -67,7 +67,7 @@ public class MyLibraryDAOImpl implements MyLibraryDAO {
 		String renewYn = sqlSession.selectOne("myLibrary.checkRenewYn", map);
 		return renewYn;
 	}
-
+ 
 	// 연체 여부 확인 (연장신청)
 	@Override
 	public int checkOverReturn(int mNo) {

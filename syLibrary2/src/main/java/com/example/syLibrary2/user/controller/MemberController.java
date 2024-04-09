@@ -30,7 +30,7 @@ public class MemberController {
 	@GetMapping("join")
 	public String join() {
 		return "user/member/join";
-	}
+	} 
 
 	@PostMapping("join")
 	public String join(@RequestParam("mname") String m_name, @RequestParam("mId") String m_Id,

@@ -24,7 +24,7 @@ public interface MyLibraryDAO {
 
 	// 예약 여부 확인
 	int checkReservation(int bId);
-
+ 
 	// 연장 여부 확인
 	String checkRenewYn(Map<String, Object> map);
 

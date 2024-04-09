@@ -27,7 +27,7 @@ public class MemberDTO {
 	private int cnt_reserv;
 
 	public MemberDTO() {
-	}
+	} 
 
 	public MemberDTO(String m_name, String m_id, String m_birth_date, String m_tel, String m_email, String m_address,
 			String m_img, String m_year, String m_zip_no, String m_detail_address, int le_no, String le_name,

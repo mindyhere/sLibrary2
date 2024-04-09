@@ -106,7 +106,7 @@ public class MyLibraryController {
 			}
 		} else if (reCnt > 0) {
 			status = 3;
-		}
+		} 
 		return status;
 	}
 	// 예약 중인 도서
