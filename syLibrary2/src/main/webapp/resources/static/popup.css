@@ -8,7 +8,7 @@
 /* 회사 로고 이미지 이미지 크기는 149 * 14px */
 .pop-address-search .logo {
 	background:
-		url("http://localhost:8080/syLibrary/resources/images/logo.png") no-repeat;
+		url("/resources/images/logo.png") no-repeat;
 	background-position: center;
 }
 
