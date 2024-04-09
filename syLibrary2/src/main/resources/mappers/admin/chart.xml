@@ -6,4 +6,8 @@
 	<select id="ct_Chart" resultType="map">
 		select category,(sum(cnt)) as cnt from ct_chart group by category
 	</select>
+	
+	<select id="loanChart" resultType="map">
+		select loan_book, to_char(l_lodate, 'mm/dd') l_lodate from chart_loan
+	</select>
 </mapper>
