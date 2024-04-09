@@ -21,6 +21,7 @@ import com.example.syLibrary2.admin.model.dao.AdminDAO;
 import com.example.syLibrary2.admin.model.dao.MemoDAO;
 import com.example.syLibrary2.admin.model.dto.MemoDTO;
 import com.example.syLibrary2.util.PageUtil2;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -100,30 +101,32 @@ public class MemoController {
 	//메모상세 (확인요망)
 		@RequestMapping("search.do")
 		@ResponseBody
-		public ModelAndView detail(@RequestParam(name="me_rownum") int me_rownum) {
+		public HashMap<String, Object> detail(@RequestParam(name="me_rownum") String me_rownum) {
 			//MemoDTO dto = memoDao.search(me_rownum);
-			ModelAndView mav = new ModelAndView();
-			System.out.println("메모번호==="+me_rownum);
-			MemoDTO memo = memoDao.search(me_rownum);
-			Map<String,Object> map = new HashMap<>();
+			int m_rownum = Integer.valueOf(me_rownum);
+			//ModelAndView mav = new ModelAndView();
+			System.out.println("메모번호==="+m_rownum);
+			MemoDTO memo = memoDao.search(m_rownum);
+			//Map<String,Object> map = null;
+			
+			ObjectMapper mapper = new ObjectMapper();
+			HashMap<String, Object> map = mapper.convertValue(memo, HashMap.class);
+			
 //			map.put("me_a_id", memo.getMe_a_id());
 //			map.put("me_rownum", memo.getMe_rownum());
 //			map.put("a_name", memo.getA_name());
 //			map.put("me_memo", memo.getMe_memo());
 //			map.put("me_post_date", memo.getMe_post_date());
-			map.put("dto", memo);
-			mav.addObject("map",map);
+//			map.put("dto", memo);
+			//mav.addObject("dto", map);
 			System.out.println(map);
-			return mav;
+			return map;
 //				dto.setMe_rownum(me_rownum);
 //				System.out.println("메모상세==="+dto);
 //				memoDao.search(dto);
 //				entity = new ResponseEntity<String>("success",HttpStatus.OK);
 //				return entity;
 			
-//			memoDao.search(me_rownum);
-//		    JsonObject jso = new JsonObject();
-//			
 //			
 //			ModelAndView mav = new ModelAndView();
 //			mav.setViewName("board/view");
