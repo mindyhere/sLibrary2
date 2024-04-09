@@ -39,11 +39,12 @@
 
 		$.ajax({
 					url : "/admin/chart/ct_chart.do",
-					type : "post",
+					type : "POST",
 					dataType : "json",
 					//contentType : "text/html;charset=utf-8",
 					//async:false,
 					success : function(data) {
+						alert(data);
 						for (let j = 0; j < data.length; j++) {
 							category.push(data[j].category);
 							cnt.push(data[j].cnt);
