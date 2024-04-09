@@ -77,11 +77,19 @@ public class MemoController {
 	
 	//메모상세 (확인요망)
 	@RequestMapping("search.do")
-	public @ResponseBody ModelAndView detail(@RequestParam(name="me_rownum") int me_rownum) {
+	@ResponseBody
+	public ModelAndView detail(@RequestParam(name="me_rownum") int me_rownum) {
 		//MemoDTO dto = memoDao.search(me_rownum);
 		ModelAndView mav = new ModelAndView();
 		System.out.println("메모번호==="+me_rownum);
-		mav.addObject("dto",memoDao.search(me_rownum));
+		MemoDTO memo = memoDao.search(me_rownum);
+		Map<String,Object> map = new HashMap<>();
+		map.put("me_a_id", memo.getMe_a_id());
+		map.put("me_rownum", memo.getMe_rownum());
+		map.put("a_name", memo.getA_name());
+		map.put("me_memo", memo.getMe_memo());
+		map.put("me_post_date", memo.getMe_post_date());
+		mav.addObject("map",map);
 		return mav;
 //			dto.setMe_rownum(me_rownum);
 //			System.out.println("메모상세==="+dto);

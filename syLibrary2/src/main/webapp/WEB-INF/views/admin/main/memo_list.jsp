@@ -56,12 +56,31 @@ function memo_del(me_rownum) {
 	swal({
         text: "정말 삭제하시겠습니까?",
         buttons: ["취소", "확인"],
+	}).then(function(isConfirmed) {
+		if (isConfirmed) {
+			$.ajax({
+				url : "/admin/memo/delete.do",
+				type : "post",
+				data : {
+					"me_rownum" : me_rownum
+				},
+				success : function(data) {
+					location.reload();
+				}
+			});
+		}
+	})
+}
+/* function memo_del(me_rownum) {
+	swal({
+        text: "정말 삭제하시겠습니까?",
+        buttons: ["취소", "확인"],
     }).then(function(isConfirmed) {
         if (isConfirmed) {
         	location.href = "/admin/memo/delete.do";
         } 
     });
-}
+} */
 function modal() {
 	const modal = document.getElementById("modal")
 	modal.style.display = "Flex"
