@@ -94,11 +94,104 @@ public class BookController {
 		} else {
 			dto.setB_url(filename);
 		}
+		String b_category = dto.getB_category();
+		int ct_number = 0;
+		if (b_category.contains("판타지")) {
+			ct_number = 100;
+		} else if(b_category.contains("에세이")) {
+			ct_number = 110;
+		} else if(b_category.contains("소설")) {
+			ct_number = 120;
+		} else if(b_category.contains("동화")) {
+			ct_number = 130;
+		} else if(b_category.contains("SF")) {
+			ct_number = 140;
+		} else if(b_category.contains("추리")) {
+			ct_number = 150;
+		} else if(b_category.contains("만화")) {
+			ct_number = 160;
+		} else if(b_category.contains("청소년")) {
+			ct_number = 170;
+		} else if(b_category.contains("자기계발")) {
+			ct_number = 180;
+		} else if(b_category.contains("역사")) {
+			ct_number = 190;
+		} else if(b_category.contains("과학")) {
+			ct_number = 200;
+		}
+		dto.setCt_number(ct_number);
 		result = dao.update(dto);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/book/edit");
 		mav.addObject("result", result);
-		System.out.println(mav);
+		// System.out.println(mav);
+		return mav;
+	}
+
+	@PostMapping("delete.do")
+	public String delete(@RequestParam(name = "b_id") int b_id) {
+		dao.delete(b_id);
+		return "redirect:/book/list_all.do";
+	}
+	
+	@GetMapping("select_cg.do")
+	public ModelAndView select_cg(){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/book/insert");
+		mav.addObject("list", dao.select_cg());
+		return mav;
+	}
+	
+	@PostMapping("insert.do")
+	public ModelAndView insert(BookDTO dto, HttpServletRequest request) {
+		String filename = "-";
+		String result = "";
+		try {
+			ServletContext application = request.getSession().getServletContext();
+			String path = application.getRealPath("/resources/images/book/");
+			for (Part part : request.getParts()) {
+				filename = part.getSubmittedFileName();
+				if (filename != null && !filename.equals("null") && !filename.equals("")) {
+					part.write(path + filename);
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		dto.setB_url(filename);
+		String b_category = dto.getB_category();
+		int ct_number = 0;
+		if (b_category.contains("판타지")) {
+			ct_number = 100;
+		} else if(b_category.contains("에세이")) {
+			ct_number = 110;
+		} else if(b_category.contains("소설")) {
+			ct_number = 120;
+		} else if(b_category.contains("동화")) {
+			ct_number = 130;
+		} else if(b_category.contains("SF")) {
+			ct_number = 140;
+		} else if(b_category.contains("추리")) {
+			ct_number = 150;
+		} else if(b_category.contains("만화")) {
+			ct_number = 160;
+		} else if(b_category.contains("청소년")) {
+			ct_number = 170;
+		} else if(b_category.contains("자기계발")) {
+			ct_number = 180;
+		} else if(b_category.contains("역사")) {
+			ct_number = 190;
+		} else if(b_category.contains("과학")) {
+			ct_number = 200;
+		}
+		dto.setCt_number(ct_number);
+		// System.out.println(dto);
+		result = dao.insert(dto);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/book/insert");
+		mav.addObject("result", result);
+		// System.out.println(mav);
 		return mav;
 	}
 }
