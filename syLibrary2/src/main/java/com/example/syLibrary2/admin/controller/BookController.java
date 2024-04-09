@@ -118,6 +118,8 @@ public class BookController {
 			ct_number = 190;
 		} else if(b_category.contains("과학")) {
 			ct_number = 200;
+		} else {
+			ct_number = 500;
 		}
 		dto.setCt_number(ct_number);
 		result = dao.update(dto);
