@@ -22,31 +22,9 @@
  -->
 
 <script>
-	//아이디 중복 확인
-	function checkId() {
-		var mId = $("#mId").val();
-		$.ajax({
-			url : "/syLibrary2/id_check.do",
-			type : "post",
-			data : {
-				mId : mId
-			},
-			success : function(result) {
-				if (result == 1) {
-					$("#checkId").html('이미 사용중인 아이디입니다.');
-					$("#checkId").attr('color', 'red');
-				} else {
-					$("#checkId").html('사용할 수 있는 아이디입니다.');
-					$("#checkId").attr('color', 'blue');
-				}
-			},
-			error : function() {
-				alert("에러발생");
-			}
-		})
-	}
-	// 널값 체크
-	$(function() {
+
+//널값 체크
+$(function() {
 		$(".btnJoin").click(function() {
 			let mName = $("#mName").val();
 			let mId = $("#mId").val();
@@ -57,44 +35,54 @@
 			let mAddress = $("#mAddress").val();
 
 			if (mName == "") {
-				swal("이름을 입력하세요!");
+				myAlert("warning","이름을 입력하세요!");
 				$("#mName").focus();
 				return false;
 			}
 
 			if (mId == "") {
-				swal("아이디를 입력하세요!");
+				myAlert("warning","아이디를 입력하세요!");
 				$("#mId").focus();
 				return false;
 			}
 
 			if (mPasswd == "") {
-				swal("비밀번호를 입력하세요!");
+				myAlert("warning","비밀번호를 입력하세요!");
 				$("#mPasswd").focus();
 				return false;
 			}
 			if (mTel == "") {
-				swal("전화번호를 입력하세요!");
+				myAlert("warning","전화번호를 입력하세요!");
 				$("#mTel").focus();
 				return false;
 			}
 			if (mBirthDate == "") {
-				swal("생년월일을 선택해주세요!");
+				myAlert("warning","생년월일을 선택해주세요!");
 				return false;
 			}
 			if (mEmail == "") {
-				swal("이메일을 입력하세요!");
+				myAlert("warning","이메일을 입력하세요!");
 				$("#mEmail").focus();
 				return false;
 			}
 
 			if (mAddress == "") {
-				swal("주소를 입력하세요!");
+				myAlert("warning","주소를 입력하세요!");
 				$("#mAddress").focus();
 				return false;
 			}
 		});
 	});
+	
+function myAlert(icon, title, msg){
+	Swal.fire({
+		icon: "warning",
+		title: title,
+		text: msg,
+		confirmButtonColor: "#FEC5BB",
+		confirmButtonText: "OK"
+	});
+}
 
 	//전화번호 자동 하이픈 생성
 	function oninputPhone(mTel) {
@@ -103,17 +91,16 @@
 						"$1-$2-$3");
 	}
 
-	//주소검색
-	function goP() {
-		var pop = window.open("/syLibrary2/user/member/jusoPopup.jsp", "pop",
+	 //주소검색
+  function goP() {
+		var pop = window.open("/jusoPopup.jsp", "pop",
 				"width=570,height=420, scrollbars=yes, resizable=yes");
-	}
-	function jusoCallBack(zipNo, roadFullAddr, roadAddrPart1, roadAddrPart2,
-			mDetailAddress) {
+	} 
+	function jusoCallBack(zipNo, roadFullAddr, roadAddrPart1, roadAddrPart2, mDetailAddress) {
 		document.form1.mZipNo.value = zipNo; //상세 주소
 		document.form1.mAddress.value = roadAddrPart1 + roadAddrPart2; //도로명 주소
-		document.form1.mDetailAddress.value = mDetailAddress; //상세 주소
-	}
+		document.form1.mDetailAddress.value = mDetailAddress; //상세 주소 
+	} 
 	//이미지 화면출력
 	function readURL(input) {
 		if (input.files && input.files[0]) {
@@ -125,12 +112,24 @@
 		} else {
 			document.getElementById('url').src = "";
 		}
-	}
-</script> 
+	} 
+</script>
+
+<style type="text/css">
+/* alert 커스텀 */
+.swal2-confirm {
+	background-color: #FEC5BB !important;
+	border: 1px solid #FEC5BB !important;
+	box-shadow: none !important;
+	outline:none !important;
+	height: 44px;
+}
+</style>
+
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
-		<form method="post" action="user/member/join">
+		<form method="post" action="/user/member/join" enctype="multipart/form-data">
 	<div class="container">
 		<h3 class="text-bold">회원가입</h3>
 		<hr>
@@ -142,8 +141,8 @@
 							<div style="text-align: -webkit-center;">
 								<br> <br>
 								<div class="profile-image" style="width: 100px; height: 100px">
-									<br> <img id="url" src="../resources/images/member"
-										width="100px" height="100px"> 프로필 사진<br>
+									<br> <img id="url" src="../../resources/images/member/image_no.png"
+											width="100px" height="100px"> 프로필 사진<br>
 									<input type="file" id="mImg" name="mImg"
 										onchange="readURL(this);" class="form-control" width="50px"
 										height="50px">
@@ -158,13 +157,14 @@
 						<div class="col-9"
 							style="background-color: white; border-radius: 20px; padding: 30px 50px 30px 50px;">
 							<div class="input-style-1">
-								<label>아이디</label> <input type="text" class="form__input"
-									name="mId" id="mId" oninput="checkId()" placeholder="아이디 입력">
-								<font id="checkId" size="2"></font>
+								<label>아이디</label>
+									<input type="text" class="form-control" id="mId" name="mId" placeholder="아이디 입력" >
+									<!-- <input type="text" class="form-control" id="mId" name="mId" oninput="checkId()" placeholder="아이디 입력" >
+									<font id="checkId" size="2"></font> -->
 							</div>
 							<div class="input-style-1">
 								<label>비밀번호</label> <input type="password" name="mPasswd"
-									id="mPasswd" class="form-control" placeholder="비밀번호 입력">
+									id="mPasswd" class="form-control" placeholder="비밀번호 입력" autoComplete="on" />
 							</div>
 							<div class="input-style-1">
 								<label>전화번호</label> <input type="text" name="mTel" id="mTel"
@@ -198,7 +198,7 @@
 									class="form-control">
 							</div>
 							<div style="text-align: center;">
-								<input type="submit" value=" 회원가입" id="main-btn" class="btnJoin">
+						<input type="submit" value=" 회원가입" id="main-btn" class="btnJoin"> 
 							</div>
 						</div>
 					</div>
