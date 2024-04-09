@@ -10,12 +10,11 @@
 	type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
+<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="../include/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <style>
 html, body {
@@ -42,26 +41,26 @@ float: left;
 }
 </style>
 <body>
-	<jsp:include page="./admin_header.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_header.jsp" />
 	
 <div id="body-wrapper">
 	<div id="body-content">
-			<jsp:include page="./menu.jsp" />
+			<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
 			<div style="padding-top: 30px; left: 250px; position: absolute; width: 2000px;">
 				<div class="dd" style="width: 350px;">
-					<%@ include file="./main/calendar.jsp" %>
+					<%@ include file="/WEB-INF/views/admin/main/calendar.jsp" %>
 				</div>
 				
 				<div class="ddm" style="width: 350px; ">	
-					<%@ include file="./main/memo_insert.jsp" %>
+					<%@ include file="/WEB-INF/views/admin/main/memo_insert.jsp" %>
 				</div>
 				
 				<div class="ddm" style="width: 550px;">	
-					<%@ include file="./main/memo_main.jsp" %>
+					<%@ include file="/WEB-INF/views/admin/main/memo_main.jsp" %>
 				</div>
 			</div>
 	</div>
-	<jsp:include page="./admin_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>
 </body>
 </html>

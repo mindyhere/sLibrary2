@@ -38,15 +38,15 @@
 </script>
 </head>
 <body>
-	<form method="post" name="form1" action="admin/memo/insert.do">
+	<form method="post" name="form1" action="/admin/memo/insert.do">
 		<table border="1" style="width: 300px" class="table table-hover">
 			<tr align="center">
 				<td>
 					<%-- <input type="text" name="me_memo" id="me_memo" size="6" class="form-control" value="${memo.me_memo}"> --%>
-					<textarea class="form-control" type="text" name="me_memo" id="me_memo" rows="5" cols="30" placeholder="메모작성" id="contents" value="${memo.me_memo}"></textarea>
+					<textarea class="form-control" type="text" name="me_memo" id="me_memo" rows="5" cols="30" placeholder="메모작성" id="contents" value="${dto.me_memo}"></textarea>
 					<input type="hidden" name="me_a_id" id="me_a_id" value="<%=session.getAttribute("a_id")%>">
 					<input type="hidden" name="me_post_date" id="me_post_date" size="4">
-					<input type="hidden" value="${memo.me_idx}" name="me_idx"></td>
+					<input type="hidden" value="${dto.me_idx}" name="me_idx"></td>
 			</tr>
 			<tr>
 				<td align="center"><input type="submit" id="btnMemo" value="메모등록" class="btn btn-warning"></td>

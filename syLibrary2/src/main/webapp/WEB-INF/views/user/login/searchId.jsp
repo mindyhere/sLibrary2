@@ -13,6 +13,8 @@
 <script>
 	$(document).ready(function() {
 		$('ul.tabs li').click(function() {
+			 $("#mTel").val("");
+			 $("#mEmail").val("");
 			var tab_id = $(this).attr('data-tab');
 			$('ul.tabs li').removeClass('current');
 			$('.input-style-tab').removeClass('current');
@@ -20,7 +22,7 @@
 			$(this).addClass('current');
 			$(this).addClass('required');
 			$("#" + tab_id).addClass('current');
-		})
+		});
 	});
 
 	// 전화번호 형식 체크
@@ -35,31 +37,24 @@
 		const mTel = $("#mTel").val();
 		const mName = $("#mName").val();
 		const mBirthDate = $("#mBirthDate").val();
+		console.log("mEmail " + mEmail);
+		console.log("mTel " + mTel);
+		console.log(mName);
+		console.log(mBirthDate);
 		if ($('#mName').val() == "") {
 			Swal.fire({
-				icon : 'warning', // Alert 타입
-				title : '', // Alert 제목
-				text : '이름을 입력해주세요.', // Alert 내용
+				icon : 'warning',
+				text : '이름을 입력해주세요.',
 			});
 			return false;
 		}
 		if ($('#mBirthDate').val() == "") {
 			Swal.fire({
-				icon : 'warning', // Alert 타입
-				title : '', // Alert 제목
-				text : '생년월일을 입력해주세요.', // Alert 내용
+				icon : 'warning',
+				text : '생년월일을 입력해주세요.',
 			});
 			return false;
 		}
-		alert(mEmail);
-		alert(mName);
-		alert(mBirthDate);
-		/* 		const params = {
-		 "mEmail" : $("#mEmail").val();
-		 "mTel" : mTel,
-		 "mName" : mName,
-		 "mBirthDate" : mBirthDate
-		 }; */
 		$.ajax({
 			url : "/user/login/searchId.do",
 			type : "POST",
@@ -71,29 +66,27 @@
 				mBirthDate : $("#mBirthDate").val()
 			},
 			success : function(searchIdResult) {
-				let data = JSON.parse(searchIdResult);
-				if (data.status == 1) {
+				if (searchIdResult.status == 1) {
 					Swal.fire({
 						title : '',
-						text : '아이디는 "' + data.mId + '" 입니다',
+						text : '아이디는 "' + searchIdResult.mId + '" 입니다',
 						icon : 'info',
 						closeOnClickOutside : false
 					}).then(function() {
-						location.href = "/user/login/login.jsp";
+						location.href = "/user/login/login";
 					});
-				} else if (data.status == 2) {
+				} else if (searchIdResult.status == 2) {
 					Swal.fire({
-						icon : 'warning', // Alert 타입
-						title : '', // Alert 제목
-						text : '입력하신 정보에 해당하는 아이디가 없습니다.', // Alert 내용
+						icon : 'warning',
+						text : '입력하신 정보에 해당하는 아이디가 없습니다.',
 					});
 				}
 			},
 			error : function() {
 				Swal.fire({
-					icon : 'error', // Alert 타입
-					title : '에러 발생', // Alert 제목
-					text : '관리자에게 문의바랍니다.', // Alert 내용
+					icon : 'error',
+					title : '에러 발생',
+					text : '관리자에게 문의바랍니다.',
 				});
 			}
 		});

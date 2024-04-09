@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>3월에 만나요:)</title>
 
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
@@ -8,7 +9,6 @@
 <link rel="stylesheet" href="/resources/static/user.css">
 <script src="/resources/static/js/bootstrap.js"></script>
 <script src="/resources/static/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!--  폰트 적용  -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,13 +40,13 @@ body {
 
 /* .nav-item:hover .dropdown-menu .dropdown-menu-end {
 	display: block;
-	margin-top: 0;
+	margin-top: 0; 
 } */
 </style>
 <body>
 	<nav class="navbar navbar-expand-lg" style="background-color: #FBFBFD;">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="main"> <img
+			<a class="navbar-brand" href="/"> <img
 				src="/resources/images/icon.png" width="60px" height="60px"> <b>
 					3월 도서관</b>
 			</a>
@@ -63,7 +63,7 @@ body {
 				<div class="navbar-nav">
 					<c:choose>
 						<c:when
-							test="${mName != null && session.a_id == null}">
+							test="${mName != null && sessionScope.a_id == null}">
 							<div class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" role="button"
 									data-bs-toggle="dropdown" aria-expanded="false">마이 페이지</a>
@@ -76,7 +76,7 @@ body {
 									<div class="dropdown-divider"></div>
 									<div>
 										<a class="dropdown-item"
-											href="/user/book/myLibrary?mId=${mId}">나의 서재</a>
+											href="/user/book/myLibrary/${mId}">나의 서재</a>
 									</div>
 									<div class="dropdown-divider"></div>
 									<div>
@@ -88,14 +88,9 @@ body {
 						</c:when>
 
 						<c:when
-							test="${mName == null && session.a_id != null}">
+							test="${mName == null && sessionScope.a_id != null}">
 							<div class="nav-item">
-								<a class="nav-link" href="/syLibrary/admin/admin_main.jsp"
-									title="사서 통합관리시스템">${sessionScope.a_name }
-									님&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-							</div>
-							<div class="nav-item">
-								<a class="nav-link" href="/syLibrary/login_servlet/logout.do">관리자계정
+								<a class="nav-link" href="/admin/admin_login/adlogout.do">관리자계정
 									로그아웃</a>
 							</div>
 						</c:when>
@@ -105,13 +100,13 @@ body {
 								<a class="nav-link" href="/user/login/login">로그인</a>
 							</div>
 							<div class="nav-item">
-								<a class="nav-link" href="/syLibrary/user/member/join.jsp">회원가입</a>
+								<a class="nav-link" href="/user/member/join">회원가입</a>
 							</div>
 						</c:otherwise>
 					</c:choose>
 
 					<div class="nav-item">
-						<a class="nav-link" href="/syLibrary/user/search/search.jsp">자료찾기</a>
+						<a class="nav-link" href="/user/search/">자료찾기</a>
 					</div>
 					<div class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" role="button"

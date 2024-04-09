@@ -14,7 +14,7 @@ select count(*) from re_book
 </select>
 
 <select id="call_CheckLoan" statementType="CALLABLE">
-	{call check_loan(#{m_id})}
+	{call check_loan_0(#{m_id})}
 </select>
 
 <!-- b_id → 가장 빠른 대출예정일 조회 -->
@@ -36,13 +36,19 @@ values (lo_book_seq.nextval,
 	#{b_id})
 </insert>
 
+<!-- 회원등급 확인 -->
+<!-- <select id="mlevel_check" resultType="int">
+select m_level from sl_member where m_id=#{m_id}
+</select> -->
+
 <!-- 사용자가 현재 대출중인 책 권수 -->
-<select id="cntUserLo">
+<!-- <select id="cntUserLo">
 select count(L_BOOKID)
 from (select * from lo_book
       where L_RETURN_YN='N')
 where L_MEMNO=(select m_no from sl_member where m_id=#{m_id})
 </select>
+ -->
 
 <select id="check_mLoan" resultType="int">
 select m_loan from sl_member where m_id=#{m_id}

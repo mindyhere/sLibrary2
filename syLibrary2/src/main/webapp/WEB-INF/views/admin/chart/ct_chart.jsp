@@ -10,7 +10,6 @@
 	type="image/x-icon">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 <script
@@ -39,14 +38,17 @@
 		let cnt = [];
 
 		$.ajax({
-					url : "/syLibrary/admin_servlet/ct_cht.do",
-					type : "get",
+					url : "/admin/chart/ct_chart.do",
+					type : "post",
 					dataType : "json",
-					contentType : "text/html;charset=utf-8",
+					//contentType : "text/html;charset=utf-8",
+					//async:false,
 					success : function(data) {
 						for (let j = 0; j < data.length; j++) {
 							category.push(data[j].category);
 							cnt.push(data[j].cnt);
+							console.log(categoty);
+							console.log(cnt);
 						}
 						const ctx = document.getElementById('myChart')
 								.getContext('2d');
@@ -133,10 +135,10 @@ width: 700px;
 </head>
 <body>
 <nav>
-	<jsp:include page="admin_header.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_header.jsp" />
 <div id="body-wrapper">
 	<div id="body-content">
-			<jsp:include page="/admin/menu.jsp" />
+			<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
 	<div style="width:1000px;">
 	<div class="page-direction" style="padding: 20px; padding-left: 250px;">
 	<div class="navi">
@@ -154,7 +156,7 @@ width: 700px;
 		</div>
 		</div>
 			</div>
-	<jsp:include page="/admin/admin_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>
 </nav>
 </body>

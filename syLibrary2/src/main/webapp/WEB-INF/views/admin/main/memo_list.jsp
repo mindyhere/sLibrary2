@@ -7,10 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="/syLibrary/include/js/bootstrap.js"></script>
+<script src="/resources/static/js/bootstrap.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-
+/* function list(page) {
+	location.href="/admin/memo/list.do?curPage=" + page;
+} */
 $(function() {
 	$("#ca").click(function() {
 		const modal = document.getElementById("modal");
@@ -38,13 +40,25 @@ $(function() {
 	});
 
 });
+/* $(function() {
+	$("#btnDelete").click(function() {
+		swal({
+	        text: "정말 삭제하시겠습니까?",
+	        buttons: ["취소", "확인"],
+	    }).then(function(isConfirmed) {
+	        if (isConfirmed) {
+	        	location.href = "/admin/memo/delete.do";
+	        } 
+	    });
+	});
+}); */
 function memo_del(me_rownum) {
 	swal({
         text: "정말 삭제하시겠습니까?",
         buttons: ["취소", "확인"],
     }).then(function(isConfirmed) {
         if (isConfirmed) {
-        	location.href = "/admin/memo/delete.do?me_rownum=" + me_rownum;
+        	location.href = "/admin/memo/delete.do";
         } 
     });
 }
@@ -66,11 +80,12 @@ $(document).mouseup(function (e){
 		modal2.style.display = "none";
 	}
 });
+
 //수정모달
 function onModal(me_rownum) {
 	$.ajax({
 		type : "post",
-		url : "/admin/memo/search/"+me_rownum,
+		url : "/admin/memo/search.do",
 		data : {
 			"me_rownum" : me_rownum
 		},
@@ -88,7 +103,7 @@ function onModal(me_rownum) {
 function onModal2(me_rownum) {
 	$.ajax({
 		type : "post",
-		url : "/admin/memo/search/"+me_rownum,
+		url : "/admin/memo/search.do",
 		data : {
 			"me_rownum" : me_rownum
 		},
@@ -102,6 +117,44 @@ function onModal2(me_rownum) {
 		}
 	});
 }
+
+//수정모달
+/* function onModal(me_rownum) {
+	const me_rownum = $("#me_rownum").val();
+	$.ajax({
+		type : "post",
+		url : "/admin/memo/search/{me_rownum}",
+		headers:{"Content-Type":"application/json"},
+		data :JSON.stringify({me_rownum:me_rownum}),
+		dataType:"text",
+		success : function(data) {
+			console.log(data);
+			modal();
+			document.getElementById("writer").value=data.a_name;
+			document.getElementById("date").value=data.me_post_date;
+			document.getElementById("message").value=data.me_memo;
+			document.getElementById("rownum").value=data.me_rownum;
+		}
+	});
+} */
+//상세모달
+/* function onModal2(me_rownum) {
+	const me_rownum = $("#me_rownum").val();
+	$.ajax({
+		type : "post",
+		url : "/admin/memo/search/{me_rownum}",
+		headers:{"Content-Type":"application/json"},
+		data :JSON.stringify({me_rownum:me_rownum}),
+		dataType:"text",
+		success : function(data) {
+			modal2();
+			document.getElementById("writer2").value=data.a_name;
+			document.getElementById("date2").value=data.me_post_date;
+			document.getElementById("message2").value=data.me_memo;
+			document.getElementById("rownum2").value=data.me_rownum;
+		}
+	});
+} */
 </script>
 <style>
 .modal-overlay {
@@ -208,7 +261,7 @@ tbody tr:hover {
 </head>
 <body>
 <c:choose>
- 	<c:when test="${list.size() == 0 }">
+ 	<c:when test="${map.list.size() == 0 }">
 	<table style='table-layout:fixed; width: 500px;' >
  			<tr align="center">
 			 	<th>작성자</th>
@@ -238,7 +291,7 @@ tbody tr:hover {
 			</tr>
 		</table>
 	</c:when>
-	<c:when test="${list.size() > 0}">
+	<c:when test="${map.list.size() > 0}">
 	
 	<div id="container">
 		<form method="post" name="form1">
@@ -250,7 +303,7 @@ tbody tr:hover {
 					<th width="65px">&nbsp;</th>
 					<th width="65px">&nbsp;</th>
 				</tr>
-				<c:forEach var="dto" items="${list}">
+				<c:forEach var="dto" items="${map.list}">
 					<tr align="center">
 						<td width="70px" height="45px" id="a_name">${dto.a_name}</td>
 						<td onclick="onModal2(${dto.me_rownum});" id="btnModal2" width="200px" height="45px" style='word-break:break-all; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'>${dto.me_memo}</td>
@@ -264,6 +317,7 @@ tbody tr:hover {
 											class="btn btn-outline-warning"></td>
 									<td width="60px" height="45px" class="ddd">
 										<input type="button" value="삭제" onclick="memo_del('${dto.me_rownum}')" class="btn btn-outline-warning">
+										<!-- <input type="button" value="삭제" id="btnDelete" class="btn btn-outline-warning">  -->
 									</td>
 							</c:when>
 						</c:choose>
@@ -271,27 +325,27 @@ tbody tr:hover {
 				</c:forEach>
 			 	<tr align="center">
 					<td colspan="6">
-						<c:if test="${page.curPage > 1}">
-							<a id="hr" href="#" onclick="list('1')">[처음]</a>
+						<c:if test="${map.page.curPage > 1}">
+							<a id="hr" href="#" onclick="javascript:list('1')">[처음]</a>
 						</c:if>
-						<c:if test="${page.curBlock > 1}">
-							<a id="hr" href="#" onclick="list('${page.prevPage}')">[이전]</a>
+						<c:if test="${map.page.curBlock > 1}">
+							<a id="hr" href="#" onclick="javascript:list('${map.page.prevPage}')">[이전]</a>
 						</c:if>
-						<c:forEach var="num" begin="${page.blockStart}" end="${page.blockEnd}">
+						<c:forEach var="num" begin="${map.page.blockStart}" end="${map.page.blockEnd}">
 							<c:choose>
-								<c:when test="${num == page.curPage}">
+								<c:when test="${num == map.page.curPage}">
 									<span style="color:blue">${num}</span>
 								</c:when>
 								<c:otherwise>
-									<a id="hr" href="#" onclick="list('${num}')">${num}</a>
+									<a id="hr" href="#" onclick="javascript:list('${num}')">${num}</a>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-						<c:if test="${page.curBlock < page.totBlock}">
-							<a id="hr" href="#" onclick="list('${page.nextPage}')">[다음]</a>
+						<c:if test="${map.page.curBlock < map.page.totBlock}">
+							<a id="hr" href="#" onclick="javascript:list('${map.page.nextPage}')">[다음]</a>
 						</c:if>
-						<c:if test="${page.curPage < page.totPage}">
-							<a id="hr" href="#" onclick="list('${page.totPage}')">[마지막]</a>
+						<c:if test="${map.page.curPage < map.page.totPage}">
+							<a id="hr" href="#" onclick="javascript:list('${map.page.totPage}')">[마지막]</a>
 						</c:if>
 					</td>
 				</tr>

@@ -1,6 +1,5 @@
 package com.example.syLibrary2.user.model.dto;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.Getter;

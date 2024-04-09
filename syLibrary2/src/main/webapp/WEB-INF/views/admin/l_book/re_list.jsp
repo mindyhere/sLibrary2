@@ -15,24 +15,18 @@
 <script src="/syLibrary/include/js/bootstrap.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-	$(function() {
-		$("#btnSearch").click(function() {
-			if ($("#search").val() == "") {
-				swal("검색어를 입력하세요");
-				return false;
-			}
-		});
-		$("#btnAll")
-				.click(
-						function() {
-							location.href = "/admin/rebook/list.do?cur_page="
-									+ page;
-						});
+$(function() {
+	$("#btnSearch").click(function() {
+		if ($("#search").val() == "") {
+			swal("검색어를 입력하세요");
+			return false;
+		}
 	});
-	function list(page) {
-		location.href = "/admin/rebook/list.do?cur_page=" + page
-				+ "&search_option=${search_option}&search=${search}";
-	}
+});
+function list(page) {
+	location.href = "/admin/rebook/list.do?curPage=" + page
+			+ "&search_option=${map.search_option}&search=${map.search}";
+}
 </script>
 <style>
 .search {
@@ -126,27 +120,18 @@ tbody tr:hover {
 
 	<nav style="position: static;">
 		<form name="form1" method="post"
-			action="/admin/rebook/search.do">
+			action="/admin/rebook/list.do">
 			<div class="search">
 				<select id="search_option" name="search_option">
-					<c:choose>
-						<c:when test="${search_option==null||search_option=='b_name'}">
-							<option value="b_name" selected>도서명</option>
-							<option value="m_id">예약자ID</option>
-							<option value="m_name">예약자명</option>
-						</c:when>
-						<c:when test="${search_option=='m_id'}">
-							<option value="b_name">도서명</option>
-							<option value="m_id" selected>예약자ID</option>
-							<option value="m_name">예약자명</option>
-						</c:when>
-						<c:when test="${search_option=='m_name'}">
-							<option value="b_name">도서명</option>
-							<option value="m_id">예약자ID</option>
-							<option value="m_name" selected>예약자명</option>
-						</c:when>
-					</c:choose>
-				</select> <input id="search" name="search" value="${search}">
+					<option value="all"
+			<c:out value="${map.search_option =='all' ? 'selected' : '' }" /> >전체검색</option>
+				<option value="b_name"
+			<c:out value="${map.search_option =='b_name' ? 'selected' : '' }" /> >도서명</option>
+				<option value="m_id"
+			<c:out value="${map.search_option =='m_id' ? 'selected' : '' }" /> >예약자ID</option>
+				<option value="m_name"
+			<c:out value="${map.search_option =='m_name' ? 'selected' : '' }" /> >예약자명</option>
+				</select> <input id="search" name="search" value="${map.search}">
 				<div class="icon">
 					<input type="submit" id="btnSearch" style="display: none;">
 					<label for="btnSearch"><svg
@@ -170,7 +155,7 @@ tbody tr:hover {
 			<th>예약순서</th>
 			<th>예약신청일</th>
 		</tr>
-		<c:forEach var="row" items="${list}">
+		<c:forEach var="row" items="${map.list}">
 			<tr align="center">
 				<td>${row.r_bookid}</td>
 				<td>${row.b_name}</td>
@@ -183,24 +168,24 @@ tbody tr:hover {
 			</tr>
 		</c:forEach>
 		<tr align="center">
-			<td colspan="7"><c:if test="${page.curPage > 1}">
-					<a id="hr" href="#" onclick="list('1')">[처음]</a>
-				</c:if> <c:if test="${page.curBlock > 1}">
-					<a id="hr" href="#" onclick="list('${page.prevPage}')">[이전]</a>
-				</c:if> <c:forEach var="num" begin="${page.blockStart}"
-					end="${page.blockEnd}">
+			<td colspan="7"><c:if test="${map.page.curPage > 1}">
+					<a id="hr" href="#" onclick="javascript:listlist('1')">[처음]</a>
+				</c:if> <c:if test="${map.page.curBlock > 1}">
+					<a id="hr" href="#" onclick="javascript:listlist('${map.page.prevPage}')">[이전]</a>
+				</c:if> <c:forEach var="num" begin="${map.page.blockStart}"
+					end="${map.page.blockEnd}">
 					<c:choose>
-						<c:when test="${num == page.curPage}">
+						<c:when test="${num == map.page.curPage}">
 							<span style="color: blue">${num}</span>
 						</c:when>
 						<c:otherwise>
-							<a id="hr" href="#" onclick="list('${num}')">${num}</a>
+							<a id="hr" href="#" onclick="javascript:listlist('${num}')">${num}</a>
 						</c:otherwise>
 					</c:choose>
-				</c:forEach> <c:if test="${page.curBlock < page.totBlock}">
-					<a id="hr" href="#" onclick="list('${page.nextPage}')">[다음]</a>
-				</c:if> <c:if test="${page.curPage < page.totPage}">
-					<a id="hr" href="#" onclick="list('${page.totPage}')">[마지막]</a>
+				</c:forEach> <c:if test="${map.page.curBlock < map.page.totBlock}">
+					<a id="hr" href="#" onclick="javascript:listlist('${map.page.nextPage}')">[다음]</a>
+				</c:if> <c:if test="${map.page.curPage < map.page.totPage}">
+					<a id="hr" href="#" onclick="javascript:listlist('${map.page.totPage}')">[마지막]</a>
 				</c:if></td>
 		</tr>
 	</table>

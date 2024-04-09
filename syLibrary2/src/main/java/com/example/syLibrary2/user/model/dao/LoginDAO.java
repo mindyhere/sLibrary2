@@ -1,21 +1,19 @@
 package com.example.syLibrary2.user.model.dao;
 
-import com.example.syLibrary2.user.model.dto.LoginDTO;
-
 public interface LoginDAO {
 
 	// 로그인
 	String loginChk(String mId, String mpasswd);
 
 	// 아이디-이메일 찾기
-	String searchIdEmail(LoginDTO dto);
+	String searchIdEmail(String mEmail, String mName, String mBirthDate);
 
 	// 아이디-전화번호 찾기
-	String searchIdTel(LoginDTO dto);
+	String searchIdTel(String mTel, String mName, String mBirthDate);
 
 	// 비밀번호-이메일 찾기
-	String searchPwEmail(LoginDTO dto);
+	String searchPwEmail(String mEmail, String mId, String mName, String mBirthDate);
 
 	// 비밀번호-전화번호 찾기
-	String searchPwTel(LoginDTO dto);
+	String searchPwTel(String mTel, String mId, String mName, String mBirthDate);
 }

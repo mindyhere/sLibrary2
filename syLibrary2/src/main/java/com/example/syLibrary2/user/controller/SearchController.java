@@ -30,13 +30,17 @@ public class SearchController {
 	
 	@Autowired
 	CheckoutDAO checkoutDao;
+	
+	@GetMapping("/")
+	public String search() {
+		return "/user/search/search";
+	}
 
-	@RequestMapping("search.do")
-	public ModelAndView search(@RequestParam(name = "page", defaultValue = "1") int page,
+	@PostMapping("result")
+	public ModelAndView searchResult(@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "option", defaultValue = "all") String option,
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "view", defaultValue = "view1") String view) {
-
 		// 페이지 설정
 		int count = searchDao.resultCount(option, keyword);
 		PageUtil pageInfo = new PageUtil(count, page);
@@ -59,7 +63,7 @@ public class SearchController {
 		return mav;
 	}
 
-	@PostMapping("detailSearch.do")
+	@PostMapping("detailSearch")
 	public ModelAndView detailSearch(@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "option", defaultValue = "detail") String option,
 			@RequestParam(name = "b_name", defaultValue = "") String b_name,
@@ -91,10 +95,9 @@ public class SearchController {
 		return mav;
 	}
 
-	@RequestMapping("moveTo.do")
+	@RequestMapping("moveTo")
 	public ModelAndView moveTo(@RequestParam(name = "page") int page, @RequestParam(name = "option") String option,
 			@RequestParam(name = "view", defaultValue = "view1") String view, HttpServletRequest request) {
-
 		// 파라미터 초기화
 		List<BookDTO> list = null;
 		List<Map<String, Object>> stateinfo = null;
@@ -104,9 +107,9 @@ public class SearchController {
 		ModelAndView mav = new ModelAndView();
 
 		if (view.equals("view1")) {
-			resultPage = "/user/search/view1.jsp";
+			resultPage = "/user/search/view1";
 		} else if (view.equals("view2")) {
-			resultPage = "/user/search/view2.jsp";
+			resultPage = "/user/search/view2";
 		}
 
 		switch (option) {
@@ -122,6 +125,7 @@ public class SearchController {
 
 			// 검색 결과 목록 가져오기
 			list = searchDao.totSearch(keyword, start, end);
+			System.out.println(list);
 			mav.setViewName(resultPage);
 			mav.addObject("list", list);
 			mav.addObject("stateinfo", searchDao.listState(list));
@@ -158,19 +162,19 @@ public class SearchController {
 		return mav;
 	}
 
-	@RequestMapping("searchBy.do")
+	@RequestMapping("searchBy")
 	public ModelAndView searchBy(@RequestParam(name = "searchOpt") String option,
 			@RequestParam(name = "b_name", defaultValue = "") String b_name,
 			@RequestParam(name = "b_author", defaultValue = "") String b_author,
 			@RequestParam(name = "b_pub", defaultValue = "") String b_pub,
 			@RequestParam(name = "view", defaultValue = "view1") String view,
 			@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "count") int count) {
-
+		
 		String resultPage = "";
 		if (view.equals("view1")) {
-			resultPage = "/user/search/view1.jsp";
+			resultPage = "/user/search/view1";
 		} else if (view.equals("view2")) {
-			resultPage = "/user/search/view2.jsp";
+			resultPage = "/user/search/view2";
 		}
 
 		// 페이지 설정
@@ -195,7 +199,7 @@ public class SearchController {
 	}
 
 	@ResponseBody // return: 화면X, Data인 경우
-	@PostMapping("simpleSearch.do")
+	@PostMapping("simpleSearch")
 	public ResponseEntity<Object> simpleSearch(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
 		// 관리자, 추천도서 edit → 도서 검색
 		List<BookDTO> list = searchDao.totSearch(keyword);
@@ -206,7 +210,7 @@ public class SearchController {
 	public ModelAndView detail(@PathVariable(name = "b_id") int b_id, ModelAndView mav) {
 		// 도서 상세정보 페이지
 		mav.setViewName("user/search/bookinfo");
-		mav.addObject("dtoB", searchDao.showDetails(b_id));
+		mav.addObject("map", searchDao.showDetails(b_id));
 		mav.addObject("l_retdate", searchDao.fastRetdate(b_id));
 		mav.addObject("state", checkoutDao.isAvailable(b_id));
 		return mav;

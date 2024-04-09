@@ -8,16 +8,15 @@
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../resources/images/sist.png" type="image/x-icon">
-<link rel="stylesheet" href="../include/css/bootstrap.css">
+<link rel="stylesheet" href="/syLibrary2/resources/static/css/bootstrap.css">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="../include/js/bootstrap.js"></script>
+<script src="/syLibrary2/resources/static/js/bootstrap.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
  <script>
-/*  $(function() { 
+$(function() { 
 		list('1');
-}); */
+});
 
 /*  function list(){
 		let params={"a_name": $("#a_name").val(), "me_memo":$("#me_memo").val(), "me_post_date":$("#me_post_date").val(),"page":$("#page").val()};
@@ -29,8 +28,8 @@
 			}
 		});
 	} */
- function list(cur_page){
-		let param = {"cur_page":cur_page};
+ function list(curPage){
+		let param = {"curPage":curPage};
 		$.ajax({
 			url: "/admin/memo/list.do",
 			data: param,

@@ -5,25 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/resources/images/icon.png"
-	type="image/x-icon">
+<link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="/resources/static/user.css">
 <c:if test="${param.message == 'join'}">
 	<script>
-	$(function() {
-		swal('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
-	});
-	</script>
-</c:if>
-<c:if test="${param.message == 'error'}">
-	<script>
 		$(function() {
-			swal('회원정보 불일치', '아이디 또는 비밀번호를 확인해주세요.', 'warning');
+			swal('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
 		});
 	</script>
 </c:if>
@@ -45,12 +35,18 @@
 			let mPasswd = $("#mPasswd").val();
 
 			if (mId == "") {
-				swal('', '아이디를 입력하세요', 'warning');
+				Swal.fire({
+					icon : 'warning',
+					text : '아이디를 입력하세요.',
+				});
 				$("#mId").focus();
 				return;
 			}
 			if (mPasswd == "") {
-				swal('', '비밀번호를 입력하세요', 'warning');
+				Swal.fire({
+					icon : 'warning',
+					text : '비밀번호를 입력하세요.',
+				});
 				$("#mPasswd").focus();
 				return;
 			}
@@ -69,13 +65,13 @@
 	@ param value : 값
 	@ param exdays : 만료일
 	 */
-	function setCookie(name, value, exdays) {
-		var today = new Date();
-		today.setDate(today.getDate() + exdays);
-		var cookie = escape(value)
-				+ ((exdays == null) ? "" : ";expires=" + today.toGMTString());
-		document.cookie = name + "=" + cookie;
-	}
+		function setCookie(name, value, exdays) {
+			var today = new Date();
+			today.setDate(today.getDate() + exdays);
+			var cookie = escape(value)
+					+ ((exdays == null) ? "" : ";expires=" + today.toGMTString());
+			document.cookie = name + "=" + cookie;
+		}
 
 	/* 쿠키 가져오기
 	@ param name : 쿠키명
@@ -101,22 +97,32 @@
 		exprieDate.setDate(exprieDate.getDate() - 1);
 		document.cookie = name + "=" + "; expires=" + exprieDate.toGMTString();
 	}
+	
+	$(function(){
+		var responseMsg = "<c:out value="${message}" />";
+		if(responseMsg == '로그인실패'){
+			Swal.fire({
+				icon : 'warning',
+				title : '회원정보 불일치',
+				text : '아이디 또는 비밀번호를 확인해주세요.',
+			});
+		}
+	});
 </script>
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
 	<div class="container min-vh-100">
 		<h3 class="text-bold">
-			<img src="/resources/images/login.png" width="35px"
-				height="35px"> 로그인
+			<img src="/resources/images/login.png" width="35px" height="35px">
+			로그인
 		</h3>
 		<hr>
 		<p class="text-sm text-gray">로그인을 하시면 보다 더 많은 정보와 서비스를 이용하실 수
 			있습니다.</p>
 		<!--  로그인 입력창 -->
 		<div class="card-style mb-30">
-			<form name="loginForm" method="post"
-				action="/user/login/login.do">
+			<form name="loginForm" method="post" action="/user/login/login.do">
 				<div>
 					<div class="input-style-1">
 						<label>아이디</label> <input type="text" name="mId" id="mId"
@@ -130,8 +136,8 @@
 						<input type="checkbox" id="saveId" class="form-check-input">
 						<label for="saveId" class="form-check-label">아이디 저장</label>
 					</div>
-					<br>
-					<input type="button" value="로그인" id="main-btn" class="btnLogin">
+					<br> <input type="button" value="로그인" id="main-btn"
+						class="btnLogin">
 				</div>
 			</form>
 		</div>

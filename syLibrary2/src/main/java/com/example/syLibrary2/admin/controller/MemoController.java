@@ -25,7 +25,6 @@ import com.example.syLibrary2.util.PageUtil2;
 
 import jakarta.servlet.http.HttpSession;
 
-//json객체 => RestController
 @Controller
 @RequestMapping("admin/memo/*")
 public class MemoController {
@@ -39,63 +38,56 @@ public class MemoController {
 	@GetMapping("list.do")
 	public ModelAndView list(@RequestParam(name="curPage", defaultValue="1") int curPage) {
 		int count = memoDao.count(); //레코드 개수
-		PageUtil2 page_info = new PageUtil2(count, curPage);
-		int start = page_info.getPageBegin();
-		int end = page_info.getPageEnd();
+		PageUtil2 page = new PageUtil2(count, curPage);
+		int start = page.getPageBegin();
+		int end = page.getPageEnd();
 		List<MemoDTO> list =memoDao.list(start, end); //게시물 리스트
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/admin/main/memo_list");
+		mav.setViewName("admin/main/memo_list");
 		Map<String,Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("count", count);
-		map.put("page_info", page_info);
+		map.put("page", page);
 		mav.addObject("map", map);
-		//mav.setViewName("admin/admin_main");
 		return mav;
 	}
 	
 	@PostMapping("insert.do")
 	public String insert(MemoDTO dto, HttpSession session) {
-		String me_a_id = (String) session.getAttribute("me_a_id");
-		String me_memo = (String) session.getAttribute("me_memo");
+		String me_a_id = (String) session.getAttribute("a_id");
 		dto.setMe_a_id(me_a_id);
-		dto.setMe_memo(me_memo);
 		memoDao.insert(dto);
-		return "redirect:/admin/list.do";
+		System.out.println("작성자==="+dto);
+		return "admin/admin_main";
 		//return "redirect:/admin/list.do";
 	}
 	
-	@PostMapping("delete.do")
-	public String delete(@RequestParam(name="me_rownum")int me_rownum) {
+	@RequestMapping("delete.do")
+	public String delete(@RequestParam(name="me_rownum") int me_rownum) {
 		memoDao.delete(me_rownum);
-		return "redirect:/admin/list.do";
+		System.out.println("삭제번호==="+me_rownum);
+		return "admin/admin_main";
 	}
 	
 	@PostMapping("update.do")
 	public String update(MemoDTO dto){
-//		int me_rownum = Integer.parseInt(request.getParameter("me_rownum"));
-//		String me_a_id = request.getParameter("me_a_id");
-//		String me_memo = request.getParameter("me_memo");
-//		dto.setMe_a_id(me_a_id);
-//		dto.setMe_rownum(me_rownum);
-//		dto.setMe_memo(me_memo);
 		memoDao.update(dto);
-		return "redirect:/admin/list.do";
+		return "admin/admin_main";
 	}
 	
 	//메모상세 (확인요망)
-	@RequestMapping("/search/{me_rownum}")
-	public ResponseEntity<String> detail(@PathVariable(name="me_rownum") int me_rownum, @RequestBody MemoDTO dto) {
-		ResponseEntity<String> entity = null;
-		try{
-			//dto.setMe_rownum(me_rownum);
-			memoDao.search(me_rownum);
-			entity = new ResponseEntity<String>("success",HttpStatus.OK);
-		} catch (Exception e){
-			e.printStackTrace();
-			entity = new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-		}
-		return entity;
+	@RequestMapping("search.do")
+	public @ResponseBody ModelAndView detail(@RequestParam(name="me_rownum") int me_rownum) {
+		//MemoDTO dto = memoDao.search(me_rownum);
+		ModelAndView mav = new ModelAndView();
+		System.out.println("메모번호==="+me_rownum);
+		mav.addObject("dto",memoDao.search(me_rownum));
+		return mav;
+//			dto.setMe_rownum(me_rownum);
+//			System.out.println("메모상세==="+dto);
+//			memoDao.search(dto);
+//			entity = new ResponseEntity<String>("success",HttpStatus.OK);
+//			return entity;
 		
 //		memoDao.search(me_rownum);
 //	    JsonObject jso = new JsonObject();

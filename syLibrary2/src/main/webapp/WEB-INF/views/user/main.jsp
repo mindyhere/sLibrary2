@@ -245,7 +245,7 @@ margin: 0 1% 0 1%;
 <div id="section-main" class="d-flex-col min-vh-100">
 	<!-- section1 검색창 -->
 	<div id="section1" class="input-group mb-3">
-		<form class="d-flex input-group" style="width:100%;" id="form1" name="form1" method="post" action="/syLibrary/search_servlet/search.do">
+		<form class="d-flex input-group" style="width:100%;" id="form1" name="form1" method="post" action="/user/search/result">
 			<input id="keyword" name="keyword" type="text" class="form-control" placeholder="검색어를 입력하세요" style="box-shadow: none !important;">
 			<input id="option" name="option" type="hidden" class="form-control" value="all" >
 			<input id="view" name="view" type="hidden" class="form-control" value="view1">
@@ -303,7 +303,7 @@ margin: 0 1% 0 1%;
 				<div id="row" class="row"> <!-- row -->
 					<c:forEach var="dto" items="${list }">
 						<div class="col">
-							<a href="/syLibrary/search_servlet/bookInfo.do?b_id=${dto.b_id}">
+							<a href="/user/search/bookInfo/${dto.b_id}">
 							<div class="card" id="book" style="width: 10em">
 								<img src="${dto.b_url}" class="card-img" alt="준비중" title="more detail">
 								<div class="card-body" id="bookCover">

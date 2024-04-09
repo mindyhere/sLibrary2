@@ -6,32 +6,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/syLibrary/resources/images/icon.png"
+<link rel="icon" href="/resources/images/icon.png"
 	type="image/x-icon">
-<link rel="stylesheet" href="/syLibrary/include/user.css">
+<link type="text/css" rel="stylesheet" href="/resources/static/user.css">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 	// 연장 신청
 	function renewDate(l_memno, l_bookid) {
-		swal({
+		Swal.fire({
 			text : "선택하신 도서를 연장하시겠습니까?",
 			buttons : [ "취소", "확인" ],
 		}).then(function(isConfirmed) {
 			if (isConfirmed) {
 				$.ajax({
-					url : "/syLibrary/myLibrary_servlet/renew.do",
-					type : "post",
+					url : "/user/book/renew",
+					type : "POST",
 					data : {
-						"mNo" : l_memno,
-						"bId" : l_bookid
+						"m_no" : l_memno,
+						"b_id" : l_bookid
 					},
 					success : function(status) {
 						if (status == 0) {
-							  swal({
+							Swal.fire({
 								  title: '',
 								  text: '7일 연장되었습니다.',
 								  icon: 'success',
@@ -40,13 +38,23 @@
 							  	location.reload();
 							  });
 						} else if (status == 1) {
-							swal('', '도서당 연장신청은 1번만 가능합니다.', 'warning');
+							Swal.fire({
+								icon : 'warning',
+								text : '도서당 연장신청은 1번만 가능합니다.',
+							});
 						}	else if (status == 2) {
-								swal('', '예약된 책으로 연장이 불가합니다.', 'warning');
+							Swal.fire({
+								icon : 'warning',
+								text : '예약된 책으로 연장이 불가합니다.',
+							});
 						}
 					},
 					error : function() {
-						swal('에러 발생', '관리자에게 문의바랍니다.', 'error');
+						Swal.fire({
+							icon : 'error',
+							title : '에러 발생',
+							text : '관리자에게 문의바랍니다.',
+						});
 					}
 				});
 			}
@@ -58,8 +66,8 @@
 	<%@ include file="../common/header.jsp"%>
 	<div class="container min-vh-100">
 		<h3 class="text-bold">
-			<img src="/syLibrary/resources/images/myLibrary/loan.png"
-				width="35px" height="35px"> 대출 중인 도서
+			<img src="/resources/images/myLibrary/loan.png" width="35px"
+				height="35px"> 대출 중인 도서
 		</h3>
 		<hr>
 		<c:choose>
@@ -78,8 +86,7 @@
 									<div class="col detail"
 										style="margin-right: 30px; margin-left: 10px;">
 										<p>
-											<a
-												href="/syLibrary/search_servlet/bookInfo.do?b_id=${myLoanBook.l_bookid}">${myLoanBook.b_name}</a>
+											<a href="/user/search/bookInfo/${myLoanBook.l_bookid}">${myLoanBook.b_name}</a>
 										</p>
 										<p>
 											<span>작가 : ${myLoanBook.b_author} </span> <span>출판사 :
