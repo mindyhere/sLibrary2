@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>3월에 만나요:)</title>
 
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
@@ -8,7 +9,6 @@
 <link rel="stylesheet" href="/resources/static/user.css">
 <script src="/resources/static/js/bootstrap.js"></script>
 <script src="/resources/static/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!--  폰트 적용  -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
