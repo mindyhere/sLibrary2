@@ -17,33 +17,20 @@ public class ReBookDAOImpl implements ReBookDAO {
 	SqlSession sqlSession;
 	
 	@Override
-	public List<ReBookDTO> list_search(String search_option, String search, int start, int end) {
+	public List<ReBookDTO> list(String search_option, String search, int start, int end) {
 		Map<String,Object> map=new HashMap<>();
 		map.put("search_option",search_option);
 		map.put("search",search);
 		map.put("start",start);
 		map.put("end",end);
-		return sqlSession.selectList("rebook.search_list",map);
+		return sqlSession.selectList("rebook.list",map);
 	}
+	
 	@Override
 	public int count(String search_option, String search) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("search_option", search_option);
 		map.put("search", search);
-		return sqlSession.selectOne("rebook.search_count",map);
-	}
-	
-	@Override
-	public List<ReBookDTO> list(int start, int end) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("start", start);
-		map.put("end", end);
-		return sqlSession.selectList("rebook.list", map);
-	}
-	
-	@Override
-	public int count() {
-		return sqlSession.selectOne("rebook.count");	
-
+		return sqlSession.selectOne("rebook.count",map);
 	}
 }
