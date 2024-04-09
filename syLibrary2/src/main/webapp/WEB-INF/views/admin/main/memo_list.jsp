@@ -40,7 +40,7 @@ $(function() {
 	});
 
 });
-/* function memo_del(me_rownum) {
+function memo_del(me_rownum) {
 	swal({
         text: "정말 삭제하시겠습니까?",
         buttons: ["취소", "확인"],
@@ -49,8 +49,8 @@ $(function() {
         	location.href = "/admin/memo/delete.do?me_rownum=" + me_rownum;
         } 
     });
-} */
-function memo_del(me_rownum) {
+}
+/* function memo_del(me_rownum) {
 	swal({
         text: "정말 삭제하시겠습니까?",
         buttons: ["취소", "확인"],
@@ -70,7 +70,7 @@ function memo_del(me_rownum) {
 		}
 		
 	})
-}
+} */
 function modal() {
 	const modal = document.getElementById("modal")
 	modal.style.display = "Flex"
