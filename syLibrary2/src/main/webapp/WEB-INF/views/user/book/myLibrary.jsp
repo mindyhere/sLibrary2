@@ -141,6 +141,10 @@ function goHisList(m_no) {
 								<td>${myLibrary.m_no}</td>
 							</tr>
 							<tr>
+								<th>회원등급</th>
+								<td>${myLibrary.le_name}</td>
+							</tr>
+							<tr>
 								<th>가입일</th>
 								<td>${myLibrary.m_year}</td>
 							</tr>
@@ -171,7 +175,7 @@ function goHisList(m_no) {
 						height="40px"> 서비스 이용현황
 				</h4>
 				<br>
-				<div class="row text-center">
+				<div class="row text-center"> 
 					<div class="col">
 						<h5 style="margin-bottom: 10px;">
 							<img src="/resources/images/myLibrary/loan.png" width="25px"

@@ -7,6 +7,7 @@
 		SELECT
 		m_no,
 		m_id,
+		le_name,
 		m_name,
 		m_tel,
 		m_email,
@@ -66,13 +67,14 @@
 		)
 		) total_cnt
 		FROM
-		sl_member
-		<!-- , lo_book , re_book -->
+		sl_member,
+		sl_level
 		WHERE
 		m_id = #{mId}
+		AND m_level = le_no
 		AND ROWNUM = 1
 	</select>
- 
+
 	<!-- 나의 대출 현황 -->
 	<select id="myLoanBook"
 		resultType="com.example.syLibrary2.user.model.dto.MyLibraryDTO">
@@ -177,7 +179,8 @@
 		lo_book
 		WHERE L_MEMNO = #{mNo}
 		AND SYSDATE > L_RETDATE
-		AND L_RETURN_YN = 'N'
+		AND L_RETURN_YN =
+		'N'
 	</select>
 
 	<!-- 연장신청 -->
