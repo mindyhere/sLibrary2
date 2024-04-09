@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="/resources/static/user.css">
 <script src="/resources/static/js/bootstrap.js"></script>
 <script src="/resources/static/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!--  폰트 적용  -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
