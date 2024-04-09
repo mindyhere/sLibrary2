@@ -21,7 +21,7 @@ public class ReBookController {
 
 	@Autowired
 	ReBookDAO dao;
-	@GetMapping("list.do")
+	@RequestMapping("list.do")
 	public ModelAndView list(@RequestParam(name="curPage", defaultValue="1") int curPage, @RequestParam(name="search_option", defaultValue="all") String search_option, @RequestParam(name="search", defaultValue="") String search) {
 		int count = dao.count(search_option, search); //레코드 개수
 		PageUtil page = new PageUtil(count, curPage);

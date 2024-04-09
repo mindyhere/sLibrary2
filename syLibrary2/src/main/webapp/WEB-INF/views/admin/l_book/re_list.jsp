@@ -120,7 +120,7 @@ tbody tr:hover {
 
 	<nav style="position: static;">
 		<form name="form1" method="post"
-			action="/admin/rebook/search.do">
+			action="/admin/rebook/list.do">
 			<div class="search">
 				<select id="search_option" name="search_option">
 					<option value="all"

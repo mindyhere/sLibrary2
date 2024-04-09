@@ -91,18 +91,15 @@ $(document).mouseup(function (e){
 });
 //수정모달
 function onModal(me_rownum) {
-	const a_name = "${dto.a_name}";
-	const me_post_date = "${dto.me_post_date}";
-	const me_memo = "${dto.me_memo}";
-	const me_rownum = "${dto.me_rownum}";
+	//const a_name = "${dto.a_name}";
+	//const me_post_date = "${dto.me_post_date}";
+	//const me_memo = "${dto.me_memo}";
+	//const me_rownum = "${dto.me_rownum}";
 	$.ajax({
 		type : "post",
 		url : "/admin/memo/search.do",
 		data : {
 			"me_rownum" : me_rownum,
-			"a_name" : a_name,
-			"me_post_date" : me_post_date,
-			"me_memo" : me_memo
 		},
 		dataType : "json",
 		success : function(data) {
@@ -117,18 +114,15 @@ function onModal(me_rownum) {
 }
 //상세모달
 function onModal2(me_rownum) {
-	const a_name = "${dto.a_name}";
-	const me_post_date = "${dto.me_post_date}";
-	const me_memo = "${dto.me_memo}";
-	const me_rownum = "${dto.me_rownum}";
+	//const a_name = "${dto.a_name}";
+	//const me_post_date = "${dto.me_post_date}";
+	//const me_memo = "${dto.me_memo}";
+	//const me_rownum = "${dto.me_rownum}";
 	$.ajax({
 		type : "post",
 		url : "/admin/memo/search.do",
 		data : {
 			"me_rownum" : me_rownum,
-			"a_name" : a_name,
-			"me_post_date" : me_post_date,
-			"me_memo" : me_memo
 		},
 		dataType : "json",
 		success : function(data) {
