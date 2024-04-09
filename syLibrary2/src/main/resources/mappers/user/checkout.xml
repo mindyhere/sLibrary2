@@ -49,4 +49,9 @@
 	where l_bookid=#{b_id}
 </select>
 
+<!-- 회원등급 업데이트 프로시저 -->
+<select id="call_checkLevel" statementType="CALLABLE">
+	{call check_level(#{m_id})}
+</select>
+
 </mapper>

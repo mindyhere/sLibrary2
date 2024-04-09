@@ -63,7 +63,7 @@ public class CheckoutController {
 		map.put("m_id", m_id);
 		map.put("b_id", b_id);
 		checkoutDao.insert(map);
-		String result = "신청이 완료되었습니다";
+		String result = "신청완료";
 		System.out.println("**INSERT 결과 확인 : " + result);
 		return result;
 	}

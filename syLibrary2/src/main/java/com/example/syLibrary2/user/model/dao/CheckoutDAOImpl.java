@@ -38,5 +38,6 @@ public class CheckoutDAOImpl implements CheckoutDAO {
 	@Override
 	public void insert(Map<String, Object> map) {
 		sqlSession.insert("checkout.insert_Lobook", map); // 대출 Lo_book insert
+		sqlSession.update("checkout.call_checkLevel", map.get("m_id")); // 대출 Lo_book insert
 	}
 }
