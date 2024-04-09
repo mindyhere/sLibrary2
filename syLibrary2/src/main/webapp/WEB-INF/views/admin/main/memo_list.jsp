@@ -22,7 +22,7 @@ $(function() {
 		let me_a_id = $("#me_a_id").val();
 		$.ajax({
 			type : "post",
-			url : "/syLibrary/memo_servlet/update.do",
+			url : "/admin/memo/update.do",
 			data : {
 				"me_memo" : me_memo,
 				"me_rownum" : me_rownum,
@@ -32,7 +32,7 @@ $(function() {
 				swal('수정되었습니다');
 				const modal = document.getElementById("modal");
 				modal.style.display = "none";
-				location.href = "/syLibrary/admin/admin_main.jsp";
+				location.href = "/admin/admin_login/main";
 			}
 		});
 	});
@@ -44,7 +44,7 @@ function memo_del(me_rownum) {
         buttons: ["취소", "확인"],
     }).then(function(isConfirmed) {
         if (isConfirmed) {
-        	location.href = "/syLibrary/memo_servlet/delete.do?me_rownum=" + me_rownum;
+        	location.href = "/admin/memo/delete.do?me_rownum=" + me_rownum;
         } 
     });
 }
@@ -70,7 +70,7 @@ $(document).mouseup(function (e){
 function onModal(me_rownum) {
 	$.ajax({
 		type : "post",
-		url : "/syLibrary/memo_servlet/search.do",
+		url : "/admin/memo/search/"+me_rownum,
 		data : {
 			"me_rownum" : me_rownum
 		},
@@ -88,7 +88,7 @@ function onModal(me_rownum) {
 function onModal2(me_rownum) {
 	$.ajax({
 		type : "post",
-		url : "/syLibrary/memo_servlet/search.do",
+		url : "/admin/memo/search/"+me_rownum,
 		data : {
 			"me_rownum" : me_rownum
 		},
@@ -102,7 +102,6 @@ function onModal2(me_rownum) {
 		}
 	});
 }
-
 </script>
 <style>
 .modal-overlay {

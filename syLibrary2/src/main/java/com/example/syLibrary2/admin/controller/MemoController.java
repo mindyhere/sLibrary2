@@ -7,12 +7,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,8 +26,8 @@ import com.example.syLibrary2.util.PageUtil2;
 import jakarta.servlet.http.HttpSession;
 
 //json객체 => RestController
-@RestController
-@RequestMapping("/memo/*")
+@Controller
+@RequestMapping("admin/memo/*")
 public class MemoController {
 	
 	@Autowired
@@ -48,6 +50,7 @@ public class MemoController {
 		map.put("count", count);
 		map.put("page_info", page_info);
 		mav.addObject("map", map);
+		//mav.setViewName("admin/admin_main");
 		return mav;
 	}
 	
@@ -59,6 +62,7 @@ public class MemoController {
 		dto.setMe_memo(me_memo);
 		memoDao.insert(dto);
 		return "redirect:/admin/list.do";
+		//return "redirect:/admin/list.do";
 	}
 	
 	@PostMapping("delete.do")

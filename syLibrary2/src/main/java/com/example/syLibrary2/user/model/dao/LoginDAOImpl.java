@@ -31,6 +31,7 @@ public class LoginDAOImpl implements LoginDAO {
 	// 아이디-이메일 찾기
 	@Override
 	public String searchIdEmail(LoginDTO dto) {
+		System.out.println("이메일로 찾기 " + dto);
 		String searchId = sqlSession.selectOne("login.searchIdEmail", dto);
 		return searchId;
 	}
@@ -38,6 +39,7 @@ public class LoginDAOImpl implements LoginDAO {
 	// 아이디-전화번호 찾기
 	@Override
 	public String searchIdTel(LoginDTO dto) {
+		System.out.println("전화번호로 찾기 " + dto);
 		String searchId = sqlSession.selectOne("login.searchIdTel", dto);
 		return searchId;
 	}

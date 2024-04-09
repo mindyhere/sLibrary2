@@ -1,16 +1,20 @@
 package com.example.syLibrary2.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.syLibrary2.admin.model.dao.RecommendDAO;
 import com.example.syLibrary2.admin.model.dto.BookDTO;
+import com.example.syLibrary2.user.model.dao.SearchDAO;
 
 @Controller
 public class RecommendController {
@@ -18,44 +22,72 @@ public class RecommendController {
 	@Autowired
 	RecommendDAO recommendDao;
 
+	@Autowired
+	SearchDAO searchDao;
+
 	@RequestMapping("/")
 	public String index() {
-		System.out.println("index > list로 redirect");
 		return "redirect:index/";
 	}
-	
+
 	@GetMapping("index/")
 	public ModelAndView list(@RequestParam(name = "opt", defaultValue = "") String option, ModelAndView mav) {
-		//String resultPage = "";
+		List<BookDTO> list = null;
 		if (option.equals("")) {
-			List<com.example.syLibrary2.admin.model.dto.BookDTO> list = recommendDao.getList("opt1");
+			list = recommendDao.getList("opt1");
 			mav.setViewName("user/main");
-			mav.addObject("list", list);
-			System.out.println("list 확인/추천목록 getList =>" + list);
 		} else if (!option.equals("")) {
-			List<BookDTO> list = recommendDao.getList(option);
-			System.out.println("옵션선택 option=" + option + "/ list=>" + list);
+			list = recommendDao.getList(option);
 			mav.setViewName("user/book/recommend");
-			mav.addObject("list", list);
 		}
+		mav.addObject("list", list);
+		mav.addObject("opt", option);
 		return mav;
 	}
 
-//	@GetMapping("index/")
-//	public String list(@RequestParam(name = "opt", defaultValue = "") String option, Model model) {
-//		String resultPage = "";
-//		if (option.equals("")) {
-//			List<BookDTO> list = recommendDao.getList("opt1");
-//			model.addAttribute("list", list);
-//			System.out.println("list 확인/추천목록 getList =>" + list);
-//			resultPage = "user/main";
-//		} else if (!option.equals("")) {
-//			List<BookDTO> list = recommendDao.getList(option);
-//			System.out.println("옵션선택 option=" + option + "/ list=>" + list);
-//			model.addAttribute("list", list);
-//			resultPage = "user/book/recommend";
-//		}
-//		return resultPage;
-//	}
+	@RequestMapping("index/recommendList")
+	public ModelAndView recommendList(ModelAndView mav) {
+		List<Map<String, Object>> list = recommendDao.getList();
+		mav.setViewName("user/book/modal1");
+		mav.addObject("list", list);
+		return mav;
+	}
+
+	@GetMapping("index/search")
+	public ModelAndView search(@RequestParam(name = "keyword", defaultValue = "") String keyword, ModelAndView mav) {
+		// 관리자 → 도서 검색
+		List<BookDTO> list = searchDao.totSearch(keyword);
+		mav.setViewName("user/book/autocomplete");
+		mav.addObject("list", list);
+		return mav;
+	}
+
+	@ResponseBody
+	@RequestMapping("index/insert")
+	public String insert(@RequestParam(name = "a_id") String a_id, @RequestParam(name = "b_id") int b_id) {
+		return recommendDao.insert(a_id, b_id);
+	}
+
+	@ResponseBody
+	@RequestMapping("index/delete")
+	public Map<String, Object> delete(@RequestParam(name = "cnt") int cnt, @RequestParam(name = "arr") String arr) {
+		Map<String, Object> map = new HashMap<>();
+		String option = "";
+		if (cnt == 5) {
+			option = "all"; // 전체삭제
+			recommendDao.delete(option);
+		} else if (cnt < 5) {
+			option = "each"; // 개별삭제
+			String[] values = arr.split(",");
+			if (values != null) {
+				for (int i = 0; i < values.length; i++) {
+					recommendDao.delete(option, Integer.parseInt(values[i]));
+				}
+			}
+		}
+		String result = "success";
+		map.put("result", result);
+		return map;
+	}
 
 }
