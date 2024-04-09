@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +25,10 @@ public class ChartController {
 	
 	@RequestMapping("ct_chart.do")
 	@ResponseBody
-	public List<Map<String, Object>> chcht() {
-		List<Map<String, Object>> ct_Chart = dao.ct_chart();
-//		JSONArray ct_Chart = dao.ct_chart();
+	public ModelAndView chcht() {
+		List<Map<String, Object>> ctchart = dao.ct_chart();
+		//List<Map<String, Object>> chart1 = null;
+		JSONArray json = new JSONArray();
 //		for(int j=0; j < ct_Chart.size(); j++) {
 //			JSONObject jsonObject = new JSONObject();
 //			jsonObject.put("cnt", ct_Chart.get(j).get("CNT"));
@@ -34,18 +36,19 @@ public class ChartController {
 //			json.add(jsonObject);
 //		}
 		
-		for (int j = 0; j < ct_Chart.size(); j++) {
+		for (int j = 0; j < ctchart.size(); j++) {
 			Map<String, Object> chart = new HashMap<>();
-			chart.put("category", ct_Chart.get(j).get("CATEGORY"));
-			chart.put("cnt", ct_Chart.get(j).get("CNT"));
-			ct_Chart.add(chart);
+			chart.put("category", ctchart.get(j).get("CATEGORY"));
+			chart.put("cnt", ctchart.get(j).get("CNT"));
+			json.add(chart);
 		}
 		
-		//ModelAndView mav = new ModelAndView();
-		//mav.setViewName("admin/chart/ct_chart");
-		//mav.addObject("ct_Chart", ct_Chart);
-		System.out.println(ct_Chart);
-		return ct_Chart;
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/chart/ct_chart");
+		mav.addObject("ct_Chart", json);
+		//mav.addObject("ct_Chart", chart);
+		System.out.println(json);
+		return mav;
 	}
 	
 }
