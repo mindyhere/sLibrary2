@@ -15,10 +15,22 @@
 <script src="http://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+	$(function() {
+		$("#btnSearch").click(function() {
+			if ($("select[name=search_option] option:selected").text() == "선택") {
+				swal("분류를 선택하세요");
+				return false;
+			}
+			if ($("#keyword").val() == "") {
+				swal("검색어를 입력하세요");
+				return;
+			}
+		});
+	});
 
 	function list(page) {
-		location.href = "/loan/list.do?cur_page="+page
-		+ "&search_option=${map.search_option}&keyword=${map.keyword}";
+		location.href = "/syLibrary/loanBook_servlet/search.do?cur_page=" + page
+				+ "&search_option=${search_option}&keyword=${keyword}";
 	}
 	
 	
@@ -32,7 +44,7 @@
 	        buttons: ["취소", "확인"],
 	    }).then(function(isConfirmed) {
 	        if (isConfirmed) {
-	        	location.href = "/loan/re_book.do?l_num="+l_num;
+	        	location.href = "/syLibrary/loanBook_servlet/re_book.do?l_num="+l_num;
 	        } 
 	    });
 	}
@@ -112,164 +124,164 @@ tbody tr:hover {
 </style>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/admin/admin_header.jsp" />
+	<jsp:include page="../admin_header.jsp" />
 	<div id="body-wrapper">
-		<div id="body-content">
+	<div id="body-content">
+	
+	<jsp:include page="../menu.jsp" />
+	<div style="width:1200px;">
+	<div class="page-direction" style="padding: 20px; padding-left: 250px;">
+		<div class="navi">
+			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;대출반납</span>
+			<i class="bi bi-chevron-right"></i> <span style="font-weight: bold;">대출도서
+				목록</span>
+		</div>
+	</div>
 
-			<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
-			<div style="width: 1200px;">
-				<div class="page-direction"
-					style="padding: 20px; padding-left: 250px;">
-					<div class="navi">
-						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;대출반납</span>
-						<i class="bi bi-chevron-right"></i> <span
-							style="font-weight: bold;">대출도서 목록</span>
-					</div>
-				</div>
-
-				<form name="form1" method="post" action="/loan/list.do">
-					<div class="search">
-						<select id="s_list" id="search_option" name="search_option">
-							<c:choose>
-								<c:when test="${map.search_option == 'none'}">
-									<option value="none" hidden>선택</option>
-									<option value="l_bookid">도서코드</option>
-									<option value="b_name">도서명</option>
-									<option value="m_name">대출자명</option>
-									<option value="l_lodate">대출일</option>
-									<option value="l_retdate">반납일</option>
-								</c:when>
-								<c:when test="${map.search_option == 'l_bookid'}">
-									<option value="none" hidden>선택</option>
-									<option value="l_bookid" selected>도서코드</option>
-									<option value="b_name">도서명</option>
-									<option value="m_name">대출자명</option>
-									<option value="l_lodate">대출일</option>
-									<option value="l_retdate">반납일</option>
-								</c:when>
-								<c:when test="${map.search_option == 'b_name'}">
-									<option value="none" hidden>선택</option>
-									<option value="l_bookid">도서코드</option>
-									<option value="b_name" selected>도서명</option>
-									<option value="m_name">대출자명</option>
-									<option value="l_lodate">대출일</option>
-									<option value="l_retdate">반납일</option>
-								</c:when>
-								<c:when test="${map.search_option == 'm_name'}">
-									<option value="none" hidden>선택</option>
-									<option value="l_bookid">도서코드</option>
-									<option value="b_name">도서명</option>
-									<option value="m_name" selected>대출자명</option>
-									<option value="l_lodate">대출일</option>
-									<option value="l_retdate">반납일</option>
-								</c:when>
-								<c:when test="${map.search_option == 'l_lodate'}">
-									<option value="none" hidden>선택</option>
-									<option value="l_bookid">도서코드</option>
-									<option value="b_name">도서명</option>
-									<option value="m_name">대출자명</option>
-									<option value="l_lodate" selected>대출일</option>
-									<option value="l_retdate">반납일</option>
-								</c:when>
-								<c:when test="${map.search_option == 'l_retdate'}">
-									<option value="none" hidden>선택</option>
-									<option value="l_bookid">도서코드</option>
-									<option value="b_name">도서명</option>
-									<option value="m_name">대출자명</option>
-									<option value="l_lodate">대출일</option>
-									<option value="l_retdate" selected>반납일</option>
-								</c:when>
-							</c:choose>
-						</select> <input type="text" id="keyword" name="keyword"
-							value="${map.keyword}" placeholder="검색어를 입력하세요">
-						<div class="icon">
-							<input type="submit" id="btnSearch" style="display: none;">
-							<label for="btnSearch"><svg
-									xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-									fill="#666666" class="bi bi-search" viewBox="0 0 16 16">
+	<form name="form1" method="post"
+		action="/syLibrary/loanBook_servlet/search.do">
+		<div class="search">
+			<select id="s_list" id="search_option" name="search_option">
+				<c:choose>
+					<c:when test="${search_option == null}">
+						<option value="none" hidden>선택</option>
+						<option value="l_bookid">도서코드</option>
+						<option value="b_name">도서명</option>
+						<option value="m_name">대출자명</option>
+						<option value="l_lodate">대출일</option>
+						<option value="l_retdate">반납일</option>
+					</c:when>
+					<c:when test="${search_option == 'l_bookid'}">
+						<option value="none" hidden>선택</option>
+						<option value="l_bookid" selected>도서코드</option>
+						<option value="b_name">도서명</option>
+						<option value="m_name">대출자명</option>
+						<option value="l_lodate">대출일</option>
+						<option value="l_retdate">반납일</option>
+					</c:when>
+					<c:when test="${search_option == 'b_name'}">
+						<option value="none" hidden>선택</option>
+						<option value="l_bookid">도서코드</option>
+						<option value="b_name" selected>도서명</option>
+						<option value="m_name">대출자명</option>
+						<option value="l_lodate">대출일</option>
+						<option value="l_retdate">반납일</option>
+					</c:when>
+					<c:when test="${search_option == 'm_name'}">
+						<option value="none" hidden>선택</option>
+						<option value="l_bookid">도서코드</option>
+						<option value="b_name">도서명</option>
+						<option value="m_name" selected>대출자명</option>
+						<option value="l_lodate">대출일</option>
+						<option value="l_retdate">반납일</option>
+					</c:when>
+					<c:when test="${search_option == 'l_lodate'}">
+						<option value="none" hidden>선택</option>
+						<option value="l_bookid">도서코드</option>
+						<option value="b_name">도서명</option>
+						<option value="m_name">대출자명</option>
+						<option value="l_lodate" selected>대출일</option>
+						<option value="l_retdate">반납일</option>
+					</c:when>
+					<c:when test="${search_option == 'l_retdate'}">
+						<option value="none" hidden>선택</option>
+						<option value="l_bookid">도서코드</option>
+						<option value="b_name">도서명</option>
+						<option value="m_name">대출자명</option>
+						<option value="l_lodate">대출일</option>
+						<option value="l_retdate" selected>반납일</option>
+					</c:when>
+				</c:choose>
+			</select> <input type="text" id="keyword" name="keyword" value="${keyword}"
+				placeholder="검색어를 입력하세요">
+			<div class="icon">
+				<input type="submit" id="btnSearch" style="display: none;">
+				<label for="btnSearch"><svg
+						xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+						fill="#666666" class="bi bi-search" viewBox="0 0 16 16">
   <path
-										d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+							d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
 </svg></label>
-						</div>
-					</div>
-				</form>
-				<table border="1">
-					<tr align="center" style="color: white; font-size: 17px;">
-						<th>도서코드</th>
-						<th>도서명</th>
-						<th>저자명</th>
-						<th>대출자 ID</th>
-						<th>대출자명</th>
-						<th>대출일</th>
-						<th>반납기한</th>
-						<th>연장신청 여부</th>
-						<th>반납</th>
-					</tr>
-					<c:choose>
-						<c:when test="${map.count==0}">
-							<tr height="100px" align="center">
-								<td colspan="9">일치하는 항목이 없습니다.</td>
-							</tr>
-						</c:when>
-						<c:otherwise>
-							<c:forEach var="dto" items="${map.dto}">
-								<tr align="center">
-									<td>${dto.l_bookid}</td>
-									<td>${dto.b_name}</td>
-									<td>${dto.b_author}</td>
-									<td>${dto.m_id}</td>
-									<td width="150px">${dto.m_name}</td>
-									<td width="150px">${dto.l_lodate}</td>
-									<td width="150px">${dto.l_retdate}</td>
-									<td>${dto.l_renew_yn}</td>
-									<td width="70px"><input type="button" id="btnRebook"
-										value="반납" class="btn text-white"
-										style="background-color: #6699CC;"
-										onclick="rebook(${dto.l_num})"></td>
-								</tr>
-							</c:forEach>
-							<tr align="center">
-								<td colspan="10"><c:if test="${map.page.curPage>1}">
-										<a id="hr" href="#" onclick="list('1')">[처음]</a>
-									</c:if> <c:if test="${map.page.curBlock>1}">
-										<a id="hr" href="#" onclick="list('${map.page.prevPage}')">[이전]</a>
-									</c:if> <c:forEach var="num" begin="${map.page.blockStart}"
-										end="${map.page.blockEnd}">
-										<c:choose>
-											<c:when test="${num==map.page.curPage}">
-												<span style="color: blue">${num}</span>
-											</c:when>
-											<c:otherwise>
-												<a id="hr" href="#" onclick="list('${num}')">${num} </a>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach> <c:if test="${map.page.curBlock<map.page.totBlock}">
-										<a id="hr" href="#" onclick="list('${map.page.nextPage}')">[다음]</a>
-									</c:if> <c:if test="${map.page.curPage<map.page.totPage}">
-										<a id="hr" href="#" onclick="list('${map.page.totPage}')">[마지막]</a>
-									</c:if></td>
-							</tr>
-
-						</c:otherwise>
-					</c:choose>
-				</table>
 			</div>
-			<c:if test="${result == 'success'}">
-				<script>
+		</div>
+	</form>
+			<table border="1">
+				<tr align="center" style="color: white; font-size: 17px;">
+					<th>도서코드</th>
+					<th>도서명</th>
+					<th>저자명</th>
+					<th>대출자 ID</th>
+					<th>대출자명</th>
+					<th>대출일</th>
+					<th>반납기한</th>
+					<th>연장신청 여부</th>
+					<th>반납</th>
+				</tr>
+				<c:choose>
+					<c:when test="${dto.size()==0}">
+						<tr height="100px" align="center">
+							<td colspan="9">일치하는 항목이 없습니다.</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="dto" items="${dto}">
+							<tr align="center">
+								<td>${dto.l_bookid}</td>
+								<td>${dto.b_name}</td>
+								<td>${dto.b_author}</td>
+								<td>${dto.m_id}</td>
+								<td width="150px">${dto.m_name}</td>
+								<td width="150px">${dto.l_lodate}</td>
+								<td width="150px">${dto.l_retdate}</td>
+								<td>${dto.l_renew_yn}</td>
+								<td width="70px"><input type="button" id="btnRebook"
+									value="반납" class="btn text-white"
+									style="background-color: #6699CC;"
+									onclick="rebook(${dto.l_num})"></td>
+							</tr>
+						</c:forEach>
+						<tr align="center">
+							<td colspan="10"><c:if test="${page.curPage>1}">
+									<a id="hr" href="#" onclick="list('1')">[처음]</a>
+								</c:if> <c:if test="${page.curBlock>1}">
+									<a id="hr" href="#" onclick="list('${page.prevPage}')">[이전]</a>
+								</c:if> <c:forEach var="num" begin="${page.blockStart}"
+									end="${page.blockEnd}">
+									<c:choose>
+										<c:when test="${num==page.curPage}">
+											<span style="color: blue">${num}</span>
+										</c:when>
+										<c:otherwise>
+											<a id="hr" href="#" onclick="list('${num}')">${num} </a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach> <c:if test="${page.curBlock<page.totBlock}">
+									<a id="hr" href="#" onclick="list('${page.nextPage}')">[다음]</a>
+								</c:if> <c:if test="${page.curPage<page.totPage}">
+									<a id="hr" href="#" onclick="list('${page.totPage}')">[마지막]</a>
+								</c:if></td>
+						</tr>
+			
+		</c:otherwise>
+	</c:choose>
+	</table>
+</div>
+	<c:if test="${result == 'success'}">
+		<script>
 		swal({
 	        text: "반납되었습니다",
 	        buttons: {cancel: false, confirm: true,},
 	    }).then(function(isConfirmed) {
 	        if (isConfirmed) {
-	        	location.href = "/loan/list.do";
+	        	location.href = "../loanBook_servlet/list.do";
 	        } 
 	    });
 			
 		</script>
-			</c:if>
+	</c:if>
 		</div>
-		<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
-	</div>
+	<jsp:include page="/admin/admin_footer.jsp" />
+</div>
 </body>
 </html>
 

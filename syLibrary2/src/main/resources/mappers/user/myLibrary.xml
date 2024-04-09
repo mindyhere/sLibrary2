@@ -13,7 +13,7 @@
 		m_img,
 		to_char(m_year,
 		'yyyy-MM-dd') m_year,
-	<!-- 	l_bookid, -->
+		<!-- l_bookid, -->
 		(
 		SELECT
 		COUNT(*)
@@ -34,7 +34,8 @@
 		lo_book_cnt,
 		(
 		SELECT
-		NVL(COUNT(*), 0)
+		NVL(COUNT(*),
+		0)
 		FROM
 		re_book
 		WHERE
@@ -66,13 +67,12 @@
 		) total_cnt
 		FROM
 		sl_member
-		<!-- , lo_book
-		, re_book -->
+		<!-- , lo_book , re_book -->
 		WHERE
 		m_id = #{mId}
 		AND ROWNUM = 1
 	</select>
-
+ 
 	<!-- 나의 대출 현황 -->
 	<select id="myLoanBook"
 		resultType="com.example.syLibrary2.user.model.dto.MyLibraryDTO">
@@ -167,10 +167,17 @@
 		lo_book
 		WHERE
 		l_memno =#{mNo}
-		AND l_return_yn =
-		'N'
-		AND l_bookid =
-		#{bId}
+		AND l_return_yn = 'N'
+		AND l_bookid = #{bId}
+	</select>
+
+	<!-- 연체 여부 확인 -->
+	<select id="checkOverReturn" resultType="int">
+		SELECT COUNT(*) FROM
+		lo_book
+		WHERE L_MEMNO = #{mNo}
+		AND SYSDATE > L_RETDATE
+		AND L_RETURN_YN = 'N'
 	</select>
 
 	<!-- 연장신청 -->

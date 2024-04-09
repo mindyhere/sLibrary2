@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="/resources/static/js/bootstrap.js"></script>
+<script src="/syLibrary/include/js/bootstrap.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 /* function list(page) {
@@ -40,47 +40,16 @@ $(function() {
 	});
 
 });
-/* $(function() {
-	$("#btnDelete").click(function() {
-		swal({
-	        text: "정말 삭제하시겠습니까?",
-	        buttons: ["취소", "확인"],
-	    }).then(function(isConfirmed) {
-	        if (isConfirmed) {
-	        	location.href = "/admin/memo/delete.do";
-	        } 
-	    });
-	});
-}); */
 function memo_del(me_rownum) {
-	swal({
-        text: "정말 삭제하시겠습니까?",
-        buttons: ["취소", "확인"],
-	}).then(function(isConfirmed) {
-		if (isConfirmed) {
-			$.ajax({
-				url : "/admin/memo/delete.do",
-				type : "post",
-				data : {
-					"me_rownum" : me_rownum
-				},
-				success : function(data) {
-					location.reload();
-				}
-			});
-		}
-	})
-}
-/* function memo_del(me_rownum) {
 	swal({
         text: "정말 삭제하시겠습니까?",
         buttons: ["취소", "확인"],
     }).then(function(isConfirmed) {
         if (isConfirmed) {
-        	location.href = "/admin/memo/delete.do";
+        	location.href = "/admin/memo/delete.do?me_rownum=" + me_rownum;
         } 
     });
-} */
+}
 function modal() {
 	const modal = document.getElementById("modal")
 	modal.style.display = "Flex"
@@ -99,46 +68,8 @@ $(document).mouseup(function (e){
 		modal2.style.display = "none";
 	}
 });
-
 //수정모달
 function onModal(me_rownum) {
-	$.ajax({
-		type : "post",
-		url : "/admin/memo/search.do",
-		data : {
-			"me_rownum" : me_rownum
-		},
-		dataType : "json",
-		success : function(data) {
-			modal();
-			document.getElementById("writer").value=data.a_name;
-			document.getElementById("date").value=data.me_post_date;
-			document.getElementById("message").value=data.me_memo;
-			document.getElementById("rownum").value=data.me_rownum;
-		}
-	});
-}
-//상세모달
-function onModal2(me_rownum) {
-	$.ajax({
-		type : "post",
-		url : "/admin/memo/search.do",
-		data : {
-			"me_rownum" : me_rownum
-		},
-		dataType : "json",
-		success : function(data) {
-			modal2();
-			document.getElementById("writer2").value=data.a_name;
-			document.getElementById("date2").value=data.me_post_date;
-			document.getElementById("message2").value=data.me_memo;
-			document.getElementById("rownum2").value=data.me_rownum;
-		}
-	});
-}
-
-//수정모달
-/* function onModal(me_rownum) {
 	const me_rownum = $("#me_rownum").val();
 	$.ajax({
 		type : "post",
@@ -155,9 +86,9 @@ function onModal2(me_rownum) {
 			document.getElementById("rownum").value=data.me_rownum;
 		}
 	});
-} */
+}
 //상세모달
-/* function onModal2(me_rownum) {
+function onModal2(me_rownum) {
 	const me_rownum = $("#me_rownum").val();
 	$.ajax({
 		type : "post",
@@ -173,7 +104,7 @@ function onModal2(me_rownum) {
 			document.getElementById("rownum2").value=data.me_rownum;
 		}
 	});
-} */
+}
 </script>
 <style>
 .modal-overlay {
@@ -336,7 +267,6 @@ tbody tr:hover {
 											class="btn btn-outline-warning"></td>
 									<td width="60px" height="45px" class="ddd">
 										<input type="button" value="삭제" onclick="memo_del('${dto.me_rownum}')" class="btn btn-outline-warning">
-										<!-- <input type="button" value="삭제" id="btnDelete" class="btn btn-outline-warning">  -->
 									</td>
 							</c:when>
 						</c:choose>

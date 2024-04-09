@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.syLibrary2.admin.model.dao.AdminDAO;
@@ -26,7 +24,7 @@ import com.example.syLibrary2.util.PageUtil2;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("admin/memo/*")
+@RequestMapping("/admin/memo/*")
 public class MemoController {
 	
 	@Autowired
@@ -43,7 +41,7 @@ public class MemoController {
 		int end = page.getPageEnd();
 		List<MemoDTO> list =memoDao.list(start, end); //게시물 리스트
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/main/memo_list");
+		mav.setViewName("/admin/main/memo_list");
 		Map<String,Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("count", count);
@@ -63,9 +61,8 @@ public class MemoController {
 	}
 	
 	@RequestMapping("delete.do")
-	public String delete(@RequestParam(name="me_rownum") int me_rownum) {
+	public String delete(@RequestParam(name="me_rownum")int me_rownum) {
 		memoDao.delete(me_rownum);
-		System.out.println("삭제번호==="+me_rownum);
 		return "admin/admin_main";
 	}
 	
@@ -76,26 +73,14 @@ public class MemoController {
 	}
 	
 	//메모상세 (확인요망)
-	@RequestMapping("search.do")
-	@ResponseBody
-	public ModelAndView detail(@RequestParam(name="me_rownum") int me_rownum) {
-		//MemoDTO dto = memoDao.search(me_rownum);
-		ModelAndView mav = new ModelAndView();
-		System.out.println("메모번호==="+me_rownum);
-		MemoDTO memo = memoDao.search(me_rownum);
-		Map<String,Object> map = new HashMap<>();
-		map.put("me_a_id", memo.getMe_a_id());
-		map.put("me_rownum", memo.getMe_rownum());
-		map.put("a_name", memo.getA_name());
-		map.put("me_memo", memo.getMe_memo());
-		map.put("me_post_date", memo.getMe_post_date());
-		mav.addObject("map",map);
-		return mav;
-//			dto.setMe_rownum(me_rownum);
-//			System.out.println("메모상세==="+dto);
-//			memoDao.search(dto);
-//			entity = new ResponseEntity<String>("success",HttpStatus.OK);
-//			return entity;
+	@PostMapping("/search/{me_rownum}")
+	public ResponseEntity<String> detail(@PathVariable(name="me_rownum") int me_rownum, @RequestBody MemoDTO dto) {
+		ResponseEntity<String> entity = null;
+		
+			dto.setMe_rownum(me_rownum);
+			memoDao.search(dto);
+			entity = new ResponseEntity<String>("success",HttpStatus.OK);
+			return entity;
 		
 //		memoDao.search(me_rownum);
 //	    JsonObject jso = new JsonObject();

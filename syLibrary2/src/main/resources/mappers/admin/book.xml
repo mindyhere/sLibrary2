@@ -17,8 +17,8 @@
 	select distinct b_category from sl_book
 </select>
 <insert id="insert">
-	insert into sl_book (b_id,b_name,b_author,b_pub,b_year,b_category,b_isbn,b_amount,b_url,b_description, b_ct_num)
-	values (book_seq.nextval, #{b_name}, #{b_author}, #{b_pub}, #{b_year}, #{b_category}, #{b_isbn}, #{b_amount}, #{b_url}, #{b_description}, #{ct_number})
+	insert into sl_book (b_id,b_name,b_author,b_pub,b_year,b_category,b_isbn,b_amount,b_url,b_description)
+	values (book_seq.nextval, #{b_name}, #{b_author}, #{b_pub}, #{b_year}, #{b_category}, #{b_isbn}, #{b_amount}, #{b_url}, #{b_description})
 </insert>
 <!-- <select id="list" resultType="com.example.syLibrary2.admin.model.BookDTO">
 	select *
@@ -36,7 +36,7 @@
 </select>
 <select id="update">
 update sl_book set b_name=#{b_name}, b_author=#{b_author}, b_pub=#{b_pub}, b_year=#{b_year}, b_amount=#{b_amount}, b_description=#{b_description},
-b_url=#{b_url}, b_category=#{b_category}, b_ct_num=#{ct_number}
+b_url=#{b_url}, b_category=#{b_category}
 where b_id=#{b_id}
 </select>
 <delete id="delete">
@@ -46,10 +46,10 @@ where b_id=#{b_id}
 	select count(*) from sl_book
 	<include refid="search"/>
 </select>
-<!-- <select id="search_count" resultType="int">
+<select id="search_count" resultType="int">
 	select count(*) from sl_book
 	where ${search_option} like '%' || #{keyword} || '%' 
-</select> -->
+</select>
 <select id="url_cate" resultType="String">
 	select b_url from sl_book where b_id=#{b_id}
 </select>

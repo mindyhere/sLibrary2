@@ -44,15 +44,8 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public String insert(BookDTO dto) {
-		String result = "";
-		System.out.println("daoimpl"+dto);
-		try {
-			sqlSession.insert("book.insert", dto);
-			result = "success";
-		} catch (Exception e) {
-			result = "fail";
-		}
-		return result;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -74,7 +67,8 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public void delete(int b_id) {
-		sqlSession.delete("book.delete", b_id);
+		// TODO Auto-generated method stub
+
 	}
 
 	/*

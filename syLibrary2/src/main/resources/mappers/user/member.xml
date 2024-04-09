@@ -3,12 +3,14 @@
 <mapper namespace="member">
 
 	<!-- 회원정보 조회 -->
-<select id="list_memberInfo" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
+	<select id="list_memberInfo"
+		resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
 		SELECT * FROM sl_member
 	</select>
 
 	<!-- 개인별 회원정보 조회 -->
-	<select id="detail_member" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
+	<select id="detail_member"
+		resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
 		SELECT
 		m_no,
 		m_id,
@@ -19,13 +21,16 @@
 		m_address,
 		m_detail_address,
 		m_email,
-		to_char(m_birth_date, 'yyyy-MM-dd') m_birth_date,
+		to_char(m_birth_date, 'yyyy-MM-dd')
+		m_birth_date,
 		m_img,
 		to_char(m_year, 'yyyy-MM-dd') m_year,
-		m_loan
+		m_loan,
+		le_name
 		FROM
-		sl_member
-		WHERE m_id = #{m_id} 
+		sl_member, sl_level
+		WHERE m_id = #{mId}
+		AND m_level = le_no
 	</select>
 
 	<!-- 회원정보 수정 -->
@@ -34,36 +39,37 @@
 		m_passwd = #{m_passwd},
 		m_tel = #{m_tel},
 		m_email = #{m_email},
-		m_zip_no =
-		#{m_zip_no},
+		m_zip_no = #{m_zip_no},
 		m_address = #{m_address},
-		m_detail_address =
-		#{m_detail_address},
+		m_detail_address = #{m_detail_address},
 		m_img = #{m_img}
 		WHERE m_id = #{m_id}
 	</update>
 
 
 	<!-- 관리자회원분류검색리스트 -->
-	<select id="ad_search_list" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
-
+	<select id="ad_search_list"
+		resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
 		select *
 		from (
 		select rownum as rn, A.*
 		from (
-		select m_no,m_name,
+		select
+		m_no,m_name,
 		to_char(m_birth_date, 'yyyy-mm-dd') m_birth_date,
 		m_id,
 		m_tel,
 		to_char(m_year, 'yyyy-mm-dd') m_year
 		from sl_member
-		where ${search_option} like '%' || #{search} || '%'
+		where
+		${search_option} like '%' || #{search} || '%'
 		order by m_no
 		) A
 		)
-		where rn between #{start} and #{end}
+		where rn
+		between #{start} and #{end}
 	</select>
-
+ 
 	<!-- 관리자회원검색 개수 -->
 	<select id="ad_search_count" resultType="int">
 		select count(*) from
@@ -72,26 +78,31 @@
 	</select>
 
 	<!-- 관리자회원상세 -->
-	<select id="ad_detail" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
+	<select id="ad_detail"
+		resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
 		select m_no, m_name, m_id,
-		to_char(m_birth_date, 'yyyy-mm-dd') m_birth_date, m_img,
+		to_char(m_birth_date,
+		'yyyy-mm-dd') m_birth_date, m_img,
 		m_tel,
 		m_email,
 		m_zip_no,
 		m_address,
 		m_detail_address, m_img,to_char(m_year,
 		'yyyy-mm-dd') m_year
-		from sl_member
+		from
+		sl_member
 		where m_no=#{m_no}
 	</select>
 
 	<!-- 관리자회원목록 -->
-	<select id="ad_p_list" resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
+	<select id="ad_p_list"
+		resultType="com.example.syLibrary2.user.model.dto.MemberDTO">
 		select *
 		from(
 		select rownum as rn, A.*
 		from(
-		select m_no, m_name,
+		select m_no,
+		m_name,
 		to_char(m_birth_date, 'yyyy-mm-dd') m_birth_date,
 		m_id,
 		m_tel,

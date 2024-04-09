@@ -14,7 +14,7 @@ select count(*) from re_book
 </select>
 
 <select id="call_CheckLoan" statementType="CALLABLE">
-	{call check_loan_0(#{m_id})}
+	{call check_loan(#{m_id})}
 </select>
 
 <!-- b_id → 가장 빠른 대출예정일 조회 -->
