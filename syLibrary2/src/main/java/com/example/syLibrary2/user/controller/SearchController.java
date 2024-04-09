@@ -41,6 +41,7 @@ public class SearchController {
 			@RequestParam(name = "option", defaultValue = "all") String option,
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "view", defaultValue = "view1") String view) {
+		System.out.println(page+", "+option+", "+", "+keyword+", "+view);
 		// 페이지 설정
 		int count = searchDao.resultCount(option, keyword);
 		PageUtil pageInfo = new PageUtil(count, page);
@@ -98,6 +99,7 @@ public class SearchController {
 	@RequestMapping("moveTo")
 	public ModelAndView moveTo(@RequestParam(name = "page") int page, @RequestParam(name = "option") String option,
 			@RequestParam(name = "view", defaultValue = "view1") String view, HttpServletRequest request) {
+
 		// 파라미터 초기화
 		List<BookDTO> list = null;
 		List<Map<String, Object>> stateinfo = null;
@@ -107,9 +109,9 @@ public class SearchController {
 		ModelAndView mav = new ModelAndView();
 
 		if (view.equals("view1")) {
-			resultPage = "/user/search/view1";
+			resultPage = "/user/search/view1.jsp";
 		} else if (view.equals("view2")) {
-			resultPage = "/user/search/view2";
+			resultPage = "/user/search/view2.jsp";
 		}
 
 		switch (option) {
@@ -125,7 +127,6 @@ public class SearchController {
 
 			// 검색 결과 목록 가져오기
 			list = searchDao.totSearch(keyword, start, end);
-			System.out.println(list);
 			mav.setViewName(resultPage);
 			mav.addObject("list", list);
 			mav.addObject("stateinfo", searchDao.listState(list));
@@ -169,12 +170,12 @@ public class SearchController {
 			@RequestParam(name = "b_pub", defaultValue = "") String b_pub,
 			@RequestParam(name = "view", defaultValue = "view1") String view,
 			@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "count") int count) {
-		
+
 		String resultPage = "";
 		if (view.equals("view1")) {
-			resultPage = "/user/search/view1";
+			resultPage = "/user/search/view1.jsp";
 		} else if (view.equals("view2")) {
-			resultPage = "/user/search/view2";
+			resultPage = "/user/search/view2.jsp";
 		}
 
 		// 페이지 설정

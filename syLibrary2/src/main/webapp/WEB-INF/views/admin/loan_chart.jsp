@@ -24,11 +24,11 @@ function getGraph() {
 	let dateList = [];
 	let bookList=[];
 	$.ajax({
-		url: "/admin/chart/loan_chart.do",
+		url: "/syLibrary/admin_servlet/chart.do",
 		type: "get",
+		dataType:"json",
 		ContentType: "text/html;charset=utf-8",
 		success: function(data){
-			// console.log(data);
 			for (let i=0; i<7; i++) {
 				dateList.push(data[i].L_LODATE);
 				bookList.push(data[i].LOAN_BOOK);	
@@ -96,10 +96,10 @@ tr-width:200px;
 }
 </style>
 <body>
-<jsp:include page="/WEB-INF/views/admin/admin_header.jsp" />
+<jsp:include page="admin_header.jsp" />
 <div id="body-wrapper">
 	<div id="body-content">
-			<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
+			<jsp:include page="/admin/menu.jsp" />
 <div style="width:1000px;">
 	<div class="page-direction" style="padding: 20px; padding-left: 250px;">
 	<div class="navi">
@@ -116,7 +116,7 @@ tr-width:200px;
             </div>
             </div>
 	</div>
-	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
+	<jsp:include page="/admin/admin_footer.jsp" />
 </div>
 </body>
 </html>

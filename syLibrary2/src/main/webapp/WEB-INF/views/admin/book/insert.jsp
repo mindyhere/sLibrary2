@@ -131,7 +131,7 @@ th {
 	</div>
 </div>
 	<form name="form1" method="post"
-		action="/book/insert.do"
+		action="/syLibrary/book_servlet/insert.do"
 		enctype="multipart/form-data">
 		<table border="1" style="width: 800px; height: 460px; resize: none">
 			<tr style="width: 500px; height: 60px;">
@@ -165,7 +165,7 @@ th {
 					id="b_category" style="width: 150px" class="form-control"> 
 					<datalist id="list_a">
 						<c:forEach var="list" items="${list}">
-							<option value="${list}"></option>
+							<option value="${list.b_category}">${dto.b_category}</option>
 						</c:forEach>
 					</datalist></td>
 			</tr>
@@ -194,7 +194,7 @@ th {
 			        buttons: ["취소", "확인"],
 			    }).then(function(isConfirmed) {
 			        if (isConfirmed) {
-			        	location.href = "/book/list_all.do";
+			        	location.href = "/syLibrary/book_servlet/list_all.do";
 			        } 
 			    });
 			});

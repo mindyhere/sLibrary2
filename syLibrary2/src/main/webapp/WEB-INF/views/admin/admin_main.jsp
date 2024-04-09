@@ -10,11 +10,12 @@
 	type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/resources/static/css/bootstrap.css">
+<link rel="stylesheet" href="/syLibrary/include/css/bootstrap.css">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="/resources/static/js/bootstrap.js"></script>
+<script src="../include/js/bootstrap.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <style>
 html, body {

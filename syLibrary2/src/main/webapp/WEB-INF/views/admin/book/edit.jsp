@@ -123,7 +123,7 @@
 	        buttons: ["취소", "확인"],
 	    }).then(function(isConfirmed) {
 	        if (isConfirmed) {
-	        	document.form1.action = "/book/delete.do?b_id=${map.dto.b_id}";
+	        	document.form1.action = "/syLibrary/book_servlet/delete.do";
 				document.form1.submit();
 	        } 
 	    });
