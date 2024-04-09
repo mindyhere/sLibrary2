@@ -64,8 +64,9 @@ public class MemoController {
 	
 	@RequestMapping("delete.do")
 	public String delete(@RequestParam(name="me_rownum")int me_rownum) {
-		memoDao.delete(me_rownum);
-		System.out.println("삭제번호==="+me_rownum);
+		int m_rownum = Integer.valueOf(me_rownum);
+		memoDao.delete(m_rownum);
+		System.out.println("삭제번호==="+m_rownum);
 		return "admin/admin_main";
 	}
 	
