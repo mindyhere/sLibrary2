@@ -52,7 +52,7 @@ html, body {
 		</ul>
 		<ul class="sub_menu">
 			<li><a id="menu_a" href="/book/list_all.do">도서 목록</a><br></li>
-			<li><a id="menu_a" href="/syLibrary/book_servlet/select_cg.do">도서 등록</a><br></li>
+			<li><a id="menu_a" href="/book/select_cg.do">도서 등록</a><br></li>
 		</ul>
 		<ul class="big_menu">
 			<li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
@@ -60,8 +60,8 @@ html, body {
 				</svg>&nbsp;대출 반납</li>
 		</ul>
 		<ul class="sub_menu">
-			<li><a id="menu_a" href="/syLibrary/record_servlet/list.do">대출/반납 목록</a><br>
-				<a id="menu_a" href="/syLibrary/loanBook_servlet/list.do">대출 도서 관리</a><br>
+			<li><a id="menu_a" href="/record/list.do">대출/반납 목록</a><br>
+				<a id="menu_a" href="/loan/list.do">대출 도서 관리</a><br>
 				<a id="menu_a" href="/admin/rebook/list.do">예약 도서 목록</a><br></li>
 		</ul>
 		<ul class="big_menu">
@@ -71,7 +71,7 @@ html, body {
 		</ul>
 		<ul class="sub_menu">
 			<li><a id="menu_a" href="/syLibrary/admin/loan_chart.jsp">주간 도서 대출량</a><br></li>
-			<li><a id="menu_a" href="/syLibrary/admin/ct_chart.jsp">월간 분류별 대출량</a><br></li>
+			<li><a id="menu_a" href="/admin/chart/ct_chart.do">월간 분류별 대출량</a><br></li>
 		</ul>
 		<ul class="big_menu">
 			<li><a style="text-decoration: none; color: black; font-weight:bold;" href="/admin/admember/list.do"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
