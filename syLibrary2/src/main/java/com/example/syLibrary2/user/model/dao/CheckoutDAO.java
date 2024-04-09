@@ -12,9 +12,6 @@ public interface CheckoutDAO {
 	// 중복요청 여부 확인
 	int duplicate(Map<String, Object> map);
 	
-	// (m_id 1개 당) 현재 대출가능한 도서 개수
-	//int cntUserLo(String m_id);
-
 	// 도서 대출 신청(db insert)
 	void insert(Map<String, Object> map);
 

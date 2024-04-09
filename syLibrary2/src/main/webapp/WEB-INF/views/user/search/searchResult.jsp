@@ -28,12 +28,12 @@ $(function() {
 		let form1 = $("form[name=form1]");
         let keyword	= $("input[name=keyword]");
 		let view= $("input[name=viewOpt]:checked").val();
-		if(keyword.val()=="" || keyword.val().trim().length==0 ){
+		/*if(keyword.val()=="" || keyword.val().trim().length==0 ){
 			myAlert("warning", "잠깐!", "검색어를 입력해주세요.");
 			$('#keyword').val("");
 			keyword.focus();
 			return false;
-		} 
+		} */
 		form1.submit();
 	});
 	$("#btnDetail").click(function() {
@@ -209,7 +209,7 @@ function reserve(b_id){
 	})
 } 
 
-// 대출신청하기
+//대출신청하기
 function checkOut(b_id){
 	let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}":"";
 	let a_id = "${sessionScope.a_id}" !=null? "${sessionScope.a_id}":"";
@@ -221,7 +221,7 @@ function checkOut(b_id){
 				myConfirm(result,
 						"나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
 						"info", 
-						"/user/user/book/myLibray?mId="+m_id);
+						"/user/book/myLibrary/${mId}");
 			},
 			error: function(err){
 				console.log(err);
@@ -229,7 +229,7 @@ function checkOut(b_id){
 				myConfirm("Not possible",
 						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
 						"error", 
-						"/user/user/book/myLibray?mId="+m_id);
+						"/user/book/myLibrary/${mId}");
 			}
 		});
 	}else if(a_id != ""){

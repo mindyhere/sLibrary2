@@ -7,9 +7,6 @@ public interface ReviewDAO {
 	// 도서별 리뷰 목록 조회
 	List<Map<String, Object>> getReviews(int b_id);
 
-	// 리뷰 테이블 전체 목록 조회
-	//List<Map<String, Object>> totalList();
-
 	String insert(Map<String, Object> map);
 
 	// 회원이 삭제할 경우
