@@ -20,11 +20,6 @@
 		$("#btnSearch")
 				.click(
 						function() {
-							if ($("select[name=search_option] option:selected")
-									.text() == "선택") {
-								swal("분류를 선택하세요");
-								return false;
-							}
 							if ($("#keyword").val() == "") {
 								swal("검색어를 입력하세요");
 								return false;
@@ -35,18 +30,20 @@
 			modal.style.display = "none";
 		});
 		$("#btnEmail").click(function() {
-			let receive_mail = $("#receive_mail").val();
+			let receiveMail = $("#receiveMail").val();
 			let subject = $("#subject").val();
 			let message = $("#message").val();
 			$.ajax({
 				type : "post",
-				url : "email_servlet/send.do",
+				url : "/email/send.do",
+				dataType: "text",
 				data : {
-					"receive_mail" : receive_mail,
+					"receiveMail" : receiveMail,
 					"subject" : subject,
 					"message" : message
 				},
-				success : function() {
+				success : function(result) {
+					console.info(result);
 					swal('전송되었습니다');
 					const modal = document.getElementById("modal");
 					modal.style.display = "none";
@@ -57,8 +54,8 @@
 	});
 
 	function list(page) {
-		location.href = "/syLibrary/record_servlet/search.do?cur_page=" + page
-				+ "&search_option=${search_option}&keyword=${keyword}";
+		location.href = "/record/list.do?cur_page="+page
+		+ "&search_option=${map.search_option}&keyword=${map.keyword}";
 	}
 
 	function modal() {
@@ -77,14 +74,10 @@
 	function mail(l_num) {
 		$.ajax({
 			type : "post",
-			url : "record_servlet/email.do",
-			data : {
-				"l_num" : l_num
-			},
-			dataType : "json",
-			success : function(data) {
+			url : "/record/email.do?l_num="+l_num,
+			success : function(result) {
 				modal();
-				$("#receive_mail").val(data.data);
+				$("#receiveMail").val(result);
 			}
 		});
 	}
@@ -249,11 +242,11 @@ tbody tr:hover {
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="../admin_header.jsp" />
+		<jsp:include page="/WEB-INF/views/admin/admin_header.jsp" />
 		<div id="body-wrapper">
 	<div id="body-content">
 		
-		<jsp:include page="../menu.jsp" />
+		<jsp:include page="/WEB-INF/views/admin/menu.jsp" />
 		<div style="width:1200px;">
 
 		<div class="page-direction" style="padding: 20px; padding-left: 250px;">
@@ -263,12 +256,11 @@ tbody tr:hover {
 		</div>
 		</div>
 		
-		<form name="form1" method="post"
-			action="/syLibrary/record_servlet/search.do">
+		<form name="form1" method="post" action="/record/list.do">
 			<div class="search">
 				<select id="s_list" id="search_option" name="search_option">
 					<c:choose>
-						<c:when test="${search_option == null}">
+						<c:when test="${map.search_option == 'none'}">
 							<option value="none" hidden>선택</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name">도서명</option>
@@ -276,7 +268,7 @@ tbody tr:hover {
 							<option value="l_lodate">대출일</option>
 							<option value="l_retdate">반납일</option>
 						</c:when>
-						<c:when test="${search_option == 'l_bookid'}">
+						<c:when test="${map.search_option == 'l_bookid'}">
 							<option value="none" hidden>선택</option>
 							<option value="l_bookid" selected>도서코드</option>
 							<option value="b_name">도서명</option>
@@ -284,7 +276,7 @@ tbody tr:hover {
 							<option value="l_lodate">대출일</option>
 							<option value="l_retdate">반납일</option>
 						</c:when>
-						<c:when test="${search_option == 'b_name'}">
+						<c:when test="${map.search_option == 'b_name'}">
 							<option value="none" hidden>선택</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name" selected>도서명</option>
@@ -292,7 +284,7 @@ tbody tr:hover {
 							<option value="l_lodate">대출일</option>
 							<option value="l_retdate">반납일</option>
 						</c:when>
-						<c:when test="${search_option == 'm_id'}">
+						<c:when test="${map.search_option == 'm_id'}">
 							<option value="none" hidden>선택</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name">도서명</option>
@@ -300,7 +292,7 @@ tbody tr:hover {
 							<option value="l_lodate">대출일</option>
 							<option value="l_retdate">반납일</option>
 						</c:when>
-						<c:when test="${search_option == 'l_lodate'}">
+						<c:when test="${map.search_option == 'l_lodate'}">
 							<option value="none" hidden>선택</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name">도서명</option>
@@ -308,7 +300,7 @@ tbody tr:hover {
 							<option value="l_lodate" selected>대출일</option>
 							<option value="l_retdate">반납일</option>
 						</c:when>
-						<c:when test="${search_option == 'l_retdate'}">
+						<c:when test="${map.search_option == 'l_retdate'}">
 							<option value="none" hidden>선택</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name">도서명</option>
@@ -317,7 +309,7 @@ tbody tr:hover {
 							<option value="l_retdate" selected>반납일</option>
 						</c:when>
 					</c:choose>
-				</select> <input type="text" id="keyword" name="keyword" value="${keyword}"
+				</select> <input type="text" id="keyword" name="keyword" value="${map.keyword}"
 					placeholder="검색어를 입력하세요">
 				<div class="icon">
 					<input type="submit" id="btnSearch" style="display: none;">
@@ -342,16 +334,16 @@ tbody tr:hover {
 				<th>반납일</th>
 				<th>반납 여부</th>
 				<th><a style="text-decoration: under; color: white;"
-					href="/syLibrary/record_servlet/order.do">연체일</a></th>
+					href="/record/order.do">연체일</a></th>
 			</tr>
 			<c:choose>
-				<c:when test="${dto.size()==0}">
+				<c:when test="${map.count==0}">
 					<tr height="100px" align="center">
 						<td colspan="9">일치하는 항목이 없습니다.</td>
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="dto" items="${dto}">
+					<c:forEach var="dto" items="${map.dto}">
 						<tr align="center">
 							<td>${dto.l_bookid}</td>
 							<td>${dto.b_name}&nbsp;</td>
@@ -376,24 +368,24 @@ tbody tr:hover {
 						</tr>
 					</c:forEach>
 					<tr align="center">
-						<td colspan="10"><c:if test="${page.curPage>1}">
+						<td colspan="10"><c:if test="${map.page.curPage>1}">
 								<a id="hr" href="#" onclick="list('1')">[처음]</a>
-							</c:if> <c:if test="${page.curBlock>1}">
-								<a id="hr" href="#" onclick="list('${page.prevPage}')">[이전]</a>
-							</c:if> <c:forEach var="num" begin="${page.blockStart}"
-								end="${page.blockEnd}">
+							</c:if> <c:if test="${map.page.curBlock>1}">
+								<a id="hr" href="#" onclick="list('${map.page.prevPage}')">[이전]</a>
+							</c:if> <c:forEach var="num" begin="${map.page.blockStart}"
+								end="${map.page.blockEnd}">
 								<c:choose>
-									<c:when test="${num==page.curPage}">
+									<c:when test="${num==map.page.curPage}">
 										<span style="color: blue">${num}</span>
 									</c:when>
 									<c:otherwise>
 										<a id="hr" href="#" onclick="list('${num}')">${num} </a>
 									</c:otherwise>
 								</c:choose>
-							</c:forEach> <c:if test="${page.curBlock<page.totBlock}">
-								<a id="hr" href="#" onclick="list('${page.nextPage}')">[다음]</a>
-							</c:if> <c:if test="${page.curPage<page.totPage}">
-								<a id="hr" href="#" onclick="list('${page.totPage}')">[마지막]</a>
+							</c:forEach> <c:if test="${map.page.curBlock<map.page.totBlock}">
+								<a id="hr" href="#" onclick="list('${map.page.nextPage}')">[다음]</a>
+							</c:if> <c:if test="${map.page.curPage<map.page.totPage}">
+								<a id="hr" href="#" onclick="list('${map.page.totPage}')">[마지막]</a>
 							</c:if></td>
 					</tr>
 
@@ -408,22 +400,21 @@ tbody tr:hover {
 			</div>
 			<div class="close-area" id="ca">X</div><hr/>
 			<div class="content">
-				<form id="m_form" method="post"
-					action="/syLibrary/email_servlet/send.do">
-					<span style="color: #26262b">받는 사람</span> <input type="text" id="receive_mail" name="receive_mail"><br>
+				<form id="m_form" method="post" action="/email/send.do">
+					<span style="color: #26262b">받는 사람</span> <input type="text" id="receiveMail" name="receiveMail"><br>
 					<span style="color: #26262b">제목</span> <input type="text" id="subject" name="subject"><br><br>
 					<textarea rows="5" cols="40" id="message" name="message"
 						placeholder="내용" ></textarea>
 					<br>
 					<div align="center">
-					<input type="submit" class="btn text-white" style="background-color: #6699CC;" id="btnEmail" value="전송">
+					<input type="button" class="btn text-white" style="background-color: #6699CC;" id="btnEmail" value="전송">
 					</div>
 				</form>
 			</div>
 		</div>
 		</div>
 			</div>
-	<jsp:include page="/admin/admin_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>
 		
 	</div>
