@@ -90,7 +90,7 @@ $(function() {
 		}else{
 			let	params={"option":"user", "arr":values};
 			$.ajax({
-				url: "/user/search/bookinfo/delete",
+				url: "/review/delete",
 				data:params,
 				success:function(txt){
 					totalList();
@@ -113,7 +113,7 @@ $(function() {
 		}else{
 			let	params={"option":"admin", "arr":values};
 			$.ajax({
-				url: "/user/search/bookinfo/delete",
+				url: "/review/delete",
 				data:params,
 				success:function(txt){
 					totalList();

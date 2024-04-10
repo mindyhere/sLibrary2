@@ -17,8 +17,6 @@ public interface SearchDAO {
 	List<BookDTO> detailSearch(String b_name, String b_author, String b_pub, int start, int end);
 
 	// 항목별 레코드 개수 구하기
-	Map<String, Object> countRecords(String keyword);
-
 	Map<String, Object> countRecords(String b_name, String b_author, String b_pub);
 
 	int resultCount(String option, String b_name, String b_author, String b_pub);
