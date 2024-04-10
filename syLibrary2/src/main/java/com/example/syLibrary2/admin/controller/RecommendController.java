@@ -55,7 +55,7 @@ public class RecommendController {
 
 	@GetMapping("index/search")
 	public ModelAndView search(@RequestParam(name = "keyword", defaultValue = "") String keyword, ModelAndView mav) {
-		// 관리자 → 도서 검색
+		// 관리자, 추천도서 edit → 도서 검색
 		List<BookDTO> list = searchDao.totSearch(keyword);
 		mav.setViewName("user/book/autocomplete");
 		mav.addObject("list", list);

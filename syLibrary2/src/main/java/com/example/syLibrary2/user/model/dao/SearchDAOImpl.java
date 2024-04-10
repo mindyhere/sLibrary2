@@ -11,13 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import com.example.syLibrary2.admin.model.dto.BookDTO;
 
-
 @Repository
 public class SearchDAOImpl implements SearchDAO {
 
 	@Autowired // 의존관계주입. 스프링 객체생성&연결
 	SqlSession sqlSession;
-	
+
 	@Autowired
 	CheckoutDAO checkoutDao;
 
@@ -27,7 +26,7 @@ public class SearchDAOImpl implements SearchDAO {
 		map.put("keyword", keyword);
 		map.put("start", start);
 		map.put("end", end);
-		List<BookDTO> list= sqlSession.selectList("search.totSearch", map);
+		List<BookDTO> list = sqlSession.selectList("search.totSearch", map);
 		for (BookDTO dto : list) {
 			String b_name = dto.getB_name();
 			String b_author = dto.getB_author();
@@ -95,50 +94,17 @@ public class SearchDAOImpl implements SearchDAO {
 		return list;
 	}
 
-	@Override
-	public Map<String, Object> countRecords(String keyword) {
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		String b_name = keyword;
-		int cntName = (sqlSession.selectOne("search.cntName", b_name) != null)
-				? sqlSession.selectOne("search.cntName", b_name)
-				: 0;
-
-		String b_author = keyword;
-		int cntAuthor = (sqlSession.selectOne("search.cntAuthor", b_author) != null)
-				? sqlSession.selectOne("search.cntAuthor", b_name)
-				: 0;
-
-		String b_pub = keyword;
-		int cntPub = (sqlSession.selectOne("search.cntPub", b_pub) != null)
-				? sqlSession.selectOne("search.cntPub", b_pub)
-				: 0;
-
-		map.put("cntName", cntName);
-		map.put("cntAuthor", cntAuthor);
-		map.put("cntPub", cntPub);
-		return map;
-	}
 
 	@Override
 	public Map<String, Object> countRecords(String b_name, String b_author, String b_pub) {
-		int cntName = 0;
-		int cntAuthor = 0;
-		int cntPub = 0;
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		if (b_name != "") {
-			cntName = sqlSession.selectOne("search.cntName", b_name);
-		}
+		int cntName = !b_name.isEmpty() ? sqlSession.selectOne("search.cntName", b_name) : 0;
+		int cntAuthor = !b_author.isEmpty() ? sqlSession.selectOne("search.cntAuthor", b_author) : 0;
+		int cntPub = !b_pub.isEmpty() ? sqlSession.selectOne("search.cntPub", b_pub) : 0;
 		map.put("cntName", cntName);
-		if (b_author != "") {
-			cntAuthor = sqlSession.selectOne("search.cntAuthor", b_author);
-		}
 		map.put("cntAuthor", cntAuthor);
-		if (b_pub != "") {
-			cntPub = sqlSession.selectOne("search.cntPub", b_pub);
-		}
 		map.put("cntPub", cntPub);
+		System.out.println("countRecords= " + map);
 		return map;
 	}
 
@@ -165,7 +131,7 @@ public class SearchDAOImpl implements SearchDAO {
 	public Map<String, Object> showDetails(int b_id) {
 		return sqlSession.selectOne("search.bookinfo", b_id);
 	}
-	
+
 	@Override
 	public List<Map<String, Object>> listState(List<BookDTO> list) {
 		List<Map<String, Object>> stateinfo = new ArrayList<>();
@@ -178,7 +144,7 @@ public class SearchDAOImpl implements SearchDAO {
 		}
 		return stateinfo;
 	}
-	
+
 	@Override
 	public String fastRetdate(int b_id) {
 		String state = "";
