@@ -17,6 +17,7 @@
 <script>
 $(function() {
 	const b_id=${map.B_ID};
+	
 	getReviews(b_id);
 	
 	$("#btnShow").click(function() {
@@ -60,9 +61,9 @@ $(function() {
 			let params={"m_id":m_id,"b_id":b_id, "contents":contents.val()};
 			insert(params);
 			contents.val("");
-		}else if(a_id != ""){
+		} else if (a_id != "") {
 			myAlert("warning","잠깐!", "관리자로 로그인 중입니다. 권한 문의바랍니다.");
-		}else if(m_id=="" && a_id==""){
+		} else if (m_id=="" && a_id=="") {
 			Swal.fire({
 				title: "잠깐!",
 				html: "로그인 후 이용가능합니다.<br>해당 페이지로 이동할까요?",
@@ -97,16 +98,16 @@ $(function() {
 		}
 	});
 	
-	$("#autoKey").keyup(function(){
+	$("#autoKey").keyup(function() {
 		const keyword = $("#autoKey").val();
 		const searchOpt = $("#searchOpt :selected").val();
 		
-		if(keyword != "" || keyword.trim().length !== 0){
+		if (keyword != "" || keyword.trim().length !== 0) {
 			const params={"searchOpt":searchOpt, "keyword":keyword};
 			$.ajax({
-				url: "/user/search/bookinfo/search",
-				data:params,
-				success:function(data){
+				url: "/review/search",
+				data: params,
+				success: function(data) {
 					$("#review-total").html(data);
 				}
 			});
@@ -116,7 +117,7 @@ $(function() {
 	});
 });
 
-function myConfirm(title, msg, icon, url){
+function myConfirm(title, msg, icon, url) {
 	Swal.fire({
 		title: title,
 		html: msg,
@@ -128,12 +129,12 @@ function myConfirm(title, msg, icon, url){
 		}).then((result) => {
 		if (result.isConfirmed) {
 			location.href=url;
-		}else if (result.isDenied) {
+		} else if (result.isDenied) {
 			location.reload();
 		}
 	});
 }
-function myAlert(icon, title, msg){
+function myAlert(icon, title, msg) {
 	Swal.fire({
 		icon: icon,
 		title: title,
@@ -141,8 +142,9 @@ function myAlert(icon, title, msg){
 		confirmButtonText: "OK"
 	});
 }
+
 //예약신청하기	
-function reserve(b_id){ 
+function reserve(b_id) { 
 	let m_id = "${sessionScope.mId}";
 	$.ajax({
 		url : "/syLibrary/res_book_servlet/recheck_book.do",
@@ -161,32 +163,39 @@ function reserve(b_id){
 		}
 	})
 } 
+
 //대출신청하기
-function checkOut(b_id){
-	let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}":"";
-	let a_id = "${sessionScope.a_id}" != null? "${sessionScope.a_id}":"";
-	if(m_id != ""){
-		//console.log(b_id+", "+m_id);
+function checkOut(b_id) {
+	let m_id = "${sessionScope.mId}" != null ? "${sessionScope.mId}" : "";
+	let a_id = "${sessionScope.a_id}" != null ? "${sessionScope.a_id}" : "";
+	if(m_id != "") {
 		$.ajax({
-			url:'../../../checkout/'+b_id,
+			url:'/checkout/'+b_id,
 			success: function(result){
-				myConfirm(result,
-						"나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
-						"info",
-						"/user/book/myLibrary/${mId}");
+				console.log(result);
+				if(result=="Not possible") {
+					myConfirm(result,
+							"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
+							"error", 
+							"/user/book/myLibrary/${mId}");
+				} else {
+					myConfirm(result,
+							"나의서재에서 신청내역을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
+							"success",
+							"/user/book/myLibrary/${mId}");
+				}
 			},
-			error: function(err){
-				console.log(err);
-				console.log("**"+err.error);
+			error: function(err) {
+				console.log("**"+err);
 				myConfirm("Not possible",
 						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
 						"error", 
 						"/user/book/myLibrary/${mId}");
 			}
 		});
-	}else if(a_id != ""){
+	} else if(a_id != "") {
 		myAlert("warning","잠깐!", "관리자로 로그인 중입니다. 권한 문의바랍니다.");
-	}else if(m_id=="" && a_id==""){
+	} else if(m_id=="" && a_id=="") {
 		Swal.fire({
 			title: "잠깐!",
 			html: "로그인 후 이용가능합니다.<br>해당 페이지로 이동할까요?",
@@ -204,59 +213,50 @@ function checkOut(b_id){
 	}
 }
 
-function getReviews(b_id){
+function getReviews(b_id) {
 	$.ajax({
-		url:"/user/search/bookinfo/getReviews/",
-		data:{"b_id":b_id},
-		success:function(txt){
+		url: "/review/",
+		data: {"b_id":b_id},
+		success: function(txt) {
 			$("#review-table").html(txt);
 		}
 	}); 
 }
+
 function totalList() {
 	$.ajax({
-		url:"/user/search/bookinfo/totalList/",
-		success:function(txt){
+		url: "/review/totalList",
+		success: function(txt) {
 			$("#review-total").html(txt);
 		}
 	});
 }
 
-function insert(params){
+function insert(params) {
 	$.ajax({
-		url:"/user/search/bookinfo/insert",
-		data:params,
-		success: function(txt){
+		url: "/review/insert",
+		data: params,
+		success: function(txt) {
 			myAlert("info", "Check", txt);
 			getReviews(params.b_id);
 		},
-		error: function(request, status, error){
+		error: function(request, status, error) {
 			alert("code= "+request.status+", msg= "+request.responseText+", error= "+error);
 		}
 	});
 }
+
 function deleteReview(params) {
 	console.log(params);
 	$.ajax({
-		url: "/user/search/bookinfo/delete",
-		data:params,
-		success:function(txt){
+		url: "/review/delete",
+		data: params,
+		success: function(txt) {
 			getReviews(${map.B_ID});
 		}
 	}); 
 }
-function search(keyword){
-	let params={"searchOpt":$("#searchOpt").val(), "keyword":keyword};
-	$.ajax({
-		url: "/user/review/search",
-		data:params,
-		success:function(txt){
-			$("#review-total").html(txt);
-		}
-	});
-}
 </script>
-
 
 <style>
 /* 기본 페이지 레이아웃 */
@@ -454,7 +454,6 @@ white-space:nowrap;
 }
 </style>
 </head>
-
 
 <body>
 <%@ include file="../common/header.jsp"%>

@@ -53,6 +53,7 @@
 	where rn between #{start} and #{end}
 </select>
 
+<!-- 관리자, 추천도서검색 -->
 <select id="simpleSearch" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
 select b_id, b_name, b_author, b_pub, b_year
 from  sl_book 
@@ -63,11 +64,10 @@ where
 order by B_id desc, B_name
 </select>
 
-<resultMap type="java.util.Map" id="result">
+<resultMap type="java.util.Map" id="bookinfo_result">
 	<result property="B_DESCRIPTION" column="B_DESCRIPTION" jdbcType="CLOB" javaType="java.lang.String" />
 </resultMap>
-
-<select id="bookinfo" resultType="java.util.Map" resultMap="result">
+<select id="bookinfo" resultType="java.util.Map" resultMap="bookinfo_result">
 	select * from sl_book where b_id=#{b_id}
 </select>
 
@@ -90,7 +90,6 @@ order by B_id desc, B_name
 	</choose>
 </select>
 
-
 <!-- 검색결과 → 컬럼별 레코드 개수 -->
 <select id="cntName" resultType="int">
 	select count(*) from sl_book
@@ -104,6 +103,5 @@ order by B_id desc, B_name
 	select count(*) from sl_book
 	where b_pub like '%'|| #{b_pub} ||'%' 
 </select>
-
 
 </mapper>

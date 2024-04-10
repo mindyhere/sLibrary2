@@ -57,7 +57,8 @@
 		m_detail_address,
 		m_img,
 		to_char(m_year, 'yyyy-mm-dd') m_year,
-		le_name
+		le_name,
+		m_loan
 		from sl_member m, sl_level l
 		where m.m_level = l.le_no
 		and m_no=#{m_no}

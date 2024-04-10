@@ -61,7 +61,7 @@ th {
 		<div style="left: 290px; position: absolute; width: 2000px;">
 			<div class="dd">
 				<form name="form1" method="post" enctype="multipart/form-data">
-					<table border="1" width="700px" style="position: static;">
+					<table border="1" width="800px" style="position: static;">
 						<td rowspan="6"><c:choose>
 								<c:when test="${map.de_list.m_img == null }">
 									<img src="/resources/images/member/image_no.png"
@@ -84,6 +84,20 @@ th {
 							<td style="text-align: center;">아이디</td>
 							<td><input type="text" name="m_id" id="m_id" size="5"
 								class="form-control" readonly value="${map.de_list.m_id}"></td>
+							<c:choose>
+							<c:when test="${map.de_list.m_loan == 0}">
+								<td><input type="text" name="m_loan" id="m_loan" size="2"
+									class="form-control" readonly value="연체중" style="color:red">
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td>
+								<input type="hidden" name="m_loan" id="m_loan" size="2"
+									class="form-control" readonly>
+								</td>
+							</c:otherwise>
+							</c:choose>
+							
 						</tr>
 						<tr>
 							<td style="text-align: center;">생년월일</td>

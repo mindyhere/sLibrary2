@@ -101,61 +101,44 @@ function myAlert(icon, title, msg){
 	});
 }
 
-function searchByName(page) {
-    let b_name = $("input[name=keyword]").val();
-    let searchOpt="name";
-    let view= $("input[name=viewOpt]:checked").val();
-    let count=${cntRec.cntName};
-    $("#text").html("결과 내 검색 - <span>[제목]:"+b_name+"&nbsp;[저자]:&nbsp;&nbsp;[발행처]:&nbsp;&nbsp;</span>에 대한 검색결과, 총 <span>"+count+"</span> 건");
-    let params={"b_name":b_name, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
-    if(count!==0){
-    	$.ajax({
-			url:"/user/search/serachBy",
-			data:params,
-			success:function(txt){
-				$("#section-resultList").html(txt);
-			}
-		});
-    }
-}
-function searchByAuthor(page) {
-    let b_author = $("input[name=keyword]").val();
-    let searchOpt="author";
-    let view= $("input[name=viewOpt]:checked").val();
-    let count=${cntRec.cntAuthor};
-    $("#text").html("결과 내 검색 - <span>[제목]:&nbsp;&nbsp;[저자]:"+b_author+"&nbsp;[발행처]:&nbsp;&nbsp;</span>에 대한 검색결과, 총 <span>"+count+"</span> 건");
-    let params={"b_author":b_author, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
-    if(count!==0){
-    	$.ajax({
-			url:"/user/search/serachBy",
-			data:params,
-			success:function(txt){
-				$("#section-resultList").html(txt);
-			}
-		});
-    }
-}
-function searchByPub(page) {
-	let b_pub = $("input[name=keyword]").val();
-	let searchOpt="pub";
+function searchBy(page, searchOpt) {
+	let keyword = $("input[name=keyword]").val();
 	let view= $("input[name=viewOpt]:checked").val();
-    let count=${cntRec.cntPub};
-	$("#text").html("결과 내 검색 - <span>[제목]:&nbsp;&nbsp;[저자]:&nbsp;&nbsp;[발행처]:"+b_pub+"&nbsp;</span>에 대한 검색결과, 총 <span>"+count+"</span> 건");
-    let params={"b_pub":b_pub, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
-    if(count!==0){
-    	$.ajax({
-			url:"/user/search/serachBy",
+	let params, count, txt;
+	
+	switch (searchOpt) {
+	case "name":
+		count = ${cntRec.cntName};
+		txt = "결과 내 검색 - <span>[제목]:"+keyword+"&nbsp;[저자]:&nbsp;&nbsp;[발행처]:&nbsp;&nbsp;</span>에 대한 검색결과, 총 <span>"+count+"</span> 건";
+		params={"b_name":keyword, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
+		break;
+	case "author":
+		count=${cntRec.cntAuthor};
+		txt = "결과 내 검색 - <span>[제목]:&nbsp;&nbsp;[저자]:"+keyword+"&nbsp;[발행처]:&nbsp;&nbsp;</span>에 대한 검색결과, 총 <span>"+count+"</span> 건";
+		params={"b_author":keyword, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
+		break;
+	case "pub":
+		count=${cntRec.cntPub};
+		txt = "결과 내 검색 - <span>[제목]:&nbsp;&nbsp;[저자]:&nbsp;&nbsp;[발행처]:"+keyword+"&nbsp;</span>에 대한 검색결과, 총 <span>"+count+"</span> 건";
+		params={"b_pub":keyword, "searchOpt":searchOpt, "view":view, "count":count, "page":page};
+		break;
+	}
+	
+	if (count !== 0) {
+		$("#text").html(txt);
+		$.ajax({
+			url:"/user/search/searchBy",
 			data:params,
-			success:function(txt){
-				$("#section-resultList").html(txt);
+			success:function(result){
+				$("#section-resultList").html(result);
 			}
 		});
-    }
+	}
 }
 
 function moveTo(page){
 	let option=$("input[name=searchOpt]").val();
-	if(option=="all"){
+	if (option=="all"){
 		let keyword=$("input[name=keyword]").val();
 		let view= $("input[name=viewOpt]:checked").val();
 		let params={"keyword":keyword, "view":view, "page":page, "option":option};
@@ -166,14 +149,8 @@ function moveTo(page){
 				$("#section-resultList").html(txt);
 			}
 		});
-	}else if(option=="name"){
-		searchByName(page);
-	}else if(option=="author"){
-		searchByAuthor(page);
-	}else if(option=="pub"){
-		searchByPub(page);
-	}else {
-		myAlert("error", "Error", "에러발생");
+	} else {
+		searchBy(page, option);
 	}
 }
 
@@ -214,18 +191,24 @@ function checkOut(b_id){
 	let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}":"";
 	let a_id = "${sessionScope.a_id}" !=null? "${sessionScope.a_id}":"";
 	if(m_id != ""){
-		console.log(b_id+", "+m_id);
 		$.ajax({
 			url:'/checkout/'+b_id,
 			success: function(result){
-				myConfirm(result,
-						"나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
-						"info", 
-						"/user/book/myLibrary/${mId}");
+				console.log("success : result=" + result);
+				if(result=="Not possible"){
+					myConfirm(result,
+							"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
+							"error", 
+							"/user/book/myLibrary/${mId}");
+				} else {
+					myConfirm(result,
+							"나의서재에서 신청내역을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
+							"success",
+							"/user/book/myLibrary/${mId}");
+				}
 			},
 			error: function(err){
-				console.log(err);
-				console.log("**"+err.error);
+				console.log("**err : "+err);
 				myConfirm("Not possible",
 						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
 						"error", 
@@ -424,9 +407,9 @@ td > a{
 			</button>
 			<div class="content" id="internal">
 				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchByName(1)">제목(<b>${cntRec.cntName}</b>)</a></li>
-					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchByAuthor(1)">저자(<b>${cntRec.cntAuthor}</b>)</a></li>
-					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchByPub(1)">발행처(<b>${cntRec.cntPub}</b>)</a></li>
+					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchBy(1, 'name')">제목(<b>${cntRec.cntName}</b>)</a></li>
+					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchBy(1, 'author')">저자(<b>${cntRec.cntAuthor}</b>)</a></li>
+					<li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" onclick="searchBy(1, 'pub')">발행처(<b>${cntRec.cntPub}</b>)</a></li>
 				</ul>
 			</div>
 		</li>
