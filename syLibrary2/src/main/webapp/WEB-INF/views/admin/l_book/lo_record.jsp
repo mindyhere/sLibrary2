@@ -267,7 +267,7 @@ tbody tr:hover {
 							<option value="m_id">대출자 ID</option>
 							<option value="l_lodate">대출일</option>
 							<option value="l_retdate">반납일</option>
-						</c:when>
+						</c:when> 
 						<c:when test="${map.search_option == 'l_bookid'}">
 							<option value="none">전체</option>
 							<option value="l_bookid" selected>도서코드</option>

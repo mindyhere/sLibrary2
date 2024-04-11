@@ -233,7 +233,7 @@ tbody tr:hover {
 	text-shadow: 1px 1px 2px gray;
 }
 
-#hr {
+#hr { 
 	text-decoration: none;
 	color: black;
 }

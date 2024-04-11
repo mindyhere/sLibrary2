@@ -70,6 +70,6 @@ public class RecordController {
 	public String member_email(@RequestParam(name="l_num") String l_num) {
 		int num = Integer.valueOf(l_num);
 		String result = dao.member_email(num);
-		return result;
+		return result; 
 	}
 }

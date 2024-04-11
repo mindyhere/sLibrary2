@@ -164,7 +164,7 @@ padding-bottom: 20px;
 						<option value="b_author" selected>저자명</option>
 						<option value="b_pub">출판사</option>
 						<option value="b_category">분류</option>
-					</c:when>
+					</c:when> 
 					<c:when test="${map.search_option == 'b_pub'}">
 						<option value="none">전체</option>
 						<option value="b_id">도서번호</option>
