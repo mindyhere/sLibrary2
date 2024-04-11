@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="login">
+	<!-- 비밀번호 복호화 -->
+	<select id="chk_passwd" resultType="String">
+		SELECT m_passwd
+		FROM sl_member
+		WHERE m_id = #{mId}
+	</select>
+	
 	<!-- 로그인 -->
 	<select id="login_check" resultType="String">
 		SELECT m_name
