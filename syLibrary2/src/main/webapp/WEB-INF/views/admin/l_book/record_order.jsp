@@ -260,7 +260,7 @@ tbody tr:hover {
 				<select id="s_list" id="search_option" name="search_option">
 					<c:choose>
 						<c:when test="${map.search_option == 'none'}">
-							<option value="none" hidden>선택</option>
+							<option value="none">전체</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name">도서명</option>
 							<option value="m_id">대출자 ID</option>
@@ -268,7 +268,7 @@ tbody tr:hover {
 							<option value="l_retdate">반납일</option>
 						</c:when>
 						<c:when test="${map.search_option == 'l_bookid'}">
-							<option value="none" hidden>선택</option>
+							<option value="none">전체</option>
 							<option value="l_bookid" selected>도서코드</option>
 							<option value="b_name">도서명</option>
 							<option value="m_id">대출자 ID</option>
@@ -276,7 +276,7 @@ tbody tr:hover {
 							<option value="l_retdate">반납일</option>
 						</c:when>
 						<c:when test="${map.search_option == 'b_name'}">
-							<option value="none" hidden>선택</option>
+							<option value="none">전체</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name" selected>도서명</option>
 							<option value="m_id">대출자 ID</option>
@@ -284,7 +284,7 @@ tbody tr:hover {
 							<option value="l_retdate">반납일</option>
 						</c:when>
 						<c:when test="${map.search_option == 'm_id'}">
-							<option value="none" hidden>선택</option>
+							<option value="none">전체</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name">도서명</option>
 							<option value="m_id" selected>대출자 ID</option>
@@ -292,7 +292,7 @@ tbody tr:hover {
 							<option value="l_retdate">반납일</option>
 						</c:when>
 						<c:when test="${map.search_option == 'l_lodate'}">
-							<option value="none" hidden>선택</option>
+							<option value="none">전체</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name">도서명</option>
 							<option value="m_name">대출자명</option>
@@ -300,7 +300,7 @@ tbody tr:hover {
 							<option value="l_retdate">반납일</option>
 						</c:when>
 						<c:when test="${map.search_option == 'l_retdate'}">
-							<option value="none" hidden>선택</option>
+							<option value="none">전체</option>
 							<option value="l_bookid">도서코드</option>
 							<option value="b_name">도서명</option>
 							<option value="m_name">대출자명</option>
