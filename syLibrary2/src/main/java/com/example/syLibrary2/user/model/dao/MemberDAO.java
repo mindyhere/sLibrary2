@@ -1,7 +1,5 @@
 package com.example.syLibrary2.user.model.dao;
 
-import java.util.Map;
-
 import com.example.syLibrary2.user.model.dto.MemberDTO;
 
 public interface MemberDAO {
