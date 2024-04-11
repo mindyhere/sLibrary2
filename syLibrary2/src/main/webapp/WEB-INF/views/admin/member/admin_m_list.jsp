@@ -151,18 +151,39 @@ tbody tr:hover {
 		 	<th>가입일</th>
 		 	<th>&nbsp;</th>
 		 </tr>
-		 <c:forEach var="row" items="${map.list}">
-		    <tr align="center">
-			  	<td width="150px">${row.m_name}</td>
-				<td width="150px">${row.m_birth_date}</td>
-			   	<td>${row.m_id}</td>
-			   	<td width="200px">${row.m_tel}</td>
-				<td width="150px">${row.m_year}</td>
- 				<td width="70px">
-					<input type="button" value="상세" class="btn text-white" style="background-color: #6699CC;" onclick="slist(${row.m_no});">
-				</td>
+		 <c:choose>
+ 			<c:when test="${map.list.size() == 0 }">
+ 			<tr>
+				<td colspan="6" align="center">&nbsp;</td>
 			</tr>
-		  </c:forEach>
+ 			<tr>
+				<td colspan="6" align="center">&nbsp;</td>
+			</tr>
+	 			<tr>
+					<td colspan="6" align="center">등록된 회원이 없습니다.</td>
+				</tr>
+			<tr>
+				<td colspan="6" align="center">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="6" align="center">&nbsp;</td>
+			</tr>
+ 			</c:when>
+ 			<c:otherwise>
+				 <c:forEach var="row" items="${map.list}">
+				    <tr align="center">
+					  	<td width="150px">${row.m_name}</td>
+						<td width="150px">${row.m_birth_date}</td>
+					   	<td>${row.m_id}</td>
+					   	<td width="200px">${row.m_tel}</td>
+						<td width="150px">${row.m_year}</td>
+		 				<td width="70px">
+							<input type="button" value="상세" class="btn text-white" style="background-color: #6699CC;" onclick="slist(${row.m_no});">
+						</td>
+					</tr>
+				  </c:forEach>
+				 </c:otherwise>
+		  </c:choose>
 		  
 	<tr align="center">
 		<td colspan="7">

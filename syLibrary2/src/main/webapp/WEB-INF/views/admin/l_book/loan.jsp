@@ -15,7 +15,19 @@
 <script src="http://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-
+$(function() {
+	$("#btnSearch").click(function() {
+		/* if ($("select[name=search_option] option:selected")
+				.text() == "선택") {
+			swal("분류를 선택하세요");
+			return false;
+		} */
+		if ($("#keyword").val() == "") {
+			swal("검색어를 입력하세요");
+			return false;
+		}
+	});
+});
 	function list(page) {
 		location.href = "/loan/list.do?cur_page="+page
 		+ "&search_option=${map.search_option}&keyword=${map.keyword}";
@@ -126,13 +138,13 @@ tbody tr:hover {
 							style="font-weight: bold;">대출도서 목록</span>
 					</div>
 				</div>
-
+ 
 				<form name="form1" method="post" action="/loan/list.do">
 					<div class="search">
 						<select id="s_list" id="search_option" name="search_option">
 							<c:choose>
 								<c:when test="${map.search_option == 'none'}">
-									<option value="none" hidden>선택</option>
+									<option value="none">전체</option>
 									<option value="l_bookid">도서코드</option>
 									<option value="b_name">도서명</option>
 									<option value="m_name">대출자명</option>
@@ -140,7 +152,7 @@ tbody tr:hover {
 									<option value="l_retdate">반납일</option>
 								</c:when>
 								<c:when test="${map.search_option == 'l_bookid'}">
-									<option value="none" hidden>선택</option>
+									<option value="none">전체</option>
 									<option value="l_bookid" selected>도서코드</option>
 									<option value="b_name">도서명</option>
 									<option value="m_name">대출자명</option>
@@ -148,7 +160,7 @@ tbody tr:hover {
 									<option value="l_retdate">반납일</option>
 								</c:when>
 								<c:when test="${map.search_option == 'b_name'}">
-									<option value="none" hidden>선택</option>
+									<option value="none">전체</option>
 									<option value="l_bookid">도서코드</option>
 									<option value="b_name" selected>도서명</option>
 									<option value="m_name">대출자명</option>
@@ -156,7 +168,7 @@ tbody tr:hover {
 									<option value="l_retdate">반납일</option>
 								</c:when>
 								<c:when test="${map.search_option == 'm_name'}">
-									<option value="none" hidden>선택</option>
+									<option value="none">전체</option>
 									<option value="l_bookid">도서코드</option>
 									<option value="b_name">도서명</option>
 									<option value="m_name" selected>대출자명</option>
@@ -164,7 +176,7 @@ tbody tr:hover {
 									<option value="l_retdate">반납일</option>
 								</c:when>
 								<c:when test="${map.search_option == 'l_lodate'}">
-									<option value="none" hidden>선택</option>
+									<option value="none">전체</option>
 									<option value="l_bookid">도서코드</option>
 									<option value="b_name">도서명</option>
 									<option value="m_name">대출자명</option>
@@ -172,7 +184,7 @@ tbody tr:hover {
 									<option value="l_retdate">반납일</option>
 								</c:when>
 								<c:when test="${map.search_option == 'l_retdate'}">
-									<option value="none" hidden>선택</option>
+									<option value="none">전체</option>
 									<option value="l_bookid">도서코드</option>
 									<option value="b_name">도서명</option>
 									<option value="m_name">대출자명</option>

@@ -30,4 +30,5 @@ public class LoanDTO {
 	private int r_memno;
 	private int l_y;
 	private int r_y;
+	private int l_o;
 }

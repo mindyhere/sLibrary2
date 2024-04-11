@@ -2,6 +2,9 @@ package com.example.syLibrary2.user.model.dao;
 
 public interface LoginDAO {
 
+	// 비밀번호 복호화
+	String chkPasswd(String mId);
+	
 	// 로그인
 	String loginChk(String mId, String mpasswd);
 

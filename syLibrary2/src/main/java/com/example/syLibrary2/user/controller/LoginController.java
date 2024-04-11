@@ -5,9 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +27,9 @@ public class LoginController {
 	@Autowired
 	LoginDAO loginDao;
 
+	@Autowired
+	PasswordEncoder pwdEncoder;
+
 	// 로그인 페이지
 	@GetMapping("login")
 	public String login() {
@@ -39,11 +41,17 @@ public class LoginController {
 	public ModelAndView loginCheck(@RequestParam(name = "mId", defaultValue = "") String mId,
 			@RequestParam(name = "mPasswd", defaultValue = "") String mPasswd, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		String chkPasswd = loginDao.chkPasswd(mId);
 		String mName = loginDao.loginChk(mId, mPasswd);
-
-		if (mName != "" && mName != null) {
+		if (pwdEncoder.matches(mPasswd, chkPasswd)) { // 로그인 성공
+			mName = loginDao.loginChk(mId, chkPasswd);
 			session.setAttribute("mId", mId);
 			session.setAttribute("mName", mName);
+			mav.setViewName("redirect:/");
+		} else if (mName != "" && mName != null) {
+			session.setAttribute("mId", mId);
+			session.setAttribute("mName", mName);
+			session.setAttribute("mPasswd", mPasswd);
 			mav.setViewName("redirect:/");
 		} else {
 			mav.addObject("message", "로그인실패");

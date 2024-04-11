@@ -47,15 +47,14 @@ public class AdmemberDAOImpl implements AdmemberDAO {
 		map.put("m_no",m_no);
 		return sqlSession.selectList("admember.lo_memlist", map);
 	}
-
+	
 	@Override
-	public LoanDTO loan_y(int m_no) {
-		return sqlSession.selectOne("admember.loan_y", m_no);
-	}
-
-	@Override
-	public LoanDTO reser_y(int m_no) {
-		return sqlSession.selectOne("admember.reser_y", m_no);
+	public LoanDTO loan(int m_no) {
+		LoanDTO loan = new LoanDTO();
+		loan.setL_y(sqlSession.selectOne("admember.loan_y", m_no)); //대출현황 카운트
+		loan.setR_y(sqlSession.selectOne("admember.reser_y", m_no)); //예약현황 카운트
+		loan.setL_o(sqlSession.selectOne("admember.over", m_no)); //연체확인
+		return loan;
 	}
 
 }

@@ -158,25 +158,27 @@ function collapse(element) {
 		content.style.maxHeight = content.scrollHeight + "px";  
 	}
 }	
+
 //예약신청하기	
 function reserve(b_id){ 
-	let m_id = "${sessionScope.mId}";
-	$.ajax({
-		url : "/syLibrary/res_book_servlet/recheck_book.do",
-		data : {"b_id" : b_id, "m_id" : m_id},
-		success : function (result) {
-			if(result == 1){
-				myAlert("error", "잠깐!", "예약가능 권수가 초과되었습니다.");
-			} else if(result == 2){
-				myAlert("warning", "잠깐!", "이미 예약하신 도서입니다.");
-			} else if (result== 3) {
-				myAlert("success", "Check", "예약신청이 완료되었습니다.");
-			}
-		},
-		error : function () {
-			myAlert("error", "Error", "에러발생");
-		}
-	})
+   let m_id = "${sessionScope.mId}";
+   $.ajax({
+      url : '/user/book/recheck_book.do',
+      data : {"b_id" : b_id, "m_id" : m_id},
+       type: 'GET',
+      success : function (result) {
+         if(result == 1){
+            myAlert("error", "잠깐!", "예약가능 권수가 초과되었습니다.");
+         } else if(result == 2){
+            myAlert("warning", "잠깐!",  "이미 예약 또는 대출한 도서입니다.");
+         } else if (result== 3) {
+            myAlert("success", "Check", "예약신청이 완료되었습니다.");
+         }
+      },
+      error : function () {
+         myAlert("error", "Error", "에러발생");
+      }
+   })
 }
 
 // 대출신청하기

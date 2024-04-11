@@ -16,6 +16,13 @@ public class LoginDAOImpl implements LoginDAO {
 	@Autowired
 	SqlSession sqlSession;
 
+	// 비밀번호 복호화
+	@Override
+	public String chkPasswd(String mId) {
+		String chkPasswd = sqlSession.selectOne("login.chk_passwd", mId);
+		return chkPasswd;
+	}
+
 	// 로그인
 	@Override
 	public String loginChk(String mId, String mPasswd) {

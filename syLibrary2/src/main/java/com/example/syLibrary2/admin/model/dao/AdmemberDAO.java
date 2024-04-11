@@ -18,6 +18,6 @@ public interface AdmemberDAO {
 	
 	//-----회원대출상세
 	List<LoanDTO> lo_memlist(int m_no);
-	LoanDTO loan_y(int m_no);
-	LoanDTO reser_y(int m_no);
+	
+	LoanDTO loan(int m_no);
 }
