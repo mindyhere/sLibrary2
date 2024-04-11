@@ -39,25 +39,25 @@ $(function() {
 });
 </script> --%>
 <script>
-$(function(){
+/* $(function(){
 	$("#btnLogin").click(function(){
 		login();
 	});
-});
+}); */
 function login() {
 	const a_id = $("#a_id").val();
 	const a_passwd = $("#a_passwd").val();
 	if(a_id==""){
-		alert("아이디를 입력하세요.");
+		swal("아이디를 입력하세요.");
 		$("#a_id").focus();
 		return false;
 	}
 	if(a_passwd==""){
-		alert("비밀번호를 입력하세요.");
+		swal("비밀번호를 입력하세요.");
 		$("#a_passwd").focus();
 		return false;
 	}
-	document.form1.action="/admin/adlogin.do";
+	//document.form1.action="/admin/adlogin.do";
 	document.form1.submit();
 }
 </script>
@@ -142,7 +142,7 @@ table {
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-					<input type="submit" id="btnlogin" value="로그인" class="btn btn-dark">
+					<input type="button" id="btnlogin" value="로그인" class="btn btn-dark" onclick="login()">
 					</td>
 				</tr>
 				</table>

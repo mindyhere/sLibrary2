@@ -79,21 +79,35 @@
 	</select>
 	
 	<!-- 대출가능 횟수(회원상세) -->
-	<select id="loan_y" resultType="com.example.syLibrary2.admin.model.dto.LoanDTO">
-		select (5-count(*)) l_y
-		from sl_member m, sl_book b, lo_book l
+	<select id="loan_y" resultType="int">
+		select (cnt_loan-count(l_memno)) l_y
+		from sl_member m, sl_book b, lo_book l, sl_level v
 		where l.l_bookid = b.b_id
 		and l.l_memno = m.m_no
+        and v.le_no=m.m_level
 		and l_return_yn = 'N'
-		and m_no=#{m_no}
+        and m_no=#{m_no}
+        group by l_memno,cnt_loan
+
+	</select>
+	
+	<!-- 연체확인 -->
+	<select id="over" resultType="int">
+		select count(*) l_o
+		from lo_all_book l, sl_member m
+		where  l.m_id=m.m_id
+        and l_over > 0
+        and l_return_yn='N'
+        and m.m_no=#{m_no}
 	</select>
 	
 	<!-- 예약가능 횟수(회원상세) -->
-	<select id="reser_y" resultType="com.example.syLibrary2.admin.model.dto.LoanDTO">
-		select (3-count(*)) r_y
-		from sl_member m, sl_book b, re_book r
-		where r.r_bookid = b.b_id and r.r_memno = m.m_no
+	<select id="reser_y" resultType="int">
+		select (cnt_reserv-count(r_memno)) r_y
+		from sl_member m, sl_book b, re_book r,sl_level v
+		where r.r_bookid = b.b_id and r.r_memno = m.m_no and v.le_no=m.m_level
 		and <![CDATA[ r.r_reservation >= 0 ]]>
 		and m_no=#{m_no}
+        group by r_memno,cnt_reserv
 	</select>
 </mapper>
