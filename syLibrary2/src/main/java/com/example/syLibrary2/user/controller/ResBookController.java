@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,14 +31,23 @@ public class ResBookController {
 	@Autowired
 	private ResbookDAO resbookDao;
 
-	// 예약 도서 리스트
-	@GetMapping("myReBook")
-	public ModelAndView myReBook(HttpSession session, ModelAndView mav) {
+	// 페이지로드
+	@GetMapping("/{mId}")
+	public ModelAndView myReBook(@PathVariable(name="mId") String mId, ModelAndView mav) {
+		List<ReBookDTO> myReBook = resbookDao.myReBook(mId);
+		mav.setViewName("user/book/myReBook"); 
+		mav.addObject("myReBook", myReBook);
+		return mav;  
+	}
+	
+	// 예약 도서 리스트 확인창 관련 코드
+	@ResponseBody
+	@GetMapping("rebookAlert")
+	public List<ReBookDTO> rebookAlert(HttpSession session, ModelAndView mav) {
 		String r_memno = (String) session.getAttribute("mId");
 		List<ReBookDTO> myReBook = resbookDao.myReBook(r_memno);
-		mav.setViewName("user/book/myReBook");
-		mav.addObject("myReBook", myReBook);
-		return mav;
+		System.out.println(myReBook);
+		return myReBook;  
 	}
 
 	// 예약 가능여부 확인
