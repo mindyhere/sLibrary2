@@ -26,7 +26,7 @@ public class SecurityConfig {
 	PasswordEncoder pwdEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
 	public void configure(WebSecurity web) throws Exception {
 		web.httpFirewall(defaultHttpFirewall());
 	}
