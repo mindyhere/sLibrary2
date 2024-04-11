@@ -155,6 +155,25 @@ tbody tr:hover {
 			<th>예약순서</th>
 			<th>예약신청일</th>
 		</tr>
+		<c:choose>
+ 			<c:when test="${map.list.size() == 0 }">
+ 			<tr>
+				<td colspan="7" align="center">&nbsp;</td>
+			</tr>
+ 			<tr>
+				<td colspan="7" align="center">&nbsp;</td>
+			</tr>
+	 			<tr>
+					<td colspan="7" align="center">등록된 예약이 없습니다.</td>
+				</tr>
+			<tr>
+				<td colspan="7" align="center">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="7" align="center">&nbsp;</td>
+			</tr>
+ 			</c:when>
+ 			<c:otherwise>
 		<c:forEach var="row" items="${map.list}">
 			<tr align="center">
 				<td>${row.r_bookid}</td>
@@ -167,6 +186,8 @@ tbody tr:hover {
 
 			</tr>
 		</c:forEach>
+		</c:otherwise>
+		  </c:choose>
 		<tr align="center">
 			<td colspan="7"><c:if test="${map.page.curPage > 1}">
 					<a id="hr" href="#" onclick="javascript:listlist('1')">[처음]</a>

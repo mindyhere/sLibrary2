@@ -77,15 +77,16 @@ th {
 							<td><input type="text" name="m_name" id="m_name" size="5"
 								class="form-control" readonly value="${map.de_list.m_name}"></td>
 							<td><input type="text" name="le_name" id="le_name" size="2"
-								class="form-control" readonly value="${map.de_list.le_name}"></td>
+								class="form-control" readonly value="${map.de_list.le_name}" style="color:blue"></td>
 						</tr>
 
 						<tr>
 							<td style="text-align: center;">아이디</td>
 							<td><input type="text" name="m_id" id="m_id" size="5"
 								class="form-control" readonly value="${map.de_list.m_id}"></td>
+							<!-- 연체여부 -->
 							<c:choose>
-							<c:when test="${map.de_list.m_loan == 0}">
+							<c:when test="${map.over.l_o != 0}">
 								<td><input type="text" name="m_loan" id="m_loan" size="2"
 									class="form-control" readonly value="연체중" style="color:red">
 								</td>
@@ -136,12 +137,31 @@ th {
 						</tr>
 						<tr>
 							<td style="text-align: center;">대출가능권수</td>
-							<td><input type="text" name="loan_y" id="loan_y" size="2"
-								class="form-control" readonly value="${map.loan_y.l_y}"></td>
-
+							<td>
+							<c:choose>
+								<c:when test="${map.over.l_y==null}">
+									<input type="text" name="loan_y" id="loan_y" size="2"
+										class="form-control" readonly value="0">
+								</c:when>
+								<c:otherwise>
+									<input type="text" name="loan_y" id="loan_y" size="2"
+										class="form-control" readonly value="${map.over.l_y}">
+								</c:otherwise>
+							</c:choose>
+							</td>
 							<td style="text-align: center;">예약가능권수</td>
-							<td><input type="text" name="reser_y" id="reser_y" size="2"
-								class="form-control" readonly value="${map.reser_y.r_y}"></td>
+							<td>
+							<c:choose>
+								<c:when test="${map.over.r_y==null}">
+									<input type="text" name="reser_y" id="reser_y" size="2"
+										class="form-control" readonly value="0">
+								</c:when>
+								<c:otherwise>
+									<input type="text" name="reser_y" id="reser_y" size="2"
+										class="form-control" readonly value="${map.over.r_y}">
+								</c:otherwise>
+							</c:choose>
+							</td>
 						</tr>
 						<tr>
 							<td colspan="4" align="center" height="30px">대출현황</td>
