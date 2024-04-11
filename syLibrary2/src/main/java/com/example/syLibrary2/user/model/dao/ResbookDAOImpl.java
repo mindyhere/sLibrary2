@@ -36,7 +36,7 @@ public class ResbookDAOImpl implements ResbookDAO {
 	@Override // 중복예약 확인
 	public int recheck_duplicate(Map<String, Object> map) {
 		int dupCnt; // 파라미터 초기화
-		
+
 		// 같은 도서를 중복으로 예약신청 했는지 확인
 		int dupCnt1 = sqlSession.selectOne("resbook.recheck_duplicate", map);
 
@@ -61,6 +61,5 @@ public class ResbookDAOImpl implements ResbookDAO {
 	@Override // 예약 차례로 대출 후 예약목록에서 삭제
 	public void myResDelete(Map<String, Object> map) {
 		sqlSession.delete("resbook.myres_delete", map);
-
 	}
 }

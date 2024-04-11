@@ -22,16 +22,20 @@ $(function() {
 			url:"/user/book/rebookAlert",
 			success: function(data){
 				console.log(data);
+				let cnt=0;
 			 	for (let i = 0; i < data.length; i++){
 			 		if(data[i].r_reservation == 0){
 			 			console.log(data[i].b_name);
-			 			myAlert("info","잠깐!", "대출가능한 책이 있습니다.");
-			 			return;
+			 			cnt++;
 			 		} 		
 				}
+			 	console.log(cnt);
+			 	if (cnt!==0) {
+				 	myAlert("info","잠깐!", "대출가능한 책이 "+cnt+"권 있습니다.");
+			 	}
 			},
-			error: function(request, status, error){
-				myAlert('error', 'Error!', '관리자에게 문의바랍니다.');
+			error: function(err){
+				console.log(err);
 			}
 		});
 } 
@@ -62,11 +66,11 @@ function myAlert(icon, title, msg){
 		});
 }
  
- //대출신청 기능
+//대출신청 기능
 function checkOut(b_id){
 	$.ajax({
 		url:'/checkout/'+b_id,
-		success: function(result){
+		success: function(result) {
 			console.log(result);
 			if(result=="Not possible") {
 				myConfirm(result,
@@ -74,11 +78,22 @@ function checkOut(b_id){
 						"error", 
 						"/user/book/myLibrary/${mId}");
 			} else {
-				myConfirm(result,
-						"나의서재에서 신청내역을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
-						"success",
-						"/user/book/myLibrary/${mId}");
-			}
+				console.log("대출신청 결과? "+result);
+				// 대출신청 성공 시 re_book에서 레코드 삭제
+				$.ajax({
+					url: "/user/book/myres_delete",
+					type: "post",
+					data: {"b_id" : b_id},
+					success : function(txt) {
+						console.log("예약테이블 delete 결과? "+txt);
+						myConfirm(txt,
+							"나의서재에서 신청내역을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
+							"success",
+							"/user/book/myLibrary/${mId}");
+						//setTimeout('location.reload()',2000); 
+					}
+				});
+			}	
 		},
 		error: function(err) {
 			console.log("**"+err);
