@@ -15,7 +15,19 @@
 <script src="http://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-
+$(function() {
+	$("#btnSearch").click(function() {
+		/* if ($("select[name=search_option] option:selected")
+				.text() == "선택") {
+			swal("분류를 선택하세요");
+			return false;
+		} */
+		if ($("#keyword").val() == "") {
+			swal("검색어를 입력하세요");
+			return false;
+		}
+	});
+});
 	function list(page) {
 		location.href = "/loan/list.do?cur_page="+page
 		+ "&search_option=${map.search_option}&keyword=${map.keyword}";
