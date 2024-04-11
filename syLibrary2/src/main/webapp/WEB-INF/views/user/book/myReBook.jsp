@@ -11,38 +11,31 @@
  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-
-
-
-
-
-
-
 <script>
-//대출하기
 $(function() {
 	reservCheck();
 });
 
-function reservCheck(){
-	let m_id = "${sessionScope.mId}";
-	$.ajax({
-		url:"/user/book/myReBook",
-		type : "get",
-		data:{"mId":m_id},
-		success: function(data){
-		 	for (let i = 0; i < data.length; i++){
-		 		if(data[i].r_reservation == 0){
-		 			myAlert("info","잠깐!", "대출가능한 책이 있습니다.");
-		 		} 		
+ function reservCheck(){
+	// 대출가능여부 확인
+	 $.ajax({
+			url:"/user/book/rebookAlert",
+			success: function(data){
+				console.log(data);
+			 	for (let i = 0; i < data.length; i++){
+			 		if(data[i].r_reservation == 0){
+			 			console.log(data[i].b_name);
+			 			myAlert("info","잠깐!", "대출가능한 책이 있습니다.");
+			 			return;
+			 		} 		
+				}
+			},
+			error: function(request, status, error){
+				myAlert('error', 'Error!', '관리자에게 문의바랍니다.');
 			}
-		},
-		error: function(request, status, error){
-			myAlert('error', 'Error!', '관리자에게 문의바랍니다.');
-		}
-	});
-}
- 
+		});
+} 
+
 function myConfirm(title, msg, icon, url){
 		Swal.fire({
 			title: title,
@@ -69,42 +62,30 @@ function myAlert(icon, title, msg){
 		});
 }
  
-function checkOut(bId){
+ //대출신청 기능
+function checkOut(b_id){
 	$.ajax({
-		url:"/checkout/checkout.do",
-		data:{"m_id":"${sessionScope.mId}","b_id":bId},
-		success: function(txt){
-			if(txt.length == 14){
-				myConfirm(txt,
-					"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
-					"error",
-					"/user/book/myLibray?mId="+"${sessionScope.mId}"); 
-			} else{
-				$.ajax({
-					url:"/user/book/myReBook/res_delete",
-					data:{"m_id":"${sessionScope.mId}","b_id":bId},
-					success: function(result){
-							Swal.fire({
-								title: txt,
-								html: "나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?",
-								icon: "success",
-								showDenyButton: true,
-								reverseButtons: true,
-								confirmButtonText: "YES",
-								denyButtonText: "NO"
-								}).then((result) => {
-								if (result.isConfirmed) {
-									location.href="/user/book/myLibrary?mId="+"${sessionScope.mId}";
-								}else if (result.isDenied) {
-									location.reload();
-								}
-							});
-					}
-				});
-				}
+		url:'/checkout/'+b_id,
+		success: function(result){
+			console.log(result);
+			if(result=="Not possible") {
+				myConfirm(result,
+						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
+						"error", 
+						"/user/book/myLibrary/${mId}");
+			} else {
+				myConfirm(result,
+						"나의서재에서 신청내역을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
+						"success",
+						"/user/book/myLibrary/${mId}");
+			}
 		},
-		error: function(request, status, error){
-			myAlert('error', 'Error!', '관리자에게 문의바랍니다.');
+		error: function(err) {
+			console.log("**"+err);
+			myConfirm("Not possible",
+					"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
+					"error", 
+					"/user/book/myLibrary/${mId}");
 		}
 	});
 }
@@ -123,7 +104,7 @@ function reDelete(r_bookid) {
 	}).then((result) => {
 		if (result.isConfirmed) {
 			$.ajax({
-				url : "/user/book/myReBook/res_delete",
+				url : "/user/book/res_delete",
 				type : "post",
 				data : {
 					"m_id" : m_id,
@@ -207,7 +188,15 @@ function reDelete(r_bookid) {
 											<li style="list-style: none; margin-bottom: 20px;"><input type="button" value="예약취소" id="main-btn"
 												onclick="reDelete(${myRList.b_id})"></li>
 											<li style="list-style: none;">											
-											 <input type="button" value="대출하기" id="main-btn" onclick="checkOut(${myRList.b_id})"></li> 
+												<c:choose>
+													<c:when test="${myRList.r_reservation ==0}">
+														<input type="button" value="대출신청" id="main-btn" onclick="checkOut(${myRList.b_id})"> 
+													</c:when>
+													<c:otherwise>
+														<input type="button" value="대출불가" id="main-btn" onclick="checkOut(${myRList.b_id})" disabled style="background-color:#C6C7C8;">
+													</c:otherwise>
+												</c:choose>
+											</li>
 										</ul>
 									</div>
 								</div>

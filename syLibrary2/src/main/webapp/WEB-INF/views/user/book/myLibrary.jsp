@@ -191,7 +191,7 @@ function goHisList(m_no) {
 								height="25px"> 예약 중인 도서
 						</h5>
 						<input type="button" class="form-control"
-							onclick="location.href='/user/book/myReBook?mId=${myLibrary.m_id}'" value="${myLibrary.re_book_cnt}">
+							onclick="location.href='/user/book/${myLibrary.m_id}'" value="${myLibrary.re_book_cnt}">
 					</div>
 					<div class="col">
 						<h5 style="margin-bottom: 10px;">
