@@ -13,7 +13,27 @@
 <link rel="stylesheet" href="/resources/static/user.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <script src="/resources/static/js/bootstrap.js"></script>
-
+<script>
+function logoutCheck(){
+	let m_id = "${sessionScope.mId}" != null? "${sessionScope.mId}" : "";
+	let a_id = "${sessionScope.a_id}" != null? "${sessionScope.a_id}" : "";
+	if (m_id != "") {
+		Swal.fire({
+			title: "잠깐!",
+			html: "회원 로그인 중입니다.<br>로그아웃 후 이용해주세요.",
+			icon: "info",
+			confirmButtonText: "OK"
+			});
+	} else if(a_id != "") {
+		Swal.fire({
+			title: "잠깐!",
+			html: "관리자계정으로 로그인 중입니다.<br>로그아웃 후 이용해주세요.",
+			icon: "info",
+			confirmButtonText: "OK",
+		});
+	}
+}	
+</script>
 
 <style>
 body {
@@ -139,7 +159,7 @@ text-decoration-line: none !important;
 			</div><!-- card-header 끝 -->
 			<div class="card-body">
 			<ul>
-			  <li><a href="#" onclick="location.href='/syLibrary/user/search/search.jsp'"><h5><b>소장자료검색</b></h5></a></li>
+			  <li><a href="#" onclick="location.href='/user/search/'"><h5><b>소장자료검색</b></h5></a></li>
 			  <li><p>- 키워드 통합검색</p></li>
 			  <li><p>- 키워드 상세검색</p></li>
 			  <li><p>- 도서 상세정보</p></li>
@@ -159,12 +179,22 @@ text-decoration-line: none !important;
 		    <div class="card-body">
 				<ul>
 				  <li><h5><b>회원정보</b></h5></li>
-				  <li><a href="#" onclick="location.href='/syLibrary/user/login/login.jsp'"><p>- 로그인</p></a></li>
-				  <li><a href="#" onclick="location.href='/syLibrary/user/member/join.jsp'"><p>- 회원가입</p></a></li>
-				  <li><a href="#" onclick="location.href='/syLibrary/user/login/searchId.jsp'"><p>- 아이디찾기</p></a></li>
-				  <li><a href="#" onclick="location.href='/syLibrary/user/login/searchPasswd.jsp'"><p>- 비밀번호찾기</p></a></li>
 				  <c:choose>
-				  	<c:when test="${sessionScope.mName != null}">
+				  	<c:when test="${mName != null || sessionScope.a_id != null}">
+					  <li><a href="#" onclick="logoutCheck()"><p>- 로그인</p></a></li>
+					  <li><a href="#" onclick="logoutCheck()"><p>- 회원가입</p></a></li>
+					  <li><a href="#" onclick="logoutCheck()"><p>- 아이디찾기</p></a></li>
+					  <li><a href="#" onclick="logoutCheck()"><p>- 비밀번호찾기</p></a></li>
+					</c:when>
+					<c:otherwise>
+					  <li><a href="#" onclick="location.href='/user/login/login'"><p>- 로그인</p></a></li>
+					  <li><a href="#" onclick="location.href='/user/member/join'"><p>- 회원가입</p></a></li>
+					  <li><a href="#" onclick="location.href='/user/login/searchId'"><p>- 아이디찾기</p></a></li>
+					  <li><a href="#" onclick="location.href='/user/login/searchPasswd'"><p>- 비밀번호찾기</p></a></li>
+				  	</c:otherwise>
+				  </c:choose>
+				  <c:choose>
+				  	<c:when test="${mName != null}">
 				  		<li><a href="#" onclick="location.href='/user/member/detail_memberInfo'"><p>- 회원정보수정</p></a></li>
 				  	</c:when>
 				  	<c:otherwise>
@@ -175,8 +205,8 @@ text-decoration-line: none !important;
 				<br>
 				<ul>
 				  <c:choose>
-				  	<c:when test="${sessionScope.mName != null}">
-				  		<li><a href="#" onclick="location.href='/syLibrary/myLibrary_servlet/myLibray_info.do?mId=${sessionScope.mId}'"><h5><b>나의서재</b></h5></a></li>
+				  	<c:when test="${mName != null}">
+				  		<li><a href="#" onclick="location.href='/user/book/myLibrary/${sessionScope.mId}'"><h5><b>나의서재</b></h5></a></li>
 				  	</c:when>
 				  	<c:otherwise>
 				 		<li><h5><b>나의서재</b></h5></li>
@@ -202,9 +232,9 @@ text-decoration-line: none !important;
 		  <div class="card-body">
 			<ul>
 			  <li><h5><b>이용안내</b></h5></li>
-			  <li><a href="#" onclick="location.href='/syLibrary/user/info/guide.jsp'"><p>- 대출/반납/예약 안내</p></a></li>
-			  <li><a href="#" onclick="location.href='/syLibrary/user/info/map.jsp'"><p>- 도서관 오는길</p></a></li>
-			  <li><a href="#" onclick="location.href='/syLibrary/user/info/sitemap.jsp'"><p>- 사이트맵</p></a></li>
+			  <li><a href="#" onclick="location.href='/user/info/guide'"><p>- 대출/반납/예약 안내</p></a></li>
+			  <li><a href="#" onclick="location.href='/user/info/map'"><p>- 도서관 오는길</p></a></li>
+			  <li><a href="#" onclick="location.href='/user/info/sitemap'"><p>- 사이트맵</p></a></li>
 			</ul>
 			<img src="/resources/images/info-square.svg" alt="Member information">
 		  </div><!-- card-body 끝 -->
