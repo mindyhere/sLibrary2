@@ -1,8 +1,5 @@
 package com.example.syLibrary2.user.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.syLibrary2.admin.model.dto.ReBookDTO;
 import com.example.syLibrary2.user.model.dao.ResbookDAO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -33,13 +28,13 @@ public class ResBookController {
 
 	// 페이지로드
 	@GetMapping("/{mId}")
-	public ModelAndView myReBook(@PathVariable(name="mId") String mId, ModelAndView mav) {
+	public ModelAndView myReBook(@PathVariable(name = "mId") String mId, ModelAndView mav) {
 		List<ReBookDTO> myReBook = resbookDao.myReBook(mId);
-		mav.setViewName("user/book/myReBook"); 
+		mav.setViewName("user/book/myReBook");
 		mav.addObject("myReBook", myReBook);
-		return mav;  
+		return mav;
 	}
-	
+
 	// 예약 도서 리스트 확인창 관련 코드
 	@ResponseBody
 	@GetMapping("rebookAlert")
@@ -47,7 +42,7 @@ public class ResBookController {
 		String r_memno = (String) session.getAttribute("mId");
 		List<ReBookDTO> myReBook = resbookDao.myReBook(r_memno);
 		System.out.println(myReBook);
-		return myReBook;  
+		return myReBook;
 	}
 
 	// 예약 가능여부 확인
@@ -69,20 +64,20 @@ public class ResBookController {
 			if (dupCnt == 0) { // 중복 예약이 없는 경우
 				status = 3; // 예약 가능
 				// 예약 정보를 데이터베이스에 추가
-				System.out.println("111 확인=" + r_bookid + ", " + m_id+", status="+status);
+				System.out.println("111 확인=" + r_bookid + ", " + m_id + ", status=" + status);
 				resbookDao.insert_book(map);
 			} else if (dupCnt == 1) { // 중복 예약이 있는 경우
 				status = 2; // 중복 예약
-				System.out.println("222 확인=" + r_bookid + ", " + m_id+", status="+status);
-				
+				System.out.println("222 확인=" + r_bookid + ", " + m_id + ", status=" + status);
+
 			}
 		} else if (reCnt >= 3) { // 최대 예약 횟수가 3회 이상인 경우
 			status = 1; // 예약 횟수 초과
-			System.out.println("333 확인=" + r_bookid + ", " + m_id+", status="+status);
-			
+			System.out.println("333 확인=" + r_bookid + ", " + m_id + ", status=" + status);
+
 		}
-		System.out.println("**결과="+status);
-		
+		System.out.println("**결과=" + status);
+
 		return status;
 	}
 
@@ -112,40 +107,42 @@ public class ResBookController {
 	}
 
 	// 예약 순서일때 대출하기
-	@GetMapping("reservation.do")
-	/* @ResponseBody */
-	public ModelAndView reservation(@RequestParam("mId") String r_memno, HttpServletResponse response)
-			throws IOException {
-
-		List<ReBookDTO> myReBook = resbookDao.myReBook(r_memno);
-
-		List<Map<String, Object>> resultList = new ArrayList<>();
-		for (int i = 0; i < myReBook.size(); i++) {
-			Map<String, Object> map = new HashMap<>();
-			map.put("r_reservation", ((ReBookDTO) myReBook).getR_reservation());
-			map.put("b_id", ((ReBookDTO) myReBook).getB_id());
-			map.put("b_name", ((ReBookDTO) myReBook).getB_name());
-			resultList.add(map);
-		}
-
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.print(new ObjectMapper().writeValueAsString(myReBook));
-
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:user/book/myReBook");
-		return mav;
-	}
+//	@GetMapping("reservation.do")
+//	/* @ResponseBody */
+//	public ModelAndView reservation(@RequestParam("mId") String r_memno, HttpServletResponse response)
+//			throws IOException {
+//
+//		List<ReBookDTO> myReBook = resbookDao.myReBook(r_memno);
+//
+//		List<Map<String, Object>> resultList = new ArrayList<>();
+//		for (int i = 0; i < myReBook.size(); i++) {
+//			Map<String, Object> map = new HashMap<>();
+//			map.put("r_reservation", ((ReBookDTO) myReBook).getR_reservation());
+//			map.put("b_id", ((ReBookDTO) myReBook).getB_id());
+//			map.put("b_name", ((ReBookDTO) myReBook).getB_name());
+//			resultList.add(map);
+//		}
+//
+//		response.setContentType("text/html;charset=utf-8");
+//		PrintWriter out = response.getWriter();
+//		out.print(new ObjectMapper().writeValueAsString(myReBook));
+//
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("redirect:user/book/myReBook");
+//		return mav;
+//	}
 
 	// 대출 성공시 예약목록에서 삭제
-	@PostMapping("myres_delete.do")
+	@PostMapping("myres_delete")
 	@ResponseBody
-	public String myResDelete(@RequestParam("m_id") String m_id, @RequestParam("b_id") int b_id) {
+	public String myResDelete(HttpSession session, @RequestParam("b_id") int b_id) {
+		String m_id = (String) session.getAttribute("mId");
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("m_id", m_id);
 		map.put("b_id", b_id);
 		resbookDao.myResDelete(map);
-		return m_id;
+		return "신청완료";
 	}
 
 	// 예약 신청 기능
