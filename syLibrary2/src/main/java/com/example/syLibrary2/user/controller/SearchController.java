@@ -4,15 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.syLibrary2.admin.model.dto.BookDTO;
@@ -31,7 +28,7 @@ public class SearchController {
 	@Autowired
 	CheckoutDAO checkoutDao;
 	
-	@GetMapping("/")
+	@GetMapping("/") // 소장자료검색 페이지로 이동
 	public String search() {
 		return "/user/search/search";
 	}
@@ -54,7 +51,7 @@ public class SearchController {
 		mav.setViewName("user/search/searchResult");
 		mav.addObject("list", list);
 		mav.addObject("stateinfo", searchDao.listState(list)); // 대출관련 상태정보 리스트
-		mav.addObject("cntRec", searchDao.countRecords(keyword));
+		mav.addObject("cntRec", searchDao.countRecords(keyword, keyword, keyword));
 		mav.addObject("count", count);
 		mav.addObject("keyword", keyword);
 		mav.addObject("page", pageInfo);
@@ -169,7 +166,7 @@ public class SearchController {
 			@RequestParam(name = "b_pub", defaultValue = "") String b_pub,
 			@RequestParam(name = "view", defaultValue = "view1") String view,
 			@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "count") int count) {
-		
+		System.out.println("test = "+option);
 		String resultPage = "";
 		if (view.equals("view1")) {
 			resultPage = "/user/search/view1";
@@ -196,14 +193,6 @@ public class SearchController {
 		mav.addObject("view", view);
 		mav.addObject("option", option);
 		return mav;
-	}
-
-	@ResponseBody // return: 화면X, Data인 경우
-	@PostMapping("simpleSearch")
-	public ResponseEntity<Object> simpleSearch(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
-		// 관리자, 추천도서 edit → 도서 검색
-		List<BookDTO> list = searchDao.totSearch(keyword);
-		return new ResponseEntity<Object>(list, HttpStatus.OK);
 	}
 
 	@GetMapping("bookInfo/{b_id}")

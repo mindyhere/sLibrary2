@@ -17,12 +17,12 @@ import com.example.syLibrary2.user.model.dao.ReviewDAO;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("user/search/bookinfo/*")
+@RequestMapping("review/*")
 public class ReviewController {
 	@Autowired
 	ReviewDAO reviewDao;
 
-	@GetMapping("totalList/")
+	@GetMapping("totalList")
 	public ModelAndView totalList(ModelAndView mav) {
 		String keyword="";
 		mav.setViewName("user/search/totalReviews");
@@ -30,7 +30,7 @@ public class ReviewController {
 		return mav;
 	}
 
-	@GetMapping("getReviews/")
+	@GetMapping("/")
 	public ModelAndView getReviews(@RequestParam(name = "b_id") int b_id, ModelAndView mav) {
 		mav.setViewName("user/search/reviews");
 		mav.addObject("reviews", reviewDao.getReviews(b_id));

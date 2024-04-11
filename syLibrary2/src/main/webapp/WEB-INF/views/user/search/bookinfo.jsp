@@ -105,7 +105,7 @@ $(function() {
 		if (keyword != "" || keyword.trim().length !== 0) {
 			const params={"searchOpt":searchOpt, "keyword":keyword};
 			$.ajax({
-				url: "/user/search/bookinfo/search",
+				url: "/review/search",
 				data: params,
 				success: function(data) {
 					$("#review-total").html(data);
@@ -170,7 +170,7 @@ function checkOut(b_id) {
 	let a_id = "${sessionScope.a_id}" != null ? "${sessionScope.a_id}" : "";
 	if(m_id != "") {
 		$.ajax({
-			url:'../../../checkout/'+b_id,
+			url:'/checkout/'+b_id,
 			success: function(result){
 				console.log(result);
 				if(result=="Not possible") {
@@ -215,7 +215,7 @@ function checkOut(b_id) {
 
 function getReviews(b_id) {
 	$.ajax({
-		url: "/user/search/bookinfo/getReviews/",
+		url: "/review/",
 		data: {"b_id":b_id},
 		success: function(txt) {
 			$("#review-table").html(txt);
@@ -225,7 +225,7 @@ function getReviews(b_id) {
 
 function totalList() {
 	$.ajax({
-		url: "/user/search/bookinfo/totalList/",
+		url: "/review/totalList",
 		success: function(txt) {
 			$("#review-total").html(txt);
 		}
@@ -234,7 +234,7 @@ function totalList() {
 
 function insert(params) {
 	$.ajax({
-		url: "/user/search/bookinfo/insert",
+		url: "/review/insert",
 		data: params,
 		success: function(txt) {
 			myAlert("info", "Check", txt);
@@ -249,23 +249,12 @@ function insert(params) {
 function deleteReview(params) {
 	console.log(params);
 	$.ajax({
-		url: "/user/search/bookinfo/delete",
+		url: "/review/delete",
 		data: params,
 		success: function(txt) {
 			getReviews(${map.B_ID});
 		}
 	}); 
-}
-
-function search(keyword) {
-	let params={"searchOpt":$("#searchOpt").val(), "keyword":keyword};
-	$.ajax({
-		url: "/user/review/search",
-		data: params,
-		success: function(txt) {
-			$("#review-total").html(txt);
-		}
-	});
 }
 </script>
 

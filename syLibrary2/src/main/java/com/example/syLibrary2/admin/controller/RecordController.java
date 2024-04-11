@@ -31,7 +31,7 @@ public class RecordController {
 		int start = page.getPageBegin();
 		int end = page.getPageEnd();
 		List<RecordDTO> dto = dao.list(start, end, search_option, keyword);
-		System.out.println(dto);
+		// System.out.println(dto);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/l_book/lo_record");
 		Map<String, Object> map = new HashMap<>();
@@ -70,6 +70,6 @@ public class RecordController {
 	public String member_email(@RequestParam(name="l_num") String l_num) {
 		int num = Integer.valueOf(l_num);
 		String result = dao.member_email(num);
-		return result;
+		return result; 
 	}
 }

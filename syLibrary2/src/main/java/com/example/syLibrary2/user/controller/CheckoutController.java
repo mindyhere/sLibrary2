@@ -16,7 +16,7 @@ import com.example.syLibrary2.user.model.dao.CheckoutDAO;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/checkout/*")
+@RequestMapping("checkout/*")
 public class CheckoutController {
 	@Autowired
 	CheckoutDAO checkoutDao;
@@ -38,14 +38,14 @@ public class CheckoutController {
 			map.put("b_id", b_id);
 			int result = checkoutDao.duplicate(map) > 0 ? 0 : 1; // 0(대출불가-중복신청) or 1(대출가능)
 			if (checkoutDao.duplicate(map) > 0) {
-				resultPage = "redirect:/checkout/fail";
+				resultPage = "redirect:fail";
 			} else {
 				resultPage = "redirect:" + b_id + "/insert";
 			}
 			System.out.println("333 CASE 1: " + resultPage);
 			break;
 		case "0":
-			resultPage = "redirect:/checkout/fail";
+			resultPage = "redirect:fail";
 			System.out.println("333 CASE 0: " + resultPage);
 			break;
 		}

@@ -32,14 +32,12 @@
 </insert>
 
 <!-- mloan 업데이트 프로시저 호출:결과값 리턴 -->
-<resultMap id="p_result_mloan" type="java.util.Map"></resultMap>
-<select id="check_mLoan" parameterType="map" statementType="CALLABLE" resultMap="p_result_mloan">
-	DECLARE
-		p_result number;
-	BEGIN
-		check_loan_0(#{userid, mode=IN, jdbcType=VARCHAR}, 
-		#{p_result, mode=OUT, jdbcType=INTEGER});
-	END;
+<resultMap id="result_mloan" type="java.util.Map"></resultMap>
+<select id="check_mLoan" parameterType="map" statementType="CALLABLE" resultMap="result_mloan">
+	{call check_loan_0(
+		#{userid, mode=IN, jdbcType=VARCHAR}, 
+		#{p_result, mode=OUT, jdbcType=INTEGER}
+	)}
 </select>
 
 <!-- 동일한 책을 기존에 대출중인지 확인 -->
