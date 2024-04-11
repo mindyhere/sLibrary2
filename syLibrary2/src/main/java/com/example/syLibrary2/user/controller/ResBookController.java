@@ -60,8 +60,6 @@ public class ResBookController {
 		map.put("m_id", m_id); // 회원 ID
 		// 해당 도서의 예약 횟수 확인
 		int reCnt = resbookDao.recheck_book(map);
-		// 중복 예약 여부 확인
-		//int dupCnt = resbookDao.recheck_duplicate(map);
 		// 초기 상태는 0 (예약 가능)으로 설정
 		int status = 0;
 		// 예약 가능 여부 확인
@@ -86,7 +84,6 @@ public class ResBookController {
 		System.out.println("**결과="+status);
 		
 		return status;
-
 	}
 
 	/*
@@ -155,7 +152,7 @@ public class ResBookController {
 	@ResponseBody
 	@PostMapping("res_book.do")
 	public String resBook(@RequestParam("b_id") int r_bookid, @RequestParam("m_id") String r_memno) {
-		System.out.println("페이지 넘아어는지");
+		System.out.println("페이지 넘어가는지");
 		Map<String, Object> map = new HashMap<>();
 		map.put("r_bookid", r_bookid);
 		map.put("m_id", r_memno);

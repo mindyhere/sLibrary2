@@ -158,6 +158,7 @@ function collapse(element) {
 		content.style.maxHeight = content.scrollHeight + "px";  
 	}
 }	
+
 //예약신청하기	
 function reserve(b_id){ 
    let m_id = "${sessionScope.mId}";

@@ -12,30 +12,30 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
-//대출가능 여부
 $(function() {
 	reservCheck();
 });
 
  function reservCheck(){
-	$.ajax({
-		url:"/user/book/rebookAlert",
-		success: function(data){
-			console.log(data);
-		 	for (let i = 0; i < data.length; i++){
-		 		if(data[i].r_reservation == 0){
-		 			console.log(data[i].b_name);
-		 			myAlert("info","잠깐!", "대출가능한 책이 있습니다.");
-		 			return;
-		 		} 		
+	// 대출가능여부 확인
+	 $.ajax({
+			url:"/user/book/rebookAlert",
+			success: function(data){
+				console.log(data);
+			 	for (let i = 0; i < data.length; i++){
+			 		if(data[i].r_reservation == 0){
+			 			console.log(data[i].b_name);
+			 			myAlert("info","잠깐!", "대출가능한 책이 있습니다.");
+			 			return;
+			 		} 		
+				}
+			},
+			error: function(request, status, error){
+				myAlert('error', 'Error!', '관리자에게 문의바랍니다.');
 			}
-		},
-		error: function(request, status, error){
-			myAlert('error', 'Error!', '관리자에게 문의바랍니다.');
-		}
-	});
+		});
 } 
-  
+
 function myConfirm(title, msg, icon, url){
 		Swal.fire({
 			title: title,
@@ -65,41 +65,27 @@ function myAlert(icon, title, msg){
  //대출신청 기능
 function checkOut(b_id){
 	$.ajax({
-		url:"/checkout/*",
-		data:{"m_id":"${sessionScope.mId}","b_id":b_id},
-		success: function(txt){
-			if(txt.length == 14){
-				myConfirm(txt,
-					"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
-					"error",
-					"/user/book/myLibrary/${mId}"); 
-			} else{
-				$.ajax({
-					url:"/user/book/myres_delete",
-					data:{"m_id":"${sessionScope.mId}","b_id":bId},
-					success: function(result){
-							Swal.fire({
-								title: txt,
-								html: "나의서재에서 신청현황을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?",
-								icon: "success",
-								showDenyButton: true,
-								reverseButtons: true,
-								confirmButtonText: "YES",
-								denyButtonText: "NO"
-								}).then((result) => {
-								if (result.isConfirmed) {
-									location.href="/user/book/myLibrary/${mId}";
-								/* 	location.href="/user/book/myLibrary?mId="+"${sessionScope.mId}"; */
-								}else if (result.isDenied) {
-									location.reload();
-								}
-							});
-					}
-				});
-				}
+		url:'/checkout/'+b_id,
+		success: function(result){
+			console.log(result);
+			if(result=="Not possible") {
+				myConfirm(result,
+						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
+						"error", 
+						"/user/book/myLibrary/${mId}");
+			} else {
+				myConfirm(result,
+						"나의서재에서 신청내역을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
+						"success",
+						"/user/book/myLibrary/${mId}");
+			}
 		},
-		error: function(request, status, error){
-			myAlert('error', 'Error!', '관리자에게 문의바랍니다.');
+		error: function(err) {
+			console.log("**"+err);
+			myConfirm("Not possible",
+					"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
+					"error", 
+					"/user/book/myLibrary/${mId}");
 		}
 	});
 }

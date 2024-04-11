@@ -21,8 +21,6 @@ public class ResbookDAOImpl implements ResbookDAO {
 	public void insert_book(Map<String, Object> map) {
 		System.out.println("map 확인=" + map);
 		sqlSession.insert("resbook.insert_book", map);
-//		sqlSession.commit();
-
 	}
 
 	@Override // 예약목록

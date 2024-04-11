@@ -192,8 +192,6 @@ function goHisList(m_no) {
 						</h5>
 						<input type="button" class="form-control"
 							onclick="location.href='/user/book/${myLibrary.m_id}'" value="${myLibrary.re_book_cnt}">
-<%-- 						<input type="button" class="form-control"
-							onclick="location.href='/user/book/myReBook?mId=${myLibrary.m_id}'" value="${myLibrary.re_book_cnt}"> --%>
 					</div>
 					<div class="col">
 						<h5 style="margin-bottom: 10px;">
