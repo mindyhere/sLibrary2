@@ -50,6 +50,7 @@ public class AdmemberController {
 		MemberDTO de_list = dao.ad_list_detail(m_no);
 		LoanDTO over = dao.loan(m_no);
 		
+		
 		ModelAndView mav = new ModelAndView();
 		Map<String,Object> map = new HashMap<>();
 		mav.setViewName("admin/member/mem_detail");
