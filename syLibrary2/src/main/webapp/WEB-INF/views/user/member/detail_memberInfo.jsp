@@ -30,15 +30,6 @@
 		}
 	}
 
-	// 비밀번호 일치 확인
-	function pwCheck() {
-		if ($("#pw1").val() == $("#pw2").val()) {
-			$("#pwConfirm").text('비밀번호 일치').css('color', 'blue');
-		} else {
-			$("#pwConfirm").text('비밀번호 불일치').css('color', 'red');
-		}
-	}
-
 	// 전화번호 형식 체크
 	function oninputPhone(mTel) {
 		mTel.value = mTel.value.replace(/[^0-9]/g, '').replace(
@@ -60,21 +51,39 @@
 		document.edit.mDetailAddress.value = mDetailAddress; //상세 주소
 	}
 
-	// 회원정보 수정
 	function updateInfo() {
-		pwCheck();
+		//pwCheck();
+		const mPasswd = $("#pw2").val();
+		alert(mPasswd);
 		Swal.fire({
 			text : "회원정보를 수정하시겠습니까?",
-			buttons : [ "취소", "확인" ],
-		}).then(function(isConfirmed) {
-			if ($("#pw1").val() == $("#pw2").val()) {
-				document.edit.submit();
-			} else {
-				Swal.fire({
-					icon : 'warning',
-					text : '비밀번호가 일치하지 않습니다.',
-				});
-			}
+			showCancelButton : true,
+			confirmButtonText : "YES",
+		}).then((result) => {
+			$.ajax({
+				url : "/user/member/chkPasswd.do",
+				type : "POST",
+				dataType : "json",
+				data : { mPasswd : mPasswd},
+				success : function(status) {
+				if (status == 1) {
+					document.edit.submit();
+				} else if (status == 2) {
+					Swal.fire({
+						icon : 'warning',
+						text : '비밀번호가 일치하지 않습니다.',
+					}).then(function() {
+						location.reload();
+					});
+				}
+				}, error : function() {
+					Swal.fire({
+						icon : 'error',
+						title : '에러 발생',
+						text : '관리자에게 문의바랍니다.',
+					});
+				}
+			});
 		});
 	}
 </script>
@@ -118,11 +127,11 @@
 						<div class="input-style-1">
 							<label>비밀번호</label> <input type="password"
 								value="${memberInfo.m_passwd}" id="pw1" autocomplete="off"
-								name="mPasswd" oninput="pwCheck()">
+								oninput="pwCheck()">
 						</div>
 						<div class="input-style-1">
 							<label>비밀번호 확인</label> <input type="password" id="pw2"
-								autocomplete="off" oninput="pwCheck()">
+								name="mPasswd" autocomplete="off" oninput="pwCheck()">
 							<p class="text-sm text-gray" id="pwConfirm">비밀번호를 입력해주세요</p>
 						</div>
 
