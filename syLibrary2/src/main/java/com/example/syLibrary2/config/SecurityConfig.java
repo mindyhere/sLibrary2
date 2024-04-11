@@ -14,10 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
-		http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-				request -> request.requestMatchers("/admin/**").hasAnyRole("ADMIN").requestMatchers("/**").permitAll())
-				.formLogin(form -> form.loginPage("/user/login.do").loginProcessingUrl("/user/login_check.do")
-						.usernameParameter("userid").passwordParameter("passwd"));
+		http.csrf(AbstractHttpConfigurer::disable);
 		return http.build();
 	}
 
