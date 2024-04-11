@@ -30,5 +30,5 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override  // 아이디 중복체크
 	public int id_check(String mId) {
 		 return sqlSession.selectOne("member.id_check", mId);
-	}
+	} 
 }

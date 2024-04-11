@@ -15,3 +15,4 @@ public interface MemberDAO {
 	// 회원아이디 중복 체크
 	int id_check(String m_id);
 } 
+ 
