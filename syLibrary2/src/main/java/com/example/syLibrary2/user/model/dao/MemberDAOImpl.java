@@ -1,11 +1,8 @@
 package com.example.syLibrary2.user.model.dao;
 
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.example.syLibrary2.user.model.dto.MemberDTO;
 
@@ -18,8 +15,6 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override // 회원가입
 	public void insert_join(MemberDTO dto) {
 		sqlSession.insert("member.insert_join", dto);
-		sqlSession.commit();
-		sqlSession.close();
 	}
  
 	@Override // 회원 상세페이지
@@ -33,7 +28,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override  // 아이디 중복체크
-	public int id_check(String m_Id) {
-		return 0;
-	}
+	public int id_check(String mId) {
+		 return sqlSession.selectOne("member.id_check", mId);
+	} 
 }

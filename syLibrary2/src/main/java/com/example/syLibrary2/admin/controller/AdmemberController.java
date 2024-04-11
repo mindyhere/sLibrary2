@@ -48,17 +48,16 @@ public class AdmemberController {
 		
 		List<LoanDTO> mem_list = dao.lo_memlist(m_no);
 		MemberDTO de_list = dao.ad_list_detail(m_no);
+		LoanDTO over = dao.loan(m_no);
 		
-		LoanDTO loan_y = dao.loan_y(m_no);
-		LoanDTO reser_y = dao.reser_y(m_no);
 		
 		ModelAndView mav = new ModelAndView();
 		Map<String,Object> map = new HashMap<>();
 		mav.setViewName("admin/member/mem_detail");
 		map.put("de_list", de_list); //회원상세 리스트
 		map.put("mem_list", mem_list); //대출현황 리스트
-		map.put("loan_y", loan_y); //대출현황 카운트
-		map.put("reser_y", reser_y); //예약현황 카운트
+		map.put("over", over); //대출예약현황, 연체확인
+		
 		mav.addObject("map", map);
 		return mav;
 	}
