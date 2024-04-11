@@ -22,16 +22,20 @@ $(function() {
 			url:"/user/book/rebookAlert",
 			success: function(data){
 				console.log(data);
+				let cnt=0;
 			 	for (let i = 0; i < data.length; i++){
 			 		if(data[i].r_reservation == 0){
 			 			console.log(data[i].b_name);
-			 			myAlert("info","잠깐!", "대출가능한 책이 있습니다.");
-			 			return;
+			 			cnt++;
 			 		} 		
 				}
+			 	console.log(cnt);
+			 	if (cnt!==0) {
+				 	myAlert("info","잠깐!", "대출가능한 책이 "+cnt+"권 있습니다.");
+			 	}
 			},
-			error: function(request, status, error){
-				myAlert('error', 'Error!', '관리자에게 문의바랍니다.');
+			error: function(err){
+				console.log(err);
 			}
 		});
 } 
