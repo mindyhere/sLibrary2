@@ -23,6 +23,6 @@ public class HoBookDTO {
 	private String h_category;
 	private String h_memid;
 	private String h_regdate;
-	private int h_state;
+	private int h_state;  // 신청완료 1 > 접수확인 2 > 접수취소 3 > 신청취소 4 > 처리중 5 > 이용가능 6
 	private String h_chkdate;
 }
