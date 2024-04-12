@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.syLibrary2.admin.model.dao.EmailService;
+import com.example.syLibrary2.admin.model.dto.EmailDTO;
 import com.example.syLibrary2.user.model.dao.LoginDAO;
 import com.example.syLibrary2.user.model.dto.LoginDTO;
 
@@ -29,6 +32,9 @@ public class LoginController {
 
 	@Autowired
 	PasswordEncoder pwdEncoder;
+
+	@Autowired
+	EmailService emailService;
 
 	// 로그인 페이지
 	@GetMapping("login")
@@ -132,25 +138,66 @@ public class LoginController {
 		}
 		String mPw = "";
 		int status = 0;
+		String sendMail = "";
 		if (dto.getM_email() != null && !dto.getM_email().equals("") && !dto.getM_email().equals("null")) {
 			mPw = loginDao.searchPwEmail(mEmail, mId, mName, mBirthDate);
 			if (mPw != null) {
 				status = 1;
+				String randomPw = getTempPassword();
+				loginDao.setRandomPw(randomPw, mId, mEmail, mTel);
+				EmailDTO emailPw = new EmailDTO();
+				emailPw.setSubject("[3월 도서관] 임시 비밀번호 안내");
+				emailPw.setMessage("안녕하세요. 3월 도서관 임시비밀번호 안내 관련 이메일 입니다." + " 회원님의 임시 비밀번호는 " + randomPw + " 입니다."
+						+ "로그인 후에 비밀번호를 변경을 해주세요");
+				emailPw.setReceiveMail(mEmail);
+				emailPw.setSenderName("SY Library");
+				emailPw.setSenderMail("SYLibrary@gmail.com");
+				emailService.sendMail(emailPw);
+				sendMail = "success";
 			} else {
 				status = 2;
+				sendMail = "fail";
 			}
 		} else {
 			mPw = loginDao.searchPwTel(mTel, mId, mName, mBirthDate);
 			if (mPw != null) {
 				status = 1;
+				String randomPw = getTempPassword();
+				loginDao.setRandomPw(randomPw, mId, mEmail, mTel);
+				String getMail =  loginDao.getEmail(mTel, mId, mName, mBirthDate);
+				EmailDTO emailPw = new EmailDTO();
+				emailPw.setSubject("[3월 도서관] 임시 비밀번호 안내");
+				emailPw.setMessage("안녕하세요. 3월 도서관 임시비밀번호 안내 관련 이메일 입니다." + " 회원님의 임시 비밀번호는 " + randomPw + " 입니다."
+						+ "로그인 후에 비밀번호를 변경을 해주세요");
+				emailPw.setReceiveMail(getMail);
+				emailPw.setSenderName("SY Library");
+				emailPw.setSenderMail("SYLibrary@gmail.com");
+				emailService.sendMail(emailPw);
+				sendMail = "success";
 			} else {
 				status = 2;
+				sendMail = "fail";
 			}
 		}
 		Map<String, Object> result = new HashMap<>();
 		result.put("mPw", mPw);
 		result.put("status", status);
+		result.put("sendMail", sendMail);
 		return result;
+	}
+
+	// 랜덤함수로 임시비밀번호 구문 만들기
+	public String getTempPassword() {
+		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+				'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
+		String str = "";
+		int idx = 0;
+		for (int i = 0; i < 10; i++) {
+			idx = (int) (charSet.length * Math.random());
+			str += charSet[idx];
+		}
+		return str;
 	}
 
 	// 로그아웃

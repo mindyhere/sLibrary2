@@ -13,8 +13,8 @@
 <script>
 	$(document).ready(function() {
 		$('ul.tabs li').click(function() {
-			 $("#mTel").val("");
-			 $("#mEmail").val("");
+			$("#mTel").val("");
+			$("#mEmail").val("");
 			var tab_id = $(this).attr('data-tab');
 			$('ul.tabs li').removeClass('current');
 			$('.input-style-tab').removeClass('current');
@@ -71,18 +71,27 @@
 			},
 			success : function(searchPwResult) {
 				if (searchPwResult.status == 1) {
-					Swal.fire({
-						title : '',
-						text : '비밀번호는 "' + searchPwResult.mPw + '" 입니다',
-						icon : 'info',
-						closeOnClickOutside : false
-					}).then(function() {
-						location.href = "/user/login/login";
-					});
+					if (searchPwResult.sendMail == "success") {
+						Swal.fire({
+							text : '이메일로 임시비밀번호가 전송되었습니다.',
+							icon : 'success',
+							closeOnClickOutside : false
+						}).then(function() {
+							location.href = "/user/login/login";
+						});
+					} else {
+						Swal.fire({
+							text : '계정 정보를 확인해주세요.',
+							icon : 'warning',
+							closeOnClickOutside : false
+						}).then(function() {
+							location.href = "/user/login/login";
+						});
+					}
 				} else if (searchPwResult.status == 2) {
 					Swal.fire({
 						icon : 'warning',
-						text : '입력하신 정보에 해당하는 아이디가 없습니다.',
+						text : '입력하신 정보에 해당하는 계정이 없습니다.',
 					});
 				}
 			},
@@ -101,8 +110,8 @@
 	<%@ include file="../common/header.jsp"%>
 	<div class="container min-vh-100">
 		<h3 class="text-bold">
-			<img src="/resources/images/login.png" width="35px"
-				height="35px"> 비밀번호 찾기
+			<img src="/resources/images/login.png" width="35px" height="35px">
+			비밀번호 찾기
 		</h3>
 		<hr>
 		<p class="text-sm text-gray">비밀번호를 찾으실 방법을 선택해주세요.</p>

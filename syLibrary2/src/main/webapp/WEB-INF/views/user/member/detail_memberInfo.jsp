@@ -52,9 +52,7 @@
 	}
 
 	function updateInfo() {
-		//pwCheck();
 		const mPasswd = $("#pw2").val();
-		alert(mPasswd);
 		Swal.fire({
 			text : "회원정보를 수정하시겠습니까?",
 			showCancelButton : true,
