@@ -158,7 +158,7 @@ function goHisList(m_no) {
 							</tr>
 							<tr>
 								<th>도서대출현황</th>
-								<td>${myLibrary.lo_book_cnt}/5(대출 중인 권수 / 대출 가능 권수)</td>
+								<td>${myLibrary.lo_book_cnt}/${myLibrary.cnt_loan}(대출 중인 권수 / 대출 가능 권수)</td>
 							</tr>
 						</tbody>
 					</table>

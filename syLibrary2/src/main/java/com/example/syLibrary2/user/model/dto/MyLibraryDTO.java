@@ -10,6 +10,7 @@ public class MyLibraryDTO {
 	private String m_id;
 	private String m_name;
 	private String le_name;
+	private String cnt_loan;
 	private String m_tel;
 	private String m_email;
 	private String m_img;

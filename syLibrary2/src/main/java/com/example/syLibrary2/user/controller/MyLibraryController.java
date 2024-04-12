@@ -85,28 +85,28 @@ public class MyLibraryController {
 		map.put("mNo", m_no);
 		map.put("bId", b_id);
 
-		// 예약여부 확인절차
+		// 예약여부 확인절차(0: 예약 없음)
 		int reCnt = myLibraryDao.checkReservation(b_id);
 		// 연장여부 확인절차
 		String renewYn = myLibraryDao.checkRenewYn(map);
-		// 연체상태 확인절차
+		// 연체상태 확인절차(0: 이용가능)
 		int overReturnYn = myLibraryDao.checkOverReturn(m_no);
 		// 상태코드
 		int status = 0;
-		if (reCnt == 0) {
-			if (renewYn.equals("N")) {
-				if (overReturnYn < 0) {
+		if (reCnt == 0) { // 예약 도서 여부 확인
+			if (overReturnYn == 0) { // 연체 여부 확인
+				if (renewYn.equals("N")) { // 연장 여부 확인
 					myLibraryDao.updateReturn(map);
 					status = 0;
-				} else { // 연체상태
+				} else { // 연장 이력 있음
 					status = 1;
 				}
-			} else if (renewYn.equals("Y")) {
+			} else if (overReturnYn > 0) { // 연체 중
 				status = 2;
 			}
-		} else if (reCnt > 0) {
+		} else if (reCnt > 0) { // 예약 도서
 			status = 3;
-		} 
+		}
 		return status;
 	}
 	// 예약 중인 도서

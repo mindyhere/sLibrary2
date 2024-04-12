@@ -225,7 +225,7 @@
 									placeholder="전화번호  '-' 빼고 입력" maxlength="13">
 							</div>
 							<div class="input-style-1">
-								<label>생년월일</label> <input type="date" id="mBirthDate"
+								<label>생년월일</label> <input type="date" id="mBirthDate" max="2030-12-30" min="1880-07-07"
 									placeholder="생년월일" name="mBirthDate" class="form-control">
 							</div>
 							<div class="input-style-1">

@@ -8,12 +8,18 @@
 		m_no,
 		m_id,
 		le_name,
+		CASE WHEN le_no = '1' THEN '3'
+		WHEN le_no = '2'
+		THEN '5'
+		ELSE '7'
+		END cnt_loan,
 		m_name,
 		m_tel,
 		m_email,
 		m_img,
 		to_char(m_year,
-		'yyyy-MM-dd') m_year,
+		'yyyy-MM-dd')
+		m_year,
 		<!-- l_bookid, -->
 		(
 		SELECT

@@ -13,8 +13,8 @@
 <script>
 	$(document).ready(function() {
 		$('ul.tabs li').click(function() {
-			 $("#mTel").val("");
-			 $("#mEmail").val("");
+			$("#mTel").val("");
+			$("#mEmail").val("");
 			var tab_id = $(this).attr('data-tab');
 			$('ul.tabs li').removeClass('current');
 			$('.input-style-tab').removeClass('current');
@@ -126,7 +126,8 @@
 					</div>
 					<div class="input-style-1">
 						<label>생년월일</label><input type="date" id="mBirthDate"
-							name="mBirthDate" required placeholder="생년월일">
+							max="2030-07-09" min="1920-07-08" name="mBirthDate" required
+							placeholder="생년월일">
 					</div>
 				</div>
 				<div style="text-align: center;">
