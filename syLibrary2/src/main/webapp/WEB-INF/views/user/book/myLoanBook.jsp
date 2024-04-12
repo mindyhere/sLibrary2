@@ -39,12 +39,12 @@
 						} else if (status == 1) {
 							Swal.fire({
 								icon : 'warning',
-								text : '현재 연체 중으로 이용 불가 상태입니다.',
+								text : '도서당 연장신청은 1번만 가능합니다.',
 							});
 						}	else if (status == 2) {
 							Swal.fire({
 								icon : 'warning',
-								text : '도서당 연장신청은 1번만 가능합니다.',
+								text : '현재 연체 중으로 이용 불가 상태입니다.',
 							});
 						}	else if (status == 3) {
 							Swal.fire({
