@@ -37,7 +37,7 @@ $(function() {
 			error: function(err){
 				console.log(err);
 			}
-		});
+		}); 
 } 
 
 function myConfirm(title, msg, icon, url){
@@ -89,8 +89,7 @@ function checkOut(b_id){
 						myConfirm(txt,
 							"나의서재에서 신청내역을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
 							"success",
-							"/user/book/myLibrary/${mId}");
-						//setTimeout('location.reload()',2000); 
+							"/user/book/myLibrary/${mId}"); 
 					}
 				});
 			}	
@@ -188,14 +187,14 @@ function reDelete(r_bookid) {
 										<p>
 											<span>작가 : ${myRList.b_author} </span> <span> 출판사 :
 												${myRList.b_pub} </span> <span>발행연도 : ${myRList.b_year}</span>
-										</p>								
+										</p>								 
 										<p>
 											<c:set var="now" value="<%=new java.util.Date()%>" />
 											<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"
 												var="today" />
 
 											<span>예약일 : ${myRList.r_regdate}</span> <span>예약순번
-												:${myRList.r_reservation}</span> <span></span>
+												:${myRList.r_reservation}</span> 
 										</p>
 									</div>
 									<div class="col detail" style="margin-left: 50px;">
