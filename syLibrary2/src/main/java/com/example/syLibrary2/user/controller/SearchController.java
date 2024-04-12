@@ -1,5 +1,6 @@
 package com.example.syLibrary2.user.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.syLibrary2.admin.model.dto.BookDTO;
@@ -205,4 +207,14 @@ public class SearchController {
 		return mav;
 	}
 
+	@ResponseBody
+	@RequestMapping("autocomplete")
+	public Map<String, Object> autocomplete(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
+		// 도서 제목 자동완성
+		Map<String, Object> params = new HashMap();
+		params.put("keyword", keyword);
+		List<Map<String, Object>> titles = searchDao.autocomplete(params);
+		params.put("titles", titles);
+		return params;
+	}
 }
