@@ -89,8 +89,7 @@ function checkOut(b_id){
 						myConfirm(txt,
 							"나의서재에서 신청내역을 조회할 수 있습니다.<br>해당 페이지로 이동할까요?", 
 							"success",
-							"/user/book/myLibrary/${mId}");
-						//setTimeout('location.reload()',2000); 
+							"/user/book/myLibrary/${mId}"); 
 					}
 				});
 			}	

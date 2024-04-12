@@ -137,42 +137,6 @@
 	outline: none !important;
 	height: 44px;
 }
-
-/* file 커스텀 
-.inputfile {
- 	width: 0.1px;
-	height: 0.1px; 
-	opacity: 0;
-	overflow: hidden;
-	z-index: -1;	
-}
-
-.inputfile + label {
-    font-size: 1.25em;
-    font-weight: 700;
-    color: #FEC5BB;  
-     background-color: #FEC5BB;  
-    display: inline-block;
-    border: solid 2px #FEC5BB ; 
-   width: 150px;
-    height: 40px;
-}
-
-.inputfile:focus + label,
-.inputfile + label:hover {
-    font-size: 1.25em;
-    font-weight: 700;
-    color: #d33a4c;  
-    background-color: #f1e5e6;
-}
-
-.inputfile:focus + label {
-	outline: 1px dotted #FEC5BB;
-	outline: -webkit-focus-ring-color auto 5px;
-}
-.inputfile + label {
-	cursor: pointer;  
-}  */
 </style>
 </head>
 <body>
@@ -196,10 +160,7 @@
 										src="../../resources/images/member/image_no.png" width="100px"
 										height="100px"> 프로필 사진<br> <input type="file"
 										id="mImg" name="mImg" onchange="readURL(this);"
-										class="form-control" width="50px" height="50px">
-									 <!-- <img id="url" src="../../resources/images/member/image_no.png" >
-										 <input type="file" name="file" id="mImg" class="inputfile"  onchange="readURL(this);" >
-										 <label for="mImg">upload</label>			 -->						  							
+										class="form-control" width="50px" height="50px">												  							
 								</div>
 							</div>						
 						</div>

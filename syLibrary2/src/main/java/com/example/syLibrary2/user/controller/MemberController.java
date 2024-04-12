@@ -54,7 +54,6 @@ public class MemberController {
 		String birthdate = request.getParameter("mBirthDate");
 		String mDetailAddress = request.getParameter("mDetailAddress");
 
-		// 회원 이미지 db 저장
 		String mImg = "image_no.png";
 		if (!mImgFile.isEmpty()) {
 			try {
