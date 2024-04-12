@@ -23,7 +23,39 @@ $(function() {
 			event.preventDefault();
 		}
 	});
+	
+	$("#keyword").keyup(function (){
+		let keyword=$("#keyword").val();
+		
+		if(keyword.length > 0 || keyword.trim()!="") {
+			$.ajax({
+				url: "/user/search/autocomplete",   
+				type: "POST",
+				dataType: "JSON",
+				data: {"keyword": keyword},
+				success: function(data) { 	
+					let arr = data.titles
+					let values = '';
+					for(let i=0; i<arr.length; i++){
+						values += arr[i].B_NAME +"<br>";
+					}
+					console.log("values="+ values);
+					$("#test_result").removeClass("hide");
+					$("#test_result").addClass("show");
+					$("#test_result").html("<p>"+values+"</p>");
+				}
+			});
+		} else {
+			$("#test_result").removeClass("show");
+			$("#test_result").addClass("hide");
+		}
+	});
+	
+	$("#keyword").focusout(function() {
+		$("#test_result").addClass("hide");
+	});
 });
+
 
 function formCheck() {
 	let form = $("form[name=form1]");
@@ -231,6 +263,27 @@ margin: 0 1% 0 1%;
 	outline:none !important;
 	height: 44px;
 }
+
+.hide {
+	display: none;
+	z-index: -999;
+	opacity : 0;
+	transition : all 0.5s;
+}
+.show {
+	visibility: visible;
+	display: block;
+	height: 100px;
+	z-index: 100;
+	width:100%; 
+	align-items: left;
+	background-color:white !important;
+	float: left;
+	white-space:nowrap;
+	overflow-y: auto;
+	opacity : 1;
+	transition : all 0.5s;
+}
 </style>
 </head>
 
@@ -253,6 +306,7 @@ margin: 0 1% 0 1%;
 				<i class="bi bi-search"></i>
 			</button>
 		</form>
+		<div class="d-flex mx-0 hide" id="test_result">여기에결과</div>
 	</div><!-- section1 끝 -->
 	
 	<!-- section2 추천도서탭-->

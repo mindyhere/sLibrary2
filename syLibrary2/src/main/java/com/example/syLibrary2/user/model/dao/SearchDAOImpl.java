@@ -156,4 +156,9 @@ public class SearchDAOImpl implements SearchDAO {
 		return result;
 	}
 
+	@Override
+	public List<Map<String, Object>> autocomplete(Map<String, Object> params) {
+		return sqlSession.selectList("search.title_autocomplete", params);
+	}
+
 }
