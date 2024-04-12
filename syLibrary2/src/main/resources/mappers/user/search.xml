@@ -106,7 +106,7 @@ order by B_id desc, B_name
 
 <!-- 도서제목 자동완성 -->
 <select id="title_autocomplete" resultType="java.util.Map">
-	select b_name from sl_book where b_name like '%'|| #{keyword} ||'%'
+	select b_name from sl_book where b_name like '%'|| #{keyword} ||'%' order by b_name
 </select>
 
 </mapper>

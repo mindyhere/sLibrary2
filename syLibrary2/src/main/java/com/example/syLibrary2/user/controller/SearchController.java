@@ -213,8 +213,8 @@ public class SearchController {
 		// 도서 제목 자동완성
 		Map<String, Object> params = new HashMap();
 		params.put("keyword", keyword);
-		List<Map<String, Object>> titles = searchDao.autocomplete(params);
-		params.put("titles", titles);
+		List<Map<String, Object>> titleList = searchDao.autocomplete(params);
+		params.put("titleList", titleList);
 		return params;
 	}
 }
