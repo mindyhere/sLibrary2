@@ -6,19 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script> -->
-
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="/resources/static/user.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/resources/static/js/bootstrap.js"></script>
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script> -->
 
 <script>
 "use strict"; 
@@ -35,14 +31,11 @@ $(function() {
 				url: "/user/search/autocomplete",   
 				data: {"keyword": $("#keyword").val()},
 				success: function (data) {
-					console.log(data);
 					response(
 						$.map(data.titleList, function (item) {
-							console.log(item);
 							return {
 								label: item.B_NAME,
 								value: item.B_NAME,
-								idx: item.ROWNUM,
 							};
 						})
 					);
@@ -59,12 +52,7 @@ $(function() {
 		delay: 200,
 		autuFocus: true
 	});
-	
-	$("#keyword").focusout(function() {
-		$("#test_result").addClass("hide");
-	});
 });
-
 
 function formCheck() {
 	let form = $("form[name=form1]");
@@ -273,6 +261,7 @@ margin: 0 1% 0 1%;
 	height: 44px;
 }
 
+/* autocomplete 관련 css */
 .ui-autocomplete {
 	max-height: 200px;
 	overflow-y: auto;
