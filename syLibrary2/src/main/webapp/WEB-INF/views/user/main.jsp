@@ -32,10 +32,10 @@ $(function() {
 				data: {"keyword": $("#keyword").val()},
 				success: function (data) {
 					response(
-						$.map(data.titleList, function (item) {
+						$.map(data.arrResult, function (item) {
 							return {
-								label: item.B_NAME,
-								value: item.B_NAME,
+								label: item.RESULT,
+								value: item.RESULT,
 							};
 						})
 					);

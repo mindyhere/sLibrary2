@@ -104,9 +104,9 @@ order by B_id desc, B_name
 	where b_pub like '%'|| #{b_pub} ||'%' 
 </select>
 
-<!-- 도서제목 자동완성 -->
-<select id="title_autocomplete" resultType="java.util.Map">
-	select b_name from sl_book where b_name like '%'|| #{keyword} ||'%' order by b_name
+<!-- 검색어 자동완성(도서명, 저자, 발행처) -->
+<select id="autocomplete" resultType="java.util.Map">
+	select ${searchOpt} result from sl_book where ${searchOpt} like '%'|| #{keyword} ||'%' order by result
 </select>
 
 </mapper>

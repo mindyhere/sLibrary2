@@ -1,5 +1,6 @@
 package com.example.syLibrary2.user.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +27,10 @@ import jakarta.servlet.http.HttpServletRequest;
 public class SearchController {
 	@Autowired
 	SearchDAO searchDao;
-	
+
 	@Autowired
 	CheckoutDAO checkoutDao;
-	
+
 	@GetMapping("/") // 소장자료검색 페이지로 이동
 	public String search() {
 		return "/user/search/search";
@@ -168,7 +169,7 @@ public class SearchController {
 			@RequestParam(name = "b_pub", defaultValue = "") String b_pub,
 			@RequestParam(name = "view", defaultValue = "view1") String view,
 			@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "count") int count) {
-		System.out.println("test = "+option);
+		System.out.println("test = " + option);
 		String resultPage = "";
 		if (view.equals("view1")) {
 			resultPage = "/user/search/view1";
@@ -212,9 +213,21 @@ public class SearchController {
 	public Map<String, Object> autocomplete(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
 		// 도서 제목 자동완성
 		Map<String, Object> params = new HashMap();
+		List<Map<String, Object>> arrResult = new ArrayList<>();
 		params.put("keyword", keyword);
-		List<Map<String, Object>> titleList = searchDao.autocomplete(params);
-		params.put("titleList", titleList);
+
+		// 도서명, 저자, 출판사 기준 레코드 검색
+		params.put("searchOpt", "B_NAME");
+		arrResult.addAll(searchDao.autocomplete(params));
+
+		params.put("searchOpt", "B_AUTHOR");
+		arrResult.addAll(searchDao.autocomplete(params));
+
+		params.put("searchOpt", "B_PUB");
+		arrResult.addAll(searchDao.autocomplete(params));
+
+		// 파라미터에 결과데이터 저장
+		params.put("arrResult", arrResult);
 		return params;
 	}
 }
