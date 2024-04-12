@@ -4,12 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.example.syLibrary2.user.model.dto.LoginDTO;
 
 @Repository
 public class LoginDAOImpl implements LoginDAO {
@@ -77,5 +73,27 @@ public class LoginDAOImpl implements LoginDAO {
 		map.put("mBirthDate", mBirthDate);
 		String searchPw = sqlSession.selectOne("login.searchPwTel", map);
 		return searchPw;
+	}
+
+	// 임시 비밀번호 생성
+	@Override
+	public void setRandomPw(String randomPw, String mId, String mEmail, String mTel) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("randomPw", randomPw);
+		map.put("mId", mId);
+		map.put("mEmail", mEmail);
+		map.put("mTel", mTel);
+		sqlSession.selectOne("login.setRandomPw", map);
+	}
+
+	@Override
+	public String getEmail(String mTel, String mId, String mName, String mBirthDate) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("mTel", mTel);
+		map.put("mId", mId);
+		map.put("mName", mName);
+		map.put("mBirthDate", mBirthDate);
+		String mail = sqlSession.selectOne("login.getEmail", map);
+		return mail;
 	}
 }
