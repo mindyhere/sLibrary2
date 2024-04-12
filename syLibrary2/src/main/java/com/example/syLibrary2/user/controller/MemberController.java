@@ -34,7 +34,7 @@ public class MemberController {
 
 	@Autowired
 	PasswordEncoder pwdEncoder;
-
+ 
 	@GetMapping("join")
 	public String join() {
 		return "user/member/join";

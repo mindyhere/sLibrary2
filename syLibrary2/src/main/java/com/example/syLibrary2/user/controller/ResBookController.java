@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpSession;
 public class ResBookController {
 
 	@Autowired
-	private ResbookDAO resbookDao;
+	private ResbookDAO resbookDao; 
 
 	// 페이지로드
 	@GetMapping("/{mId}")

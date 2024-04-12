@@ -19,7 +19,7 @@
 //아이디 중복체크
 	function checkId() {
 		var mId = $("#mId").val();
-		$.ajax({
+		$.ajax({ 
 			url : "id_check.do",
 			type : "post",
 			data : {mId : mId},
