@@ -33,6 +33,6 @@ public interface SearchDAO {
 	// 가장 빠른 반납예정일
 	String fastRetdate(int b_id);
 
-	// 도서제목 자동완성 기능
+	// 검색어 자동완성 기능
 	List<Map<String, Object>> autocomplete(Map<String, Object> params);
 }
