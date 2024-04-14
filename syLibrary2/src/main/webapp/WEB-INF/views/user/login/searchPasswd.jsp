@@ -141,7 +141,7 @@
 							placeholder="이름을 입력하세요" required>
 					</div>
 					<div class="input-style-1">
-						<label>생년월일</label><input type="date" id="mBirthDate"
+						<label>생년월일</label><input type="date" id="mBirthDate" max="2030-07-09" min="1930-07-08"
 							name="mBirthDate" placeholder="생년월일" required>
 					</div>
 				</div>
