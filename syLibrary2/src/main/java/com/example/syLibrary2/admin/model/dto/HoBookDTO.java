@@ -24,5 +24,7 @@ public class HoBookDTO {
 	private String h_memid;
 	private String h_regdate;
 	private int h_state;  // 신청완료 1 > 접수확인 2 > 접수취소 3 > 신청취소 4 > 처리중 5 > 이용가능 6
+	private String h_state_code; // h_state 한글코드명
 	private String h_chkdate;
+	private String ho_book_cnt; // 희망도서 신청건수
 }
