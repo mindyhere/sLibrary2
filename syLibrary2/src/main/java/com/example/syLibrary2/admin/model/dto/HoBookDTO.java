@@ -27,4 +27,5 @@ public class HoBookDTO {
 	private String h_chkdate;
 	private String h_link;
 	private String ho_book_cnt; // 희망도서 신청건수
+	private String h_cancel;
 }
