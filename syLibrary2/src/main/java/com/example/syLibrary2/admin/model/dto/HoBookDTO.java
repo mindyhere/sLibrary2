@@ -27,4 +27,23 @@ public class HoBookDTO {
 	private String h_chkdate;
 	private String h_link;
 	private String ho_book_cnt; // 희망도서 신청건수
+	private String h_cancel;
+	
+	// ho_book 테이블 insert 시
+	public HoBookDTO(String h_name, String h_url, String h_author, String h_pub, String h_isbn,
+			String h_description, int h_year, String h_category, String h_memid, String h_link) {
+		super();
+		this.h_name = h_name;
+		this.h_url = h_url;
+		this.h_author = h_author;
+		this.h_pub = h_pub;
+		this.h_isbn = h_isbn;
+		this.h_description = h_description;
+		this.h_year = h_year;
+		this.h_category = h_category;
+		this.h_memid = h_memid;
+		this.h_link = h_link;
+	}
+	
+	
 }
