@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.syLibrary2.admin.model.dto.HoBookDTO;
 import com.example.syLibrary2.user.model.dao.MyLibraryDAO;
 import com.example.syLibrary2.user.model.dto.MyLibraryDTO;
 
@@ -120,4 +121,14 @@ public class MyLibraryController {
 		mav.addObject("myHistory", myHistory);
 		return mav;
 	}
+	
+	// 희망도서 신청내역
+		@GetMapping("myHopeBook/{mId}")
+		public ModelAndView myHopeBook(HttpSession session, ModelAndView mav) {
+			String mId = (String) session.getAttribute("mId");
+			List<HoBookDTO> myHopeBook = myLibraryDao.myHopeBook(mId);
+			mav.setViewName("user/book/myHopeBook");
+			mav.addObject("myHopeBook", myHopeBook);
+			return mav;
+		}
 }

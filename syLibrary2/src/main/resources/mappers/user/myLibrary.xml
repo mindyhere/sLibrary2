@@ -59,6 +59,13 @@
 		re_book_cnt,
 		(
 		SELECT
+		COUNT(*) FROM ho_book
+		WHERE H_MEMID = #{mId}
+		AND
+		h_state NOT IN (3, 4)
+		) ho_book_cnt,
+		(
+		SELECT
 		COUNT(*)
 		FROM
 		lo_book
@@ -249,4 +256,61 @@
 		EXTRACT(YEAR FROM TO_DATE(l_lodate))
 		ORDER BY category
 	</select>
+
+	<!-- 희망도서 신청 내역 -->
+	<select id="myHopeBook"
+		resultType="com.example.syLibrary2.admin.model.dto.HoBookDTO">
+		SELECT
+		h_idx,
+		h_name,
+		h_url,
+		h_author,
+		h_pub,
+		h_isbn,
+		h_description,
+		h_year,
+		h_category,
+		h_memid,
+		h_regdate,
+		h_state,
+		CASE
+		WHEN h_state =
+		'1' THEN
+		'신청완료'
+		WHEN h_state = '2' THEN
+		'접수확인'
+		WHEN h_state = '3' THEN
+		'접수취소'
+		WHEN h_state = '4' THEN
+		'신청취소'
+		WHEN h_state = '5' THEN
+		'처리중'
+		WHEN
+		h_state = '6' THEN
+		'이용가능'
+		END h_state_code,
+		h_chkdate,
+		(
+		SELECT
+		COUNT(*)
+		FROM
+		ho_book
+		WHERE
+		h_memid = #{mId}
+		) ho_book_cnt
+		FROM
+		ho_book
+		WHERE
+		h_memid =
+		#{mId}
+	</select>
+
+	<!-- 희망도서 신청취소 -->
+	<update id="cancelHopeBook">
+		UPDATE ho_book
+		SET H_STATE = 4, H_CHKDATE = SYSDATE
+		WHERE h_memid = #{mId}
+		AND H_ID =
+		#{hId}
+	</update>
 </mapper>

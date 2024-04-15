@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.syLibrary2.admin.model.dto.HoBookDTO;
 import com.example.syLibrary2.user.model.dto.MyLibraryDTO;
 
 @Repository
@@ -80,6 +81,15 @@ public class MyLibraryDAOImpl implements MyLibraryDAO {
 		sqlSession.update("myLibrary.updateReturn", map);
 	}
 
-	// 예약 중인 도서
+	// 희망도서 신청내역
+	@Override
+	public List<HoBookDTO> myHopeBook(String mId) {
+		return sqlSession.selectList("myLibrary.myHopeBook", mId);
+	}
 
+	// 희망도서 신청취소
+	@Override
+	public void cancelHopeBook(Map<String, Object> map) {
+		sqlSession.update("myLibrary.cancelHopeBook", map);
+	}
 }
