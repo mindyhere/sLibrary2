@@ -93,6 +93,10 @@ function logout() {
 									</div>
 								</div>
 							</div>
+
+							<div class="nav-item">
+								<a class="nav-link" href="/user/search/">희망도서</a>
+							</div>
 						</c:when>
 
 						<c:when test="${mName == null && sessionScope.a_id != null}">

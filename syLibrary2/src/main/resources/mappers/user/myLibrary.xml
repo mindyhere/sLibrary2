@@ -261,7 +261,7 @@
 	<select id="myHopeBook"
 		resultType="com.example.syLibrary2.admin.model.dto.HoBookDTO">
 		SELECT
-		h_id,
+		h_idx,
 		h_name,
 		h_url,
 		h_author,

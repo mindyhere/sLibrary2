@@ -114,7 +114,7 @@
 											<c:when test="${myHopeBook.h_state < 3}">
 												<p>
 													<input type="button" value="신청 취소" id="main-btn"
-														onclick="renewDate(${mId}, ${myHopeBook.h_id})">
+														onclick="renewDate(${mId}, ${myHopeBook.h_idx})">
 												</p>
 											</c:when>
 											<c:otherwise>

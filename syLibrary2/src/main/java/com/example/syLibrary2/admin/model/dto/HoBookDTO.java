@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HoBookDTO {
-	private int h_id;
+	private int h_idx;
 	private String h_name;
 	private String h_url;
 	private String h_author;
