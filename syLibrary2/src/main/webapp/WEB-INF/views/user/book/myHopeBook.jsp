@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<html>   
+<html>
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
@@ -106,25 +106,14 @@
 										</p>
 										<p>
 											<span>신청일 : ${myHopeBook.h_regdate}</span> <span>처리 현황
-												: ${myHopeBook.h_state_code}</span>
+												: ${myHopeBook.h_state}</span>
 										</p>
 									</div>
 									<div class="col align-self-center" style="text-align: center;">
-										<c:choose>
-											<c:when test="${myHopeBook.h_state < 3}">
-												<p>
-													<input type="button" value="신청 취소" id="main-btn"
-														onclick="renewDate(${mId}, ${myHopeBook.h_idx})">
-												</p>
-											</c:when>
-											<c:otherwise>
-												<p>
-													<input type="button" value="신청 취소" id="main-btn"
-														style="background-color: lightgray;"
-														onclick="cannotCancel()">
-												</p>
-											</c:otherwise>
-										</c:choose>
+										<p>
+											<input type="button" value="신청 취소" id="main-btn"
+												onclick="renewDate(${mId}, ${myHopeBook.h_idx})">
+										</p>
 									</div>
 								</div>
 							</li>
