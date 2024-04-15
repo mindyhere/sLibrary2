@@ -75,7 +75,18 @@ function logout() {
 					<c:choose>
 						<c:when test="${mName != null && sessionScope.a_id == null}">
 							<div class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" role="button"
+									data-bs-toggle="dropdown" aria-expanded="false">마이 페이지</a>
 								<div class="dropdown-menu dropdown-menu-end">
+									<div>
+										<a class="dropdown-item" href="/user/member/detail_memberInfo">회원정보
+											수정</a>
+									</div>
+									<div class="dropdown-divider"></div>
+									<div>
+										<a class="dropdown-item" href="/user/book/myLibrary/${mId}">나의
+											서재</a>
+									</div>
 									<div class="dropdown-divider"></div>
 									<div>
 										<a class="dropdown-item" onclick="logout()">로그아웃</a>
@@ -84,7 +95,7 @@ function logout() {
 							</div>
 
 							<div class="nav-item">
-								<a class="nav-link" href="/user/search/">희망도서</a>
+								<a class="nav-link" href="/user/request/">희망도서</a>
 							</div>
 						</c:when>
 
