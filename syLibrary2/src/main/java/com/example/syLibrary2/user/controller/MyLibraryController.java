@@ -19,6 +19,7 @@ import com.example.syLibrary2.admin.model.dto.HoBookDTO;
 import com.example.syLibrary2.user.model.dao.MyLibraryDAO;
 import com.example.syLibrary2.user.model.dto.MyLibraryDTO;
 
+import ch.qos.logback.classic.spi.STEUtil;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -121,14 +122,33 @@ public class MyLibraryController {
 		mav.addObject("myHistory", myHistory);
 		return mav;
 	}
-	
+
 	// 희망도서 신청내역
-		@GetMapping("myHopeBook/{mId}")
-		public ModelAndView myHopeBook(HttpSession session, ModelAndView mav) {
-			String mId = (String) session.getAttribute("mId");
-			List<HoBookDTO> myHopeBook = myLibraryDao.myHopeBook(mId);
-			mav.setViewName("user/book/myHopeBook");
-			mav.addObject("myHopeBook", myHopeBook);
-			return mav;
+	@GetMapping("myHopeBook/{mId}")
+	public ModelAndView myHopeBook(HttpSession session, ModelAndView mav) {
+		String mId = (String) session.getAttribute("mId");
+		List<HoBookDTO> myHopeBook = myLibraryDao.myHopeBook(mId);
+		mav.setViewName("user/book/myHopeBook");
+		mav.addObject("myHopeBook", myHopeBook);
+		return mav;
+	}
+
+	// 희망도서 신청취소
+	@PostMapping("cancelHoBook")
+	@ResponseBody
+	public String cancelHoBook(@RequestParam(name = "h_idx") int hIdx, HttpSession session) {
+		String mId = (String) session.getAttribute("mId");
+		Map<String, Object> map = new HashMap<>();
+		map.put("mId", mId);
+		map.put("hIdx", hIdx);
+		myLibraryDao.cancelHopeBook(map);
+		int status = myLibraryDao.chkHopeBookSts(map);
+		String resultCode = "";
+		if (status == 0) {
+			resultCode = "success";
+		} else {
+			resultCode = "error";
 		}
+		return resultCode;
+	}
 }
