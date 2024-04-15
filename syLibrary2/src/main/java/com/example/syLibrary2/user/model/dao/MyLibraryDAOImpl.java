@@ -90,6 +90,12 @@ public class MyLibraryDAOImpl implements MyLibraryDAO {
 	// 희망도서 신청취소
 	@Override
 	public void cancelHopeBook(Map<String, Object> map) {
-		sqlSession.update("myLibrary.cancelHopeBook", map);
+		sqlSession.delete("myLibrary.cancelHopeBook", map);
+	}
+
+	// 희망도서 상태조회
+	@Override
+	public int chkHopeBookSts(Map<String, Object> map) {
+		return sqlSession.selectOne("myLibrary.chkHopeBookSts", map);
 	}
 }
