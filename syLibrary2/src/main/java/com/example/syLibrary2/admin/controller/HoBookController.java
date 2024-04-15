@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,8 +46,32 @@ public class HoBookController {
 	@GetMapping("detail.do")
 	public ModelAndView detail(@RequestParam(name = "h_idx") int h_idx) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/book/hope_detail");
+		mav.setViewName("admin/hope/hope_detail");
 		mav.addObject("dto", dao.detail(h_idx));
 		return mav;
 	}
+	
+	@PostMapping("change_status")
+	public String change_status(HoBookDTO dto){
+//		Optional<OrderItem> result = orderItemRepository.findById(orderIdx);
+//		OrderItem o=result.get();
+//		o.setStatus(status);
+//		orderItemRepository.save(o);
+//		return "redirect:/order/list";
+//		HoBookDTO dto = h_state. 
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("admin/hope/hope_detail");
+//		Map<String, Object> map = dao.state_update(dto);
+//		mav.addObject("dto", dao.state_update(h_idx)); 
+//		return mav;
+		dao.state_update(dto);
+		return "admin/hope/hope_detail";
+	}
+	
+	@PostMapping("cancle_reason")
+	public String cancle_reason(HoBookDTO dto) {
+		dao.cancle_reason(dto);
+		return "admin/hope/hope_detail";
+	}
+	
 }
