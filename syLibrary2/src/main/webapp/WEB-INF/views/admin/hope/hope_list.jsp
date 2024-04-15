@@ -28,7 +28,7 @@
 	});
 
 	function list(page) {
-		location.href = "/hope/list.do?cur_page="+page
+		location.href = "/admin/hope/list.do?cur_page="+page
 				+ "&search_option=${map.search_option}&keyword=${map.keyword}";
 	}
 </script>
@@ -72,7 +72,7 @@ position: absolute;
 	box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
 	background-color: white;
 	border: none;
-	width: 1000px;
+	width: 900px;
 	left: 300px;
 }
 
@@ -129,7 +129,7 @@ padding-bottom: 20px;
 		</div>
 	</div>
 
-	<form name="form1" method="post" action="/hope/list_all.do">
+	<form name="form1" method="post" action="/admin/hope/list.do">
 		<div class="search">
 			<select id="s_list" id="search_option" name="search_option">
 				<c:choose>
@@ -217,7 +217,7 @@ padding-bottom: 20px;
 						<td>${dto.h_name}&nbsp;</td>
 						<td>${dto.h_memid}</td>
 						<td>${dto.h_regdate}</td>
-						<td width="150px">${dto.h_chkdate}</td>
+						<td>${dto.h_chkdate}</td>
 						<td>${dto.h_state}&nbsp;</td>
 					</tr>
 				</c:forEach>

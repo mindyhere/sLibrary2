@@ -25,12 +25,10 @@ public class HoBookController {
 	public ModelAndView list(@RequestParam(name = "cur_page", defaultValue = "1") int curPage,
 			@RequestParam(name = "search_option", defaultValue = "none") String search_option,
 			@RequestParam(name = "keyword", defaultValue = "") String keyword) {
-		System.out.println(curPage);
 		int count = dao.count(search_option, keyword);
 		PageUtil2 page = new PageUtil2(count, curPage);
 		int start = page.getPageBegin();
 		int end = page.getPageEnd();
-		System.out.println(count+" "+start + " " + end);
 		List<HoBookDTO> dto = dao.list(start, end, search_option, keyword);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/hope/hope_list");
@@ -41,7 +39,6 @@ public class HoBookController {
 		map.put("keyword", keyword);
 		map.put("page", page);
 		mav.addObject("map", map);
-		System.out.println(search_option);
 		return mav;
 	}
 	
