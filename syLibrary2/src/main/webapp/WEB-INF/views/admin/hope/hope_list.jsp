@@ -213,7 +213,7 @@ padding-bottom: 20px;
 			<c:otherwise>
 				<c:forEach var="dto" items="${map.dto}">
 					<tr align="center">
-						<td><a style="color: black;" href="/book/detail.do?h_idx=${dto.h_idx}">${dto.h_idx}</a></td>
+						<td><a style="color: black;" href="/admin/hope/detail.do?h_idx=${dto.h_idx}">${dto.h_idx}</a></td>
 						<td>${dto.h_name}&nbsp;</td>
 						<td>${dto.h_memid}</td>
 						<td>${dto.h_regdate}</td>

@@ -39,7 +39,7 @@ public class HoBookController {
 		map.put("keyword", keyword);
 		map.put("page", page);
 		mav.addObject("map", map);
-		return mav;
+		return mav; 
 	}
 	
 	@GetMapping("detail.do")
