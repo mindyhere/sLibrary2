@@ -14,7 +14,6 @@
 <link rel="stylesheet"
 	href="/resources/static/assets/materialdesignicons.min.css" />
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	//이미지 화면출력

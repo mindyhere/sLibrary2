@@ -29,5 +29,6 @@ public class MyLibraryDTO {
 	private String l_complete;
 	private int lo_book_cnt;
 	private int re_book_cnt;
+	private int ho_book_cnt;
 	private int total_cnt;
 }
