@@ -178,7 +178,7 @@ padding-bottom: 20px;
 						<option value="h_idx">번호</option>
 						<option value="h_name">도서명</option>
 						<option value="h_memid">신청자</option>
-						<option value="h_date">날짜</option>
+						<option value="h_date">날짜</option> 
 						<option value="h_state" selected>상태</option>
 					</c:when>
 				</c:choose>
