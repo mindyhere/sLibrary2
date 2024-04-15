@@ -8,4 +8,6 @@ public interface HoBookDAO {
 	int count(String search_option, String keyword);
 	List<HoBookDTO> list(int start, int end, String search_option, String keyword);
 	HoBookDTO detail(int h_idx);
+	void state_update(HoBookDTO dto);
+	void cancle_reason(HoBookDTO dto);
 }
