@@ -3,6 +3,7 @@ package com.example.syLibrary2.user.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.example.syLibrary2.admin.model.dto.HoBookDTO;
 import com.example.syLibrary2.user.model.dto.MyLibraryDTO;
 
 public interface MyLibraryDAO {
@@ -38,5 +39,11 @@ public interface MyLibraryDAO {
 
 	// 대출이력
 	List<MyLibraryDTO> myHistory(int mNo);
+	
+	// 희망도서 신청 내역
+	List<HoBookDTO> myHopeBook(String mId);
+	
+	// 희망도서 신청 취소
+	void cancelHopeBook(Map<String, Object> map);
 
 }

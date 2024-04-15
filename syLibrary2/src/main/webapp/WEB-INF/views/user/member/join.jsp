@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <link rel="stylesheet" href="/resources/static/user.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
