@@ -11,61 +11,66 @@
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-	// 신청 취소
-	function cancelHoBook(l_memno, l_bookid) {
-		Swal.fire({
-			text : "선택하신 희망 도서를 취소하시겠습니까?",
-			buttons : [ "취소", "확인" ],
-		}).then(function(isConfirmed) {
-			if (isConfirmed) {
-				$.ajax({
-					url : "/user/book/renew",
-					type : "POST",
-					data : {
-						"m_no" : l_memno,
-						"b_id" : l_bookid
-					},
-					success : function(status) {
-						if (status == 0) {
-							Swal.fire({
-								  title: '',
-								  text: '신청이 취소되었습니다.',
-								  icon: 'success',
-								closeOnClickOutside : false
-							  }).then(function(){
-							  	location.reload();
-							  });
-						} else if (status == 1) { // 애초에 취소버튼 비활성화하기?
-							Swal.fire({
-								icon : 'warning',
-								text : '현재 000 단계로 취소가 불가합니다.',
-							});
-						}	else if (status == 2) {
-							Swal.fire({
-								icon : 'warning',
-								text : '현재 연체 중으로 이용 불가 상태입니다.',
-							});
-						}
-					},
-					error : function() {
-						Swal.fire({
-							icon : 'error',
-							title : '에러 발생',
-							text : '관리자에게 문의바랍니다.',
-						});
-					}
+// 신청 취소
+function cancelHoBook(hIdx) {
+	Swal.fire({
+		icon : 'question',
+		text : '선택하신 희망 도서를 취소하시겠습니까?',
+		showCancelButton : true,
+		confirmButtonText : "YES",
+	}).then((result) => {
+		if (result.isConfirmed) {
+		$.ajax({
+			url : "/user/book/cancelHoBook",
+			type : "POST",
+			data : {"h_idx" : hIdx},
+			success : function(status) {
+				if (status == "success") {
+					Swal.fire({
+						  icon: 'success',
+						  text: '신청이 취소되었습니다.',
+						closeOnClickOutside : false
+					  }).then(function(){
+					  	location.reload();
+					  });
+				} else if (status == "error") {
+					Swal.fire({
+						icon : 'warning',
+						text : '선택하신 도서는 취소가 불가합니다.',
+					});
+				}
+			},
+			error : function() {
+				Swal.fire({
+					icon : 'error',
+					title : '에러 발생',
+					text : '관리자에게 문의바랍니다.',
 				});
 			}
-		})
-	}
-	
-	// 취소 불가
-	function cannotCancel(){
-		Swal.fire({
-			icon : 'warning',
-			text : '선택하신 도서는 취소가 불가합니다.'',
 		});
 	}
+	});
+}
+
+// 취소 불가
+function cannotCancel(h_state){
+	if(h_state == "접수취소"){
+		Swal.fire({
+			icon : 'warning',
+			text : '선택하신 도서는 관리자권한으로 취소되었습니다.',
+		});
+	} else if(h_state == "처리중"){
+		Swal.fire({
+			icon : 'info',
+			text : '선택하신 도서는 현재 처리중입니다.',
+		});
+	} else{
+		Swal.fire({
+			icon : 'success',
+			text : '선택하신 도서는 현재 이용가능한 상태입니다.',
+		});
+	}
+}
 </script>
 </head>
 <body>
@@ -77,7 +82,7 @@
 		</h3>
 		<hr>
 		<c:choose>
-			<c:when test="${myHopeBook.size() > 0 }">
+			<c:when test="${myHopeBook[0].ho_book_cnt > 0 }">
 				<div class="card-style mb-30">
 					<h4>희망도서 신청건수 : ${myHopeBook[0].ho_book_cnt} 건</h4>
 					<hr>
@@ -104,15 +109,39 @@
 												: ${myHopeBook.h_isbn} </span>
 										</p>
 										<p>
-											<span>신청일 : ${myHopeBook.h_regdate}</span> <span>처리 현황
-												: ${myHopeBook.h_state}</span>
+											<span>신청일 : ${myHopeBook.h_regdate}</span>
 										</p>
 									</div>
 									<div class="col align-self-center" style="text-align: center;">
-										<p>
-											<input type="button" value="신청 취소" id="main-btn"
-												onclick="renewDate(${mId}, ${myHopeBook.h_idx})">
-										</p>
+										<c:choose>
+											<c:when test="${myHopeBook.h_state == '신청완료'}">
+												<p>
+													<input type="button" value="신청 취소" id="main-btn"
+														onclick="cancelHoBook(${myHopeBook.h_idx})">
+												</p>
+											</c:when>
+											<c:when test="${myHopeBook.h_state == '접수취소'}">
+												<p>
+													<input type="button" value="접수 취소" id="main-btn"
+														style="background-color: lightgray;"
+														onclick="cannotCancel('${myHopeBook.h_state}')">
+												</p>
+											</c:when>
+											<c:when test="${myHopeBook.h_state == '처리중'}">
+												<p>
+													<input type="button" value="처리 중" id="main-btn"
+														style="background-color: #C1E8F5;"
+														onclick="cannotCancel('${myHopeBook.h_state}')">
+												</p>
+											</c:when>
+											<c:otherwise>
+												<p>
+													<input type="button" value="이용 가능" id="main-btn"
+														style="background-color: #EBF0C5;"
+														onclick="cannotCancel('${myHopeBook.h_state}')">
+												</p>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 							</li>
@@ -123,7 +152,7 @@
 			</c:when>
 			<c:otherwise>
 				<div class="card-style mb-30" style="height: 150px;">
-					<h4>희망도서 신청건수 : ${myHopeBook.size()} 건</h4>
+					<h4>희망도서 신청건수 : ${myHopeBook[0].ho_book_cnt} 건</h4>
 					<hr>
 					<h5 class="text-bold" align="center">신청하신 희망도서가 없습니다.</h5>
 				</div>

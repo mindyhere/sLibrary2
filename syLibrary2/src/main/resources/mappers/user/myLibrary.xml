@@ -61,8 +61,6 @@
 		SELECT
 		COUNT(*) FROM ho_book
 		WHERE H_MEMID = #{mId}
-		AND
-		h_state NOT IN ( '신청완료', '접수취소', '신청취소' )
 		) ho_book_cnt,
 		(
 		SELECT
@@ -78,7 +76,8 @@
 		WHERE
 		m_id = #{mId}
 		)
-		) total_cnt
+		)
+		total_cnt
 		FROM
 		sl_member,
 		sl_level
@@ -271,9 +270,11 @@
 		h_year,
 		h_category,
 		h_memid,
-		to_char(h_regdate, 'yyyy-MM-dd') h_regdate,
+		to_char(h_regdate,
+		'yyyy-MM-dd') h_regdate,
 		h_state,
 		h_chkdate,
+		h_link,
 		(
 		SELECT
 		COUNT(*)
@@ -281,7 +282,8 @@
 		ho_book
 		WHERE
 		h_memid = #{mId}
-		) ho_book_cnt
+		)
+		ho_book_cnt
 		FROM
 		ho_book
 		WHERE
@@ -290,11 +292,17 @@
 	</select>
 
 	<!-- 희망도서 신청취소 -->
-	<update id="cancelHopeBook">
-		UPDATE ho_book
-		SET H_STATE = 4, H_CHKDATE = SYSDATE
+	<delete id="cancelHopeBook">
+		DELETE FROM ho_book
 		WHERE h_memid = #{mId}
-		AND H_ID =
-		#{hId}
-	</update>
+		AND h_idx = #{hIdx}
+	</delete>
+
+	<!-- 희망도서 상태조회 -->
+	<select id="chkHopeBookSts" resultType="int">
+		SELECT count(*)
+		FROM ho_book
+		WHERE h_memid = #{mId}
+		AND h_idx = #{hIdx}
+	</select>
 </mapper>

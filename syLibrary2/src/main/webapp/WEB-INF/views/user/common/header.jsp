@@ -95,7 +95,7 @@ function logout() {
 							</div>
 
 							<div class="nav-item">
-								<a class="nav-link" href="/user/search/">희망도서</a>
+								<a class="nav-link" href="/user/request/">희망도서</a>
 							</div>
 						</c:when>
 
