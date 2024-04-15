@@ -27,7 +27,6 @@ public class CheckoutController {
 		Map<String, Object> param = new HashMap();
 		param.put("userid", m_id);
 		checkoutDao.checkMloan(param);
-		System.out.println("222 리턴값: " + param.get("p_result") + ", " + param);
 
 		String resultPage = "";
 		switch (param.get("p_result").toString()) {
@@ -42,14 +41,11 @@ public class CheckoutController {
 			} else {
 				resultPage = "redirect:" + b_id + "/insert";
 			}
-			System.out.println("333 CASE 1: " + resultPage);
 			break;
 		case "0":
 			resultPage = "redirect:fail";
-			System.out.println("333 CASE 0: " + resultPage);
 			break;
 		}
-		System.out.println("이동확인 : " + resultPage);
 		return resultPage;
 	}
 
@@ -58,13 +54,11 @@ public class CheckoutController {
 	@GetMapping("{b_id}/insert")
 	public String insert(@PathVariable(name = "b_id") int b_id, HttpSession session) {
 		String m_id = (String) session.getAttribute("mId");
-		System.out.println("insert 확인 : " + b_id + ", " + m_id);
 		Map<String, Object> map = new HashMap<>();
 		map.put("m_id", m_id);
 		map.put("b_id", b_id);
 		checkoutDao.insert(map);
 		String result = "신청완료";
-		System.out.println("**INSERT 결과 확인 : " + result);
 		return result;
 	}
 
@@ -72,8 +66,6 @@ public class CheckoutController {
 	@GetMapping("fail")
 	public String fail() {
 		String result = "Not possible";
-		System.out.println("**FAIL 결과 확인 : " + result);
-		System.out.println("test1");
 		return result;
 	}
 }

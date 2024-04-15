@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.example.syLibrary2.admin.model.dto.HoBookDTO;
 
 @Repository
-public class HoBookDAOImpl implements HoBookDAO {
+public class UserRequestDAOImpl implements UserRequestDAO {
 	@Autowired
 	SqlSession sqlSession;
 
