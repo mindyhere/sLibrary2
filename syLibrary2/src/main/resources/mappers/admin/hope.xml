@@ -36,4 +36,33 @@
 		</otherwise>
 	</choose>
 </sql>
+
+<select id="detail" resultType="com.example.syLibrary2.admin.model.dto.HoBookDTO">
+	select
+	h_memid,
+	to_char(h_regdate, 'yy/mm/dd') h_regdate,
+	to_char(h_chkdate, 'yy/mm/dd') h_chkdate,
+	h_name,
+	h_url,
+	h_author,
+	h_pub,
+	h_isbn,
+	h_year,
+	h_category,
+	h_state,
+	h_cancel
+	from ho_book
+	where h_idx=#{h_idx}
+</select>
+
+<update id="state_update">
+	update ho_book set h_state=#{h_state},h_chkdate=sysdate
+	where h_idx=#{h_idx}
+</update>
+
+<update id="cancle_reason">
+	update ho_book set h_cancel=#{h_cancel},h_chkdate=sysdate
+	where h_idx=#{h_idx}
+</update>
+
 </mapper>
