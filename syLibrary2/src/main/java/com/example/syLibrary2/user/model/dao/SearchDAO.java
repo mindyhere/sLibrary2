@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.example.syLibrary2.admin.model.dto.BookDTO;
 
-
 public interface SearchDAO {
 	// 키워드로 통합검색(도서명, 작가, 출판사)
 	List<BookDTO> totSearch(String keyword, int start, int end);
@@ -28,9 +27,12 @@ public interface SearchDAO {
 	List<Map<String, Object>> listState(List<BookDTO> list);
 
 	// 도서 상세정보 가져오기
-	//BookDTO showDetails(int b_id);
+	// BookDTO showDetails(int b_id);
 	Map<String, Object> showDetails(int b_id);
 
 	// 가장 빠른 반납예정일
 	String fastRetdate(int b_id);
+
+	// 검색어 자동완성 기능
+	List<Map<String, Object>> autocomplete(Map<String, Object> params);
 }

@@ -132,7 +132,7 @@
 		#{m_passwd},
 		#{m_tel},
 		#{m_address},
-		#{m_email},
+		#{m_email}, 
 		#{m_birth_date},
 		#{m_zip_no},
 		#{m_detail_address},

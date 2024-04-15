@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>3월에 만나요:)</title>
-<link rel="icon" href="/syLibrary/resources/images/icon.png"type="image/x-icon">
+<link rel="icon" href="/resources/images/icon.png"type="image/x-icon">
 <link rel="icon" href="../resources/images/sist.png" type="image/x-icon">
 <link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <script src="/resources/static/js/bootstrap.js"></script>

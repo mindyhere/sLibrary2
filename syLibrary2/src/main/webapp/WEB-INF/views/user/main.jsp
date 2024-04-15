@@ -6,14 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <link rel="stylesheet" href="/resources/static/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="/resources/static/user.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/resources/static/js/bootstrap.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <script>
 "use strict"; 
@@ -22,6 +23,34 @@ $(function() {
 		if(event.keyCode===13){
 			event.preventDefault();
 		}
+	});
+	
+	$("input[type='text']").autocomplete({
+		source: function (request, response) {
+			$.ajax({
+				url: "/user/search/autocomplete",   
+				data: {"keyword": $("#keyword").val()},
+				success: function (data) {
+					response(
+						$.map(data.arrResult, function (item) {
+							return {
+								label: item.RESULT,
+								value: item.RESULT,
+							};
+						})
+					);
+				}
+			});
+		}, 
+		focus: function(event, ui) {
+			return false;
+		},
+		select: function(event, ui) {
+			console.log(ui.item.idx);
+		},
+		minLength: 1,
+		delay: 200,
+		autuFocus: true
 	});
 });
 
@@ -230,6 +259,25 @@ margin: 0 1% 0 1%;
 	box-shadow: none !important;
 	outline:none !important;
 	height: 44px;
+}
+
+/* autocomplete 관련 css */
+.ui-autocomplete {
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: auto;
+}
+.ui-menu-item div.ui-state-hover, .ui-menu-item div.ui-state-active {
+	color: crimson;
+	text-decoration: none;
+	font-weight: bold;
+	background-color: #f1d59838;
+	border-radius: 0px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	background-image: none;
+	border:none;
 }
 </style>
 </head>

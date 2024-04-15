@@ -20,7 +20,7 @@
 	    (select to_char(l_retdate, 'yyyy-mm-dd')  be_return
 	    from lo_book
 	    where L_RETURN_YN='N' and l_bookid=#{b_id}) A
-	where be_return > sysdate and rownum=1
+	where be_return <![CDATA[>]]> sysdate and rownum=1
 </select>
 
 <!-- 대출내역리스트(lo_book)에 데이터 추가 -->

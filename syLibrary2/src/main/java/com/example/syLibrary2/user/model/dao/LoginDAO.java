@@ -2,6 +2,9 @@ package com.example.syLibrary2.user.model.dao;
 
 public interface LoginDAO {
 
+	// 비밀번호 복호화
+	String chkPasswd(String mId);
+	
 	// 로그인
 	String loginChk(String mId, String mpasswd);
 
@@ -16,4 +19,10 @@ public interface LoginDAO {
 
 	// 비밀번호-전화번호 찾기
 	String searchPwTel(String mTel, String mId, String mName, String mBirthDate);
+	
+	// 임시 비밀번호로 업데이트
+	void setRandomPw(String randomPw, String mId, String mEmail, String mTel);
+	
+	// 전화번호로 비밀번호 찾을 때 메일 주소 찾기
+	String getEmail(String mTel, String mId, String mName, String mBirthDate);
 }

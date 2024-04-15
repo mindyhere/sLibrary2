@@ -158,7 +158,7 @@ function goHisList(m_no) {
 							</tr>
 							<tr>
 								<th>도서대출현황</th>
-								<td>${myLibrary.lo_book_cnt}/5(대출 중인 권수 / 대출 가능 권수)</td>
+								<td>${myLibrary.lo_book_cnt} / ${myLibrary.cnt_loan}(대출 중인 권수 / 대출 가능 권수)</td>
 							</tr>
 						</tbody>
 					</table>
@@ -191,7 +191,16 @@ function goHisList(m_no) {
 								height="25px"> 예약 중인 도서
 						</h5>
 						<input type="button" class="form-control"
-							onclick="location.href='/user/book/myReBook?mId=${myLibrary.m_id}'" value="${myLibrary.re_book_cnt}">
+							onclick="location.href='/user/book/${myLibrary.m_id}'" value="${myLibrary.re_book_cnt}">
+					</div>
+					<div class="col">
+						<h5 style="margin-bottom: 10px;">
+							<img src="/resources/images/myLibrary/ho_book.png" width="30px"
+								height="30px"> 희망 도서
+						</h5>
+						<input type="button" class="form-control"
+							value="${myLibrary.ho_book_cnt}"
+							onclick="location.href='/user/book/myHopeBook/${myLibrary.m_id}'">
 					</div>
 					<div class="col">
 						<h5 style="margin-bottom: 10px;">

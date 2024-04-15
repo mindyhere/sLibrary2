@@ -1,7 +1,5 @@
 package com.example.syLibrary2.user.model.dao;
 
-import java.util.Map;
-
 import com.example.syLibrary2.user.model.dto.MemberDTO;
 
 public interface MemberDAO {
@@ -17,3 +15,4 @@ public interface MemberDAO {
 	// 회원아이디 중복 체크
 	int id_check(String m_id);
 } 
+ 

@@ -94,7 +94,6 @@ public class SearchDAOImpl implements SearchDAO {
 		return list;
 	}
 
-
 	@Override
 	public Map<String, Object> countRecords(String b_name, String b_author, String b_pub) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -154,6 +153,11 @@ public class SearchDAOImpl implements SearchDAO {
 			result = sqlSession.selectOne("checkout.retDate", b_id);
 		}
 		return result;
+	}
+
+	@Override
+	public List<Map<String, Object>> autocomplete(Map<String, Object> params) {
+		return sqlSession.selectList("search.autocomplete", params);
 	}
 
 }

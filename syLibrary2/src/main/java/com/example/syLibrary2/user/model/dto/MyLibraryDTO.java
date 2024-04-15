@@ -10,6 +10,7 @@ public class MyLibraryDTO {
 	private String m_id;
 	private String m_name;
 	private String le_name;
+	private String cnt_loan;
 	private String m_tel;
 	private String m_email;
 	private String m_img;
@@ -28,5 +29,6 @@ public class MyLibraryDTO {
 	private String l_complete;
 	private int lo_book_cnt;
 	private int re_book_cnt;
+	private int ho_book_cnt;
 	private int total_cnt;
 }

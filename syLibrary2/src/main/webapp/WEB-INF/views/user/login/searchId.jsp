@@ -8,13 +8,12 @@
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <link type="text/css" rel="stylesheet" href="/resources/static/user.css">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 	$(document).ready(function() {
 		$('ul.tabs li').click(function() {
-			 $("#mTel").val("");
-			 $("#mEmail").val("");
+			$("#mTel").val("");
+			$("#mEmail").val("");
 			var tab_id = $(this).attr('data-tab');
 			$('ul.tabs li').removeClass('current');
 			$('.input-style-tab').removeClass('current');
@@ -126,7 +125,8 @@
 					</div>
 					<div class="input-style-1">
 						<label>생년월일</label><input type="date" id="mBirthDate"
-							name="mBirthDate" required placeholder="생년월일">
+							max="2030-07-09" min="1920-07-08" name="mBirthDate" required
+							placeholder="생년월일">
 					</div>
 				</div>
 				<div style="text-align: center;">

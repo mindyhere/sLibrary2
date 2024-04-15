@@ -10,6 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @SpringBootApplication
 public class SyLibrary2Application {
@@ -17,7 +20,7 @@ public class SyLibrary2Application {
 	public static void main(String[] args) {
 		SpringApplication.run(SyLibrary2Application.class, args);
 	}
-	
+
 	@Bean
 	SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
@@ -31,5 +34,9 @@ public class SyLibrary2Application {
 	SqlSessionTemplate sqlSession(SqlSessionFactory factory) {
 		return new SqlSessionTemplate(factory);
 	}
-
+	
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
