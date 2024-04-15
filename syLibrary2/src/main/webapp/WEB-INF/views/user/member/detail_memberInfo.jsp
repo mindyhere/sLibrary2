@@ -57,6 +57,7 @@
 			showCancelButton : true,
 			confirmButtonText : "YES",
 		}).then((result) => {
+			if (result.isConfirmed) {
 			$.ajax({
 				url : "/user/member/chkPasswd.do",
 				type : "POST",
@@ -81,6 +82,7 @@
 					});
 				}
 			});
+			}
 		});
 	}
 </script>
@@ -124,11 +126,11 @@
 						<div class="input-style-1">
 							<label>비밀번호</label> <input type="password"
 								value="${memberInfo.m_passwd}" id="pw1" autocomplete="off"
-								oninput="pwCheck()">
+								>
 						</div>
 						<div class="input-style-1">
 							<label>비밀번호 확인</label> <input type="password" id="pw2"
-								name="mPasswd" autocomplete="off" oninput="pwCheck()">
+								name="mPasswd" autocomplete="off">
 							<p class="text-sm text-gray" id="pwConfirm">비밀번호를 입력해주세요</p>
 						</div>
 

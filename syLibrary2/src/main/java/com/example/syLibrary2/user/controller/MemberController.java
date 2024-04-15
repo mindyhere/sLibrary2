@@ -34,7 +34,7 @@ public class MemberController {
 
 	@Autowired
 	PasswordEncoder pwdEncoder;
- 
+
 	@GetMapping("join")
 	public String join() {
 		return "user/member/join";
@@ -110,22 +110,15 @@ public class MemberController {
 	@ResponseBody
 	public int chkPasswd(@RequestParam("mPasswd") String mPasswd, HttpServletRequest request, HttpSession session) {
 		String mId = (String) session.getAttribute("mId");
-		System.out.println(" ! 아이디 mId" + mId);
-		System.out.println(" ! 입력 비밀번호 mPasswd" + mPasswd);
 		String chkPasswd = loginDao.chkPasswd(mId);
-		System.out.println(" 복호화 비밀번호 chkPasswd" + chkPasswd);
 		String beforePasswd = loginDao.loginChk(mId, mPasswd);
-		System.out.println(" 이전 비밀번호 beforePasswd" + beforePasswd);
-		int status = 0; 
+		int status = 0;
 		if (pwdEncoder.matches(mPasswd, chkPasswd)) { // 비밀번호 일치
 			status = 1;
-			System.out.println(" 복호화 비밀번호 chkPasswd 성공");
 		} else if (beforePasswd != "" && beforePasswd != null) {
 			status = 1;
-			System.out.println(" 이전 비밀번호 beforePasswd 성공");
 		} else {
 			status = 2;
-			System.out.println("비밀번호 불일치");
 		}
 		return status;
 	}
