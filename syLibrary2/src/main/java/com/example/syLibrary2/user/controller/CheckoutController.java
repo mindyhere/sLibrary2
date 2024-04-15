@@ -73,6 +73,7 @@ public class CheckoutController {
 	public String fail() {
 		String result = "Not possible";
 		System.out.println("**FAIL 결과 확인 : " + result);
+		System.out.println("test1");
 		return result;
 	}
 }
