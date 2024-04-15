@@ -271,7 +271,7 @@
 		h_year,
 		h_category,
 		h_memid,
-		h_regdate,
+		to_char(h_regdate, 'yyyy-MM-dd') h_regdate,
 		h_state,
 		h_chkdate,
 		(

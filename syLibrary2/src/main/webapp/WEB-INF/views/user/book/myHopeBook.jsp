@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<html>   
+<html>
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
@@ -92,8 +92,7 @@
 									<div class="col detail"
 										style="margin-right: 30px; margin-left: 10px;">
 										<p>
-											<%-- <a href="/user/search/bookInfo/${myHopeBook.h_id}">${myHopeBook.h_name}</a> --%>
-											<a href="${myHopeBook.h_url}">${myHopeBook.h_name}</a>
+											<a href="${myHopeBook.h_link}">${myHopeBook.h_name}</a>
 										</p>
 										<p>
 											<span>작가 : ${myHopeBook.h_author} </span> <span>출판사 :
