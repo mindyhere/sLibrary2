@@ -32,7 +32,8 @@ function bookInfo(success, data) {
 			"h_isbn" : items[i].isbn13,
 			"h_description" : items[i].description,
 			"h_year" : items[i].pubDate.substr(0, 4),
-			"h_category" : items[i].categoryName.split(">", 2),
+			//"h_category" : items[i].categoryName.split(">", 2),
+			"h_category" : items[i].categoryName,
 			"h_link" : items[i].link,
 		});
 
@@ -79,8 +80,7 @@ function confirm(i) {
 	opener.document.getElementById("h_year").value = data.h_year
 	opener.document.getElementById("h_category").value = data.h_category
 	opener.document.getElementById("data").value = document.getElementById(i).value
-	//location.href = "/user/request/result"+data;
-	//window.close();
+	window.close();
 }
 </script>
 

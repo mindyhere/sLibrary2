@@ -9,8 +9,34 @@
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-function popup() {
-	var pop = window.open("../../pop1.jsp", "pop", "width=650,height=500, scrollbars=yes, resizable=yes");
+$(function(){
+	$("#btnOpen").click(function(){
+		var pop = window.open("../../pop1.jsp", "pop",
+		"width=650,height=500, scrollbars=yes, resizable=yes");
+	});
+	
+	$("#btnConfirm").click(function() {
+		const obj = JSON.parse(document.getElementById("data").value);
+		const data = obj[0];
+		console.log(data.h_category);
+		$.ajax({
+			url: "/user/request/insert",
+			data: data,
+			success: function(result) {
+				myAlert("info", "Check", result);
+				location.reload;
+			}
+		});
+	});
+});
+
+function myAlert(icon, title, msg) {
+	Swal.fire({
+		icon: icon,
+		title: title,
+		text: msg,
+		confirmButtonText: "OK"
+	});
 }
 </script>
 </head>
@@ -35,10 +61,10 @@ function popup() {
 
 					<div class="bot">
 						<div>
-							<input	id="btnOpen" onclick="popup()" name="btnOpen" type="button"
-								class="btn btn-light" value="자료검색하기"> <input id="check"
-								onclick="location.href='/user/member/myLibrary'" name="check"
-								type="submit" class="btn btn-light" value="신청현황확인">
+							<input id="btnOpen" name="btnOpen"
+								type="button" class="btn btn-light" value="자료검색하기"> <input
+								id="check" onclick="location.href='/user/member/myLibrary'"
+								name="check" type="submit" class="btn btn-light" value="신청현황확인">
 						</div>
 						<br>
 						<div class="col detail">
@@ -51,7 +77,7 @@ function popup() {
 								<span>저자 : </span> <input type="text" name="h_author"
 									id="h_author" class="form-control" readonly>
 							</p>
- 
+
 							<p>
 								<span>출판사 : </span> <input type="text" name="h_pub" id="h_pub"
 									class="form-control" readonly>
@@ -68,15 +94,14 @@ function popup() {
 							</p>
 
 							<p>
-							<input type="hidden" id="data" name="data" value="">
- 							<input 	id="save " onclick="btnsave()" name="save" type="submit"
-								class="btn btn-light" value="신청하기"></p>
+								<input type="hidden" id="data" name="data" value="">
+								<input id="btnConfirm" name="btnConfirm" type="button" class="btn btn-light" value="신청하기">
+							</p>
 						</div>
-						
-								</div>
-								 </div>
 					</div>
 				</div>
+			</div>
+		</div>
 	</form>
 	<br>
 </body>

@@ -14,7 +14,7 @@ public class UserRequestDAOImpl implements UserRequestDAO {
 	// 희망도서 신청(HoBook 테이블 insert)
 	public String insert(HoBookDTO dto) {
 		String result = "";
-		System.out.println("222페이지 링크 확인=HoBookDAOImpl");
+		System.out.println(dto);
 		try {
 			sqlSession.insert("request.insert", dto);
 			result = "등록되었습니다.";
