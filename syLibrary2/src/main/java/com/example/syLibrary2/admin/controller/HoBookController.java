@@ -16,6 +16,8 @@ import com.example.syLibrary2.admin.model.dao.HoBookDAO;
 import com.example.syLibrary2.admin.model.dto.HoBookDTO;
 import com.example.syLibrary2.util.PageUtil2;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/admin/hope/*")
 public class HoBookController {
@@ -46,13 +48,16 @@ public class HoBookController {
 	@GetMapping("detail.do")
 	public ModelAndView detail(@RequestParam(name = "h_idx") int h_idx) {
 		ModelAndView mav = new ModelAndView();
+		HoBookDTO dto = dao.detail(h_idx);
+		dto.setH_idx(h_idx);
 		mav.setViewName("admin/hope/hope_detail");
-		mav.addObject("dto", dao.detail(h_idx));
+		mav.addObject("dto", dto);
+		// System.out.println("디티오==="+dto);
 		return mav;
 	}
 	
-	@PostMapping("change_status")
-	public String change_status(HoBookDTO dto){
+//	@PostMapping("change_status")
+//	public String change_status(HoBookDTO dto){
 //		Optional<OrderItem> result = orderItemRepository.findById(orderIdx);
 //		OrderItem o=result.get();
 //		o.setStatus(status);
@@ -64,15 +69,74 @@ public class HoBookController {
 //		Map<String, Object> map = dao.state_update(dto);
 //		mav.addObject("dto", dao.state_update(h_idx)); 
 //		return mav;
-		dao.state_update(dto);
+//		dao.state_update(dto);
+//		return "admin/hope/hope_detail";
+//	}
+	
+	@GetMapping("change_status")
+	public String change_status(HoBookDTO dto, @RequestParam(name="state")String h_state){
+		int h_idx = dto.getH_idx();
+		String result = "";
+		// System.out.println(h_state);
+		
+		if (h_state.equals("이용가능")) {
+			dao.state_update(h_idx, h_state);
+			return "redirect:/admin/hope/ins_book?h_idx="+h_idx;
+		} else {
+			dao.state_update(h_idx, h_state);
+			return "redirect:/admin/hope/detail.do?h_idx="+h_idx;
+		}
+	}
+	
+	@PostMapping("cancel_reason")
+	public String cancel_reason(HoBookDTO dto) {
+		dao.cancel_reason(dto);
+		System.out.println("취소사유등록="+dto);
 		return "admin/hope/hope_detail";
 	}
 	
-	@PostMapping("cancle_reason")
-	public String cancle_reason(HoBookDTO dto) {
-		dao.cancle_reason(dto);
-		return "admin/hope/hope_detail";
+	@GetMapping("ins_book")
+	public ModelAndView ins_book(@RequestParam(name = "h_idx") int h_idx) {
+		HoBookDTO dto = dao.detail(h_idx);
+		dto.setH_idx(h_idx);
+		System.out.println("ins_book=="+dto);
+		String result = "";
+		String h_category = dto.getH_category();
+		int ct_number = 0;
+		if (h_category.contains("판타지")) {
+			ct_number = 100;
+		} else if(h_category.contains("에세이")) {
+			ct_number = 110;
+		} else if(h_category.contains("소설")) {
+			ct_number = 120;
+		} else if(h_category.contains("동화")) {
+			ct_number = 130;
+		} else if(h_category.contains("SF")) {
+			ct_number = 140;
+		} else if(h_category.contains("추리")) {
+			ct_number = 150;
+		} else if(h_category.contains("만화")) {
+			ct_number = 160;
+		} else if(h_category.contains("청소년")) {
+			ct_number = 170;
+		} else if(h_category.contains("자기계발")) {
+			ct_number = 180;
+		} else if(h_category.contains("역사")) {
+			ct_number = 190;
+		} else if(h_category.contains("과학")) {
+			ct_number = 200;
+		} else {
+			ct_number = 500;
+		}
+		result = dao.ins_book(dto, ct_number);
+		ModelAndView mav = new ModelAndView();
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", result);
+		map.put("idx", h_idx);
+		mav.setViewName("admin/hope/hope_detail");
+		mav.addObject("map", map); 
+		System.out.println("mav=="+mav);
+		return mav;
 	}
-
 }
 
