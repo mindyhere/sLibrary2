@@ -11,41 +11,85 @@
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-function bookDisplay(success, data) {
-	console.log("콜백= " + data.item[1].title);
-	/*let params={
-	"title": "All About IB Psychology Essay - IB Psychology Essay Guide for SL and HL Students",
-	"link": "http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=269866535&amp;partner=openAPI&amp;start=api",
-	"author": "강수민 (지은이)",
-	"pubDate": "2021-05-15",
-	"description": "성공적으로 IB 심리 과정을 이수한 저자가 에세이 노하우의 모든것을 이 책에 적어냈다. 심리 에세이를 접근하는 방법부터 안정적인 에세이의 구성, IB 심리에서 용이하게 쓰이는 용어와 문장들이 정리되어 있다.",
-	"isbn13": "9791197045318",
-	"cover": "https://image.aladin.co.kr/product/26986/65/cover/k452730517_1.jpg",
-	"categoryName": "국내도서\u003E자기계발\u003E취업/진로/유망직업\u003E해외취업/이민/유학.연수",
-	"publisher": "그루미출판"
-	};*/
-}
-
-function search() {
-	let keyword = $("#keyword").val(); // aladin-bookinfo로 시작하는 id를 가진 div 엘리먼트를 찾습니다.
-	console.log("클릭 = "+keyword);
-	
-	if (keyword !="") { 
-		let url = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbabout_kei2155001&Query="
-			+ keyword + "&QueryType=Keyword&MaxResults=10&start=1&SearchTarget=Book&Sort=Title&cover=Big&output=js&callBack=bookDisplay";
-		console.log("if => "+keyword);
-		
-		$.ajax({
-			url: url,
-			async: false,
-			dataType: "jsonp",
-			jsonp: "bookDisplay"
-		});
-	}
+function popUp(){
+	window.open("../../pop1.jsp", "pop", "width=600,height=500, scrollbars=yes, resizable=yes");
 }
 </script>
 
+<style>
+/* 모달페이지 */
+.modal-bg {
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	padding: 10%;
+	top: 0;
+	left: 0;
+	width: 100%; 
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	transition : all 1s;
+	z-index: 999;
+	transition : opacity 0.5s ease;
+}
+.modal-body {
+	/* overflow-y: auto; */
+	box-sizing: border-box;
+	position: absolute;
+	top: 50%; 
+	min-width: 600px !important;
+	height: 500px !important;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	background: #fbf7f5 !important;
+	border-radius: 7px;
+	box-shadow: 0 1px 7px rgba(0, 0, 0, 0.5); 
+	transform: translateY(-50%); 
+}
+.modal-bg.visible {
+	visibility: visible;
+	opacity : 1;
+	display: block;
+	transition : all 0.5s;
+}
+.invisible {
+	display: none;
+	z-index: -999;
+	opacity : 0;
+	transition : all 0.5s;
+}
+.modal-container {
+background: #fbf7f5 !important;
+width:100%;
+height:100%;
+padding:2%;
+border-radius: 7px !important;
+}
+#modal-header {
+height:10%;
+margin-bottom:1%
+}
+#modal-section1 {
+overflow-y: scroll;
+height:70%;
+margin-bottom:2%;
+overflow-y: auto;
+background-color:white !important;
+border-radius: 7px !important;
+box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);\
+}
+#modal-section2 {
+height:15%;
+max-height:2.5rem;
+}
+#review-total .table {
+white-space:nowrap;
+}
+</style>
 </head>
+
+
 <body>
 <%@ include file="../common/header.jsp"%>
 <div class="container">
@@ -64,9 +108,10 @@ function search() {
 				<div class="bot">
 			<h5>신청서작성</h5>
 			<hr>
+			
 			<div>
 				<span><input type ="text" id="keyword" value="${keyword}"></span>
-				<input id="btnSearch" onclick="search()" name="btnSearch" type="button" class="btn btn-light"  value ="자료검색하기" >
+				<input id="btnSearch" onclick="popUp()" name="btnSearch" type="button" class="btn btn-light"  value ="자료검색하기" >
 			</div>
 			<br>
 			<div class="col-9" style="background-color: white; border-radius: 20px; padding: 30px 50px 30px 50px;">
