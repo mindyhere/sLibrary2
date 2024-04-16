@@ -14,15 +14,13 @@ public class UserRequestDAOImpl implements UserRequestDAO {
 	// 희망도서 신청(HoBook 테이블 insert)
 	public String insert(HoBookDTO dto) {
 		String result = "";
-		System.out.println("222페이지 링크 확인=HoBookDAOImpl");
 		try {
 			sqlSession.insert("request.insert", dto);
-			result = "등록되었습니다.";
+			result = "신청완료";
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "Not possible";
 		}
-		System.out.println("333 result=" + result);
 		return result;
 	}
 }
