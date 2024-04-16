@@ -49,7 +49,7 @@
 								<span>저자 : </span> <input type="text" name="h_author"
 									id="h_author" class="form-control" value="${dto.h_author}">
 							</p>
-
+ 
 							<p>
 								<span>출판사 : </span> <input type="text" name="h_pub" id="h_pub"
 									class="form-control" value="${dto.h_pub}">
