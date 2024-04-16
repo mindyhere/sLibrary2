@@ -8,7 +8,7 @@ function loginCheck(){
 	if (m_id != ""){
 		Swal.fire({
 			title: "잠깐!",
-			html: "본 계정은 통합관리시스템 이용권한이 없습니다.<br>로그아웃 후 이동할까요?",
+			html: "통합관리시스템 이용권한이 없습니다.<br>로그아웃 후 이동할까요?",
 			icon: "question",
 			showCancelButton: true,
 			reverseButtons: true,
