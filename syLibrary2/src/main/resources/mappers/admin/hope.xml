@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hope">
+<select id="list" resultType="com.example.syLibrary2.admin.model.dto.HoBookDTO">
+	select *
+	from (
+		select rownum as rn, A.*
+		from (
+			select h_idx, h_name, h_memid, to_char(h_regdate, 'yy/mm/dd') h_regdate, to_char(h_chkdate, 'yy/mm/dd') h_chkdate, h_state 
+			from ho_book 
+			<include refid="search"/>
+			order by h_idx
+		) A
+	) where rn between #{start} and #{end}
+</select>
+<select id="count" resultType="int">
+	select count(*) from ho_book
+	<include refid="search"/>
+</select>
+<sql id="search">
+	<choose>
+		<when test="search_option == 'none' ">
+			where h_idx like '%' || #{keyword} || '%'
+			or h_name like '%' || #{keyword} || '%'
+			or h_memid like '%' || #{keyword} || '%'
+			or h_regdate like '%' || #{keyword} || '%'
+			or h_chkdate like '%' || #{keyword} || '%'
+			or h_state like '%' || #{keyword} || '%'
+		</when>
+		<when test="search_option == 'h_date' ">
+			where h_regdate like '%' || #{keyword} || '%'
+			or h_chkdate like '%' || #{keyword} || '%'
+		</when>
+		<otherwise>
+			where ${search_option} like '%' || #{keyword} || '%'
+		</otherwise>
+	</choose>
+</sql>
+
+<select id="detail" resultType="com.example.syLibrary2.admin.model.dto.HoBookDTO">
+	select
+	h_memid,
+	to_char(h_regdate, 'yy/mm/dd') h_regdate,
+	to_char(h_chkdate, 'yy/mm/dd') h_chkdate,
+	h_name,
+	h_url,
+	h_author,
+	h_pub,
+	h_isbn,
+	h_year,
+	h_category,
+	h_state,
+	h_cancel
+	from ho_book
+	where h_idx=#{h_idx}
+</select>
+
+<update id="state_update">
+	update ho_book set h_state=#{h_state},h_chkdate=sysdate
+	where h_idx=#{h_idx}
+</update>
+
+<update id="cancle_reason">
+	update ho_book set h_cancel=#{h_cancel},h_chkdate=sysdate
+	where h_idx=#{h_idx}
+</update>
+
+</mapper>

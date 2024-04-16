@@ -35,8 +35,6 @@ public interface MyLibraryDAO {
 	// 연장 신청
 	void updateReturn(Map<String, Object> map);
 
-	// 예약 중인 도서
-
 	// 대출이력
 	List<MyLibraryDTO> myHistory(int mNo);
 	
@@ -46,4 +44,6 @@ public interface MyLibraryDAO {
 	// 희망도서 신청 취소
 	void cancelHopeBook(Map<String, Object> map);
 
+	// 희망도서 상태조회
+	int chkHopeBookSts(Map<String, Object> map);
 }
