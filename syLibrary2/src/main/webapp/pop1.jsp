@@ -17,13 +17,27 @@
 <script>
 function bookInfo(success, data) {
 	const items = data.item; 
-	let str="";
+	let str = "";
 	console.log("콜백= " + items.length);
 	for (i=0 ; i < items.length ; i++){
+		let jsonArr=new Array();
+		jsonArr.push({
+			"idx": i,
+			"h_name": items[i].title,
+			"h_url": items[i].cover,
+			"h_author": items[i].author,
+			"h_pub": items[i].publisher,
+			"h_isbn": items[i].isbn13,
+			"h_description": items[i].description,
+			"h_year": items[i].pubDate.substr(0,4),
+			"h_category": items[i].categoryName,
+			"h_link": items[i].link,
+		});
+		
 		console.log("for문: "+i+" => "+items[i].title);
-		str +="<tr><td><a href='#' onclick=''>" + items[i].title + "</a>&nbsp;(" + items[i].author + "&nbsp;|&nbsp;"
-		+ items[i].publisher + "&nbsp;|&nbsp;" + items[i].pubDate.substr(0,4) + ")</td></tr>"
-		+<input;
+		str +="<tr><td><a href='#' onclick='confirm("+ i +")'>" + items[i].title + "</a>&nbsp;(" + items[i].author + "&nbsp;|&nbsp;"
+		+ items[i].publisher + "&nbsp;|&nbsp;" + items[i].pubDate.substr(0,4) + ")<input id='" + i + "' type='hidden' class='json' value='" + JSON.stringify(jsonArr) + "'></td></tr>";
+		//console.log("***str "+i+": " + str);
 	}
 	/*let params={
 	"title": "All About IB Psychology Essay - IB Psychology Essay Guide for SL and HL Students",
@@ -58,6 +72,13 @@ function search() {
 		});
 	}
 }
+
+function confirm(i) {
+	let arr	= document.getElementById(i).value;
+	console.log("arr="+arr);
+	let jsonData = JSON.parse(document.getElementById(i).value);
+	console.log("jsonData="+jsonData);
+}
 </script>
 
 <style>
@@ -77,6 +98,11 @@ border-radius: 7px !important;
 #search{
 margin-bottom: 0.5em;
 }
+#keyword, #btnSearch {
+	border-color:#FAE0E0;
+	outline: none;
+	box-shadow: none !important;
+}
 #searchResult {
 overflow-y: scroll;
 height:70%;
@@ -90,6 +116,7 @@ white-space:nowrap;
 }
 a{
 color: crimson;
+text-decoration-line: none;
 }
 </style>
 </head>
@@ -101,7 +128,7 @@ color: crimson;
 	</div><!-- modal-header 끝 -->	
 	<hr>
 	<div id="search" class="input-group input-group-sm d-flex">
-		<input name="keyword" type="hidden" class="bookinfo" value="">
+		<input id="keyword" name="keyword" type="text" class="form-control" placeholder="검색어를 입력하세요">
 		<button class="btn btn-light" type="button" id="btnSearch" onclick="search()" style="background-color:#FEC5BB !important;">
 			<i class="bi bi-search"></i>
 		</button>
