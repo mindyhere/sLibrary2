@@ -50,7 +50,8 @@
 	h_year,
 	h_category,
 	h_state,
-	h_cancel
+	h_cancel,
+	h_description
 	from ho_book
 	where h_idx=#{h_idx}
 </select>
@@ -60,9 +61,14 @@
 	where h_idx=#{h_idx}
 </update>
 
-<update id="cancle_reason">
+<update id="cancel_reason">
 	update ho_book set h_cancel=#{h_cancel},h_chkdate=sysdate
 	where h_idx=#{h_idx}
 </update>
+
+<insert id="book_insert">
+insert into sl_book (b_id,b_name,b_author,b_pub,b_year,b_category,b_isbn,b_amount,b_url,b_description, b_ct_num)
+values (book_seq.nextval, #{dto.h_name}, #{dto.h_author}, #{dto.h_pub}, #{dto.h_year}, #{dto.h_category}, #{dto.h_isbn}, 3, #{dto.h_url}, #{dto.h_description}, #{ct_num})
+</insert>
 
 </mapper>
