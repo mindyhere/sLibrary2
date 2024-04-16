@@ -16,66 +16,67 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-
 <script>
-	function bookInfo(success, data) {
-		const items = data.item;
-		let str = "";
-		console.log("콜백= " + items.length);
-		for (i = 0; i < items.length; i++) {
-			let jsonArr = new Array();
-			jsonArr.push({
-				"idx" : i + "",
-				"h_name" : items[i].title,
-				"h_url" : items[i].cover,
-				"h_author" : items[i].author,
-				"h_pub" : items[i].publisher,
-				"h_isbn" : items[i].isbn13,
-				"h_description" : items[i].description,
-				"h_year" : items[i].pubDate.substr(0, 4),
-				"h_category" : items[i].categoryName,
-				"h_link" : items[i].link,
-			});
+function bookInfo(success, data) {
+	const items = data.item;
+	let str = "";
+	console.log("콜백= " + items.length);
+	for (i = 0; i < items.length; i++) {
+		let jsonArr = new Array();
+		jsonArr.push({
+			"idx" : i + "",
+			"h_name" : items[i].title,
+			"h_url" : items[i].cover,
+			"h_author" : items[i].author,
+			"h_pub" : items[i].publisher,
+			"h_isbn" : items[i].isbn13,
+			"h_description" : items[i].description,
+			"h_year" : items[i].pubDate.substr(0, 4),
+			"h_category" : items[i].categoryName,
+			"h_link" : items[i].link,
+		});
 
-			str += "<tr><td><a href='#' onclick='confirm(" + i + ")'>"
-					+ items[i].title + "</a>&nbsp;(" + items[i].author
-					+ "&nbsp;|&nbsp;" + items[i].publisher + "&nbsp;|&nbsp;"
-					+ items[i].pubDate.substr(0, 4) + ")<input id='" + i
-					+ "' type='hidden' class='json' value='"
-					+ JSON.stringify(jsonArr) + "'></td></tr>";
-		}
-		console.log("콜백, str: " + str);
-		$("#result").append(str);
+		str += "<tr><td><a href='#' onclick='confirm(" + i + ")'>"
+				+ items[i].title + "</a>&nbsp;(" + items[i].author
+				+ "&nbsp;|&nbsp;" + items[i].publisher + "&nbsp;|&nbsp;"
+				+ items[i].pubDate.substr(0, 4) + ")<input id='" + i
+				+ "' type='hidden' class='json' value='"
+				+ JSON.stringify(jsonArr) + "'></td></tr>";
 	}
+	console.log("콜백, str: " + str);
+	$("#result").append(str);
+}
 
-	function search() {
-		let keyword = $("#keyword").val();
-		console.log("클릭 = " + keyword);
+function search() {
+	let keyword = $("#keyword").val();
+	console.log("클릭 = " + keyword);
 
-		if (keyword != "") {
-			$('#result > tr > td').remove();
-			let url = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbabout_kei2155001&Query="
-					+ keyword
-					+ "&QueryType=Keyword&start=1&MaxResults=100&SearchTarget=Book&Sort=Title&cover=Big&output=js&callBack=bookInfo";
-			console.log("if => " + keyword);
+	if (keyword != "") {
+		$('#result > tr > td').remove();
+		let url = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbabout_kei2155001&Query="
+				+ keyword
+				+ "&QueryType=Keyword&start=1&MaxResults=100&SearchTarget=Book&Sort=Title&cover=Big&output=js&callBack=bookInfo";
+		console.log("if => " + keyword);
 
-			$.ajax({
-				url : url,
-				async : false,
-				dataType : "jsonp",
-				jsonp : "bookInfo"
-			});
-		}
+		$.ajax({
+			url : url,
+			async : false,
+			dataType : "jsonp",
+			jsonp : "bookInfo"
+		});
 	}
+}
 
-	function confirm(i) {
-		let obj = JSON.parse(document.getElementById(i).value);
-		console.log(obj[i].h_name);
-	}
+function confirm(i) {
+	let obj = JSON.parse(document.getElementById(i).value);
+	console.log(obj[i].h_name);
+	console.log(obj[i]);
+}
 </script>
 
 <style>
 body {
+	display:flex;
 	background: #fbf7f5 !important;
 }
 
@@ -107,7 +108,6 @@ div {
 	margin-bottom: 2%;
 	overflow-y: auto;
 	background-color: white !important;
-	/* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
 }
 
 #result .table {
@@ -122,34 +122,26 @@ a {
 </head>
 
 <body>
-	<div class="container">
-		<div id="modal-header" class="d-flex justify-content-between">
-			<div>
-				<h3>
-					&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;SEARCH
-				</h3>
-				</stong>
-			</div>
+<div class="container">
+	<div id="modal-header" class="d-flex justify-content-between">
+		<div>
+			<h3>&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;SEARCH</h3></stong>
 		</div>
-		<!-- modal-header 끝 -->
-		<hr>
-		<div id="search" class="input-group input-group-sm d-flex">
-			<input id="keyword" name="keyword" type="text" class="form-control"
-				placeholder="검색어를 입력하세요">
-			<button class="btn btn-light" type="button" id="btnSearch"
-				onclick="search()" style="background-color: #FEC5BB !important;">
-				<i class="bi bi-search"></i>
-			</button>
-		</div>
-		<!-- search 끝 -->
-		<div id="searchResult">
-			<table class="table table-sm table-hover align-middle text-left"
-				id="table1">
-				<tbody id="result" style="border-color: #FAE0E0;">
-				</tbody>
-			</table>
-		</div>
+	</div><!-- modal-header 끝 -->
+	
+	<hr>
+	<div id="search" class="input-group input-group-sm d-flex">
+		<input id="keyword" name="keyword" type="text" class="form-control" placeholder="검색어를 입력하세요">
+		<button class="btn btn-light" type="button" id="btnSearch" onclick="search()" style="background-color: #FEC5BB !important;">
+			<i class="bi bi-search"></i>
+		</button>
+	</div><!-- search 끝 -->
+	
+	<div id="searchResult">
+		<table class="table table-sm table-hover align-middle text-left" id="table1">
+			<tbody id="result" style="border-color: #FAE0E0;"></tbody>
+		</table>
 	</div>
-	<!-- container 끝 -->
+</div> <!-- container 끝 -->
 </body>
 </html>
