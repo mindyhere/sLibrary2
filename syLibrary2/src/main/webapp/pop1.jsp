@@ -32,7 +32,7 @@ function bookInfo(success, data) {
 			"h_isbn" : items[i].isbn13,
 			"h_description" : items[i].description,
 			"h_year" : items[i].pubDate.substr(0, 4),
-			"h_category" : items[i].categoryName,
+			"h_category" : items[i].categoryName.split(">", 2),
 			"h_link" : items[i].link,
 		});
 
@@ -40,10 +40,10 @@ function bookInfo(success, data) {
 				+ items[i].title + "</a>&nbsp;(" + items[i].author
 				+ "&nbsp;|&nbsp;" + items[i].publisher + "&nbsp;|&nbsp;"
 				+ items[i].pubDate.substr(0, 4) + ")<input id='" + i
-				+ "' type='hidden' class='json' value='"
+				+ "' type='hidden' value='"
 				+ JSON.stringify(jsonArr) + "'></td></tr>";
 	}
-	console.log("콜백, str: " + str);
+	//console.log("콜백, str: " + str);
 	$("#result").append(str);
 }
 
@@ -68,9 +68,19 @@ function search() {
 }
 
 function confirm(i) {
-	let obj = JSON.parse(document.getElementById(i).value);
-	console.log(obj[i].h_name);
-	console.log(obj[i]);
+	const obj = JSON.parse(document.getElementById(i).value);
+	const data = obj[0];
+	console.log(data.h_author);
+	//console.log(data);
+	
+	opener.document.getElementById("h_name").value = data.h_name
+	opener.document.getElementById("h_author").value = data.h_author
+	opener.document.getElementById("h_pub").value = data.h_pub
+	opener.document.getElementById("h_year").value = data.h_year
+	opener.document.getElementById("h_category").value = data.h_category
+	opener.document.getElementById("data").value = document.getElementById(i).value
+	//location.href = "/user/request/result"+data;
+	//window.close();
 }
 </script>
 

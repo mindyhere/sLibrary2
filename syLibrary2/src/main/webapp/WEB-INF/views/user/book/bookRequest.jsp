@@ -44,30 +44,31 @@ function popup() {
 						<div class="col detail">
 							<p>
 								<span>도서명 : </span> <input type="text" name="h_name" id="h_name"
-									class="form-control" value="${dto.h_name}">
+									class="form-control" readonly>
 							</p>
 
 							<p>
 								<span>저자 : </span> <input type="text" name="h_author"
-									id="h_author" class="form-control" value="h_author">
+									id="h_author" class="form-control" readonly>
 							</p>
  
 							<p>
 								<span>출판사 : </span> <input type="text" name="h_pub" id="h_pub"
-									class="form-control" value="${dto.h_pub}">
+									class="form-control" readonly>
 							</p>
 
 							<p>
 								<span>출판년도 : </span> <input type="number" name="h_year"
-									id="h_year" class="form-control" value="${dto.h_year}">
+									id="h_year" class="form-control" readonly>
 							</p>
 
 							<p>
 								<span>분류 : </span> <input type="text" name="h_category"
-									id=h_category class="form-control" value="${dto.h_category}">
+									id=h_category class="form-control" readonly>
 							</p>
 
 							<p>
+							<input type="hidden" id="data" name="data" value="">
  							<input 	id="save " onclick="btnsave()" name="save" type="submit"
 								class="btn btn-light" value="신청하기"></p>
 						</div>
