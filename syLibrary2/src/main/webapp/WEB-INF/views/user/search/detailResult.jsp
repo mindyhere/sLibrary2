@@ -164,7 +164,7 @@ function reserve(b_id){
    let m_id = "${sessionScope.mId}";
    let a_id = "${sessionScope.a_id}";
  if (a_id != "") {
-			myAlert("warning","잠깐!","관리자로 로그인 중입니다. 권한 문의바랍니다.");  
+			myAlert("warning","잠깐!","관리자로 로그인 중입니다.<br>권한 문의바랍니다.");  
 	   } else if(!m_id) {
 	   myAlert("warning", "잠깐!", "로그인 후 이용 가능한 서비스입니다.");
    } else if(m_id != ""){
