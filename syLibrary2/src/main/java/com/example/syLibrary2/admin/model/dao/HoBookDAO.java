@@ -8,6 +8,8 @@ public interface HoBookDAO {
 	int count(String search_option, String keyword);
 	List<HoBookDTO> list(int start, int end, String search_option, String keyword);
 	HoBookDTO detail(int h_idx);
-	void state_update(HoBookDTO dto);
-	void cancle_reason(HoBookDTO dto);
+	// void state_update(HoBookDTO dto);
+	void state_update(int h_idx, String h_state);
+	void cancel_reason(HoBookDTO dto);
+	String ins_book(HoBookDTO dto, int ct_num);
 }
