@@ -96,6 +96,11 @@
 		}
 	}
  	
+  	function popup() {
+  	 	var link = '';
+  		var popOption = "top=10, left=10, width=600, height=800";
+  		var pop = window.open(link, "", popOption);
+  	}
 	
 </script>
 <style>
@@ -160,7 +165,7 @@ th {
 						style="height: 90%; width: 90%; border: 0; outline: none; resize: none;"></textarea></td>
 			</tr>
 			<tr style="width: 400px; height: 60px;">
-				<td align="center">분류</td>
+				<td align="center"><a style="color: black;" href="#" onClick="popup()">분류</a></td>
 				<td><input type="text" list="list_a" name="b_category"
 					id="b_category" style="width: 150px" class="form-control"> 
 					<datalist id="list_a">
