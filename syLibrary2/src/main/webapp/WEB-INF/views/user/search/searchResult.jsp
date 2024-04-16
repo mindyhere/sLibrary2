@@ -168,6 +168,10 @@ function collapse(element) {
 //예약신청하기	
 function reserve(b_id){ 
    let m_id = "${sessionScope.mId}";
+   if(!m_id) {
+	   myAlert("warning", "잠깐!", "로그인 후 이용 가능한 서비스입니다.");
+       return;
+   }    
    $.ajax({
       url : '/user/book/recheck_book.do',
       data : {"b_id" : b_id, "m_id" : m_id},
