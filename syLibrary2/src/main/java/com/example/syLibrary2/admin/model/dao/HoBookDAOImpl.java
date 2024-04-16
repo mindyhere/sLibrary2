@@ -37,5 +37,15 @@ public class HoBookDAOImpl implements HoBookDAO {
 	public HoBookDTO detail(int h_idx) {
 		return sqlSession.selectOne("hope.detail", h_idx);
 	}
+	
+	@Override
+	public void state_update(HoBookDTO dto) {
+		sqlSession.update("hope.state_update", dto);
+	}
+	
+	@Override
+	public void cancle_reason(HoBookDTO dto) {
+		sqlSession.update("hope.cancle_reason", dto);
+	}
 
 }
