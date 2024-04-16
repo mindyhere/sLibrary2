@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
-s<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="/resources/static/user.css">
 <c:if test="${param.message == 'join'}">
 	<script>
