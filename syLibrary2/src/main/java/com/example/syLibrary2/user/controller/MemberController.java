@@ -154,7 +154,6 @@ public class MemberController {
 		}
 
 		MemberDTO dto = new MemberDTO();
-		dto.setM_passwd(pwdEncoder.encode(m_passwd));
 		dto.setM_tel(m_tel);
 		dto.setM_email(m_email);
 		dto.setM_zip_no(m_zip_no);
@@ -162,6 +161,14 @@ public class MemberController {
 		dto.setM_address(m_address);
 		dto.setM_detail_address(m_detail_address);
 		dto.setM_id(mId);
+
+		if (m_passwd == null || m_passwd.trim().equals("") || m_passwd.equals("null")) {
+			MemberDTO dto2 = memberDao.detailMember(mId);
+			m_passwd = dto2.getM_passwd();
+			dto.setM_passwd(pwdEncoder.encode(m_passwd));
+		} else {
+			dto.setM_passwd(pwdEncoder.encode(m_passwd));
+		}
 
 		if (mImg == null || mImg.trim().equals("") || mImg.equals("null")) {
 			MemberDTO dto2 = memberDao.detailMember(mId);
