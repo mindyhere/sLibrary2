@@ -189,7 +189,7 @@ th {
 				<td><input type="text" name="b_author" id="b_author" class="form-control"
 					value="${map.dto.b_author}"></td>
 				<c:choose>
-				<c:when test="${map.dto.b_id > 50}">
+				<c:when test="${map.check == 0}">
 					<td rowspan="2">
 						<img src="/resources/images/book/${map.dto.b_url}" id="b_url" name="b_url" 
 					style="max-height: 100px;"/>

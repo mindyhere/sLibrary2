@@ -57,8 +57,17 @@ public class BookController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/book/edit");
 		Map<String, Object> map = new HashMap<>();
-		map.put("dto", dao.edit(b_id));
+		BookDTO dto = dao.edit(b_id);
+		String b_url = dto.getB_url();
+		int check = 0;
+		if (b_url.contains("https")) {
+			check = 1;
+		} else {
+			check = 0;
+		}
+		map.put("dto", dto);
 		map.put("list", dao.select_cg());
+		map.put("check", check);
 		mav.addObject("map", map);
 		// System.out.println(map);
 		return mav;
