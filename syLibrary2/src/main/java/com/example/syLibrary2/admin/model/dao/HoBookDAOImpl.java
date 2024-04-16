@@ -44,8 +44,8 @@ public class HoBookDAOImpl implements HoBookDAO {
 	}
 	
 	@Override
-	public void cancle_reason(HoBookDTO dto) {
-		sqlSession.update("hope.cancle_reason", dto);
+	public void cancel_reason(HoBookDTO dto) {
+		sqlSession.update("hope.cancel_reason", dto);
 	}
 
 }

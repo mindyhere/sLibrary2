@@ -46,8 +46,11 @@ public class HoBookController {
 	@GetMapping("detail.do")
 	public ModelAndView detail(@RequestParam(name = "h_idx") int h_idx) {
 		ModelAndView mav = new ModelAndView();
+		HoBookDTO dto = dao.detail(h_idx);
+		dto.setH_idx(h_idx);
 		mav.setViewName("admin/hope/hope_detail");
-		mav.addObject("dto", dao.detail(h_idx));
+		mav.addObject("dto", dto);
+		System.out.println("디티오==="+dto);
 		return mav;
 	}
 	
@@ -64,13 +67,15 @@ public class HoBookController {
 //		Map<String, Object> map = dao.state_update(dto);
 //		mav.addObject("dto", dao.state_update(h_idx)); 
 //		return mav;
+		//System.out.println("상태변경="+dto);
 		dao.state_update(dto);
 		return "admin/hope/hope_detail";
 	}
 	
-	@PostMapping("cancle_reason")
-	public String cancle_reason(HoBookDTO dto) {
-		dao.cancle_reason(dto);
+	@PostMapping("cancel_reason")
+	public String cancel_reason(HoBookDTO dto) {
+		dao.cancel_reason(dto);
+		System.out.println("취소사유등록="+dto);
 		return "admin/hope/hope_detail";
 	}
 }

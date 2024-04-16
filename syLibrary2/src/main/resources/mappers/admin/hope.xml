@@ -60,7 +60,7 @@
 	where h_idx=#{h_idx}
 </update>
 
-<update id="cancle_reason">
+<update id="cancel_reason">
 	update ho_book set h_cancel=#{h_cancel},h_chkdate=sysdate
 	where h_idx=#{h_idx}
 </update>

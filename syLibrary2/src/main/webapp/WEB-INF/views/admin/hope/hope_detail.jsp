@@ -39,25 +39,77 @@ th {
 }
 </style>
 <script>
-function cancleReason() {
-	let h_cancle = $("#h_cancle").val();
+$(function() {
+	$("#btnCancel").click(function() {
+		let h_cancel = $("#cancelReason").val();
+		let h_idx = $("#h_idx").val();
+		$.ajax({
+			type : "post",
+			url : "/admin/hope/cancel_reason",
+			data : {
+				"h_cancel" : h_cancel,
+				"h_idx" : h_idx
+			},
+			success : function(data) {
+				document.getElementById("h_cancel").value=data.h_cancel;
+				swal('등록되었습니다');
+				//location.href = "/admin/hope/hope_detail";
+			}
+		});
+		document.form1.h_cancel.value=h_cancel;
+		document.form1.submit();
+	});
+
+});
+/* function cancelReason() {
+	let h_cancel = $("#cancelReason").val();
 	let h_idx = $("#h_idx").val();
 	$.ajax({
 		type: "post",
-		url: "/admin/hope/cancle_reason",
+		url: "/admin/hope/cancel_reason",
 		data: {
 			"h_idx" : h_idx,
-			"h_cancle" : h_cancle
+			"h_cancel" : h_cancel
 		},
 		success : function() {
 			swal('수정되었습니다.');
 			location.href = "/admin/hope/hope_detail";
 		}
 	})
-}
-function changeState(h_idx) {
 	
-	/* let h_state = $("#state_change").val();
+	document.form2.h_idx.value=h_idx;
+	document.form2.h_cancel.value=h_cancel;
+	document.form2.action="/admin/hope/cancel_reason";
+	document.form2.submit();
+} */
+$(function() {
+	$("#btnChange").click(function() {
+		let h_state = $("#state").val();
+		let h_idx = $("#h_idx").val();
+		$.ajax({
+			type : "post",
+			url : "/admin/hope/change_status",
+			data : {
+				"h_state" : h_state,
+				"h_idx" : h_idx
+			},
+			success : function(data) {
+				consol.log(data);
+				document.getElementById("h_state").value=data.h_state;
+				swal('등록되었습니다');
+				//location.href = "/admin/hope/hope_detail";
+			}
+		});
+		document.form1.h_state.value=h_state;
+		document.form1.submit();
+	});
+	//document.form1.h_idx.value=h_idx;
+	//document.form1.h_state.value=h_state;
+	//document.form1.action="/admin/hope/change_status";
+});
+/* function changeState(h_idx) {
+	
+	let h_state = $("#state_change").val();
 	let h_idx = $("#h_idx").val();
 	$.ajax({
 		type: "post",
@@ -70,12 +122,13 @@ function changeState(h_idx) {
 			swal('수정되었습니다.');
 			location.href = "/admin/hope/hope_detail";
 		}
-	}) */
+	})
 	
 	document.form1.h_idx.value=h_idx;
+	document.form1.h_state.value=h_state;
 	document.form1.action="/admin/hope/change_status";
 	document.form1.submit();
-}
+} */
 </script>
 </head>
 <body>
@@ -92,7 +145,7 @@ function changeState(h_idx) {
 				
 				<div style="left: 290px; position: absolute; width: 2000px;">
 					<div class="dd">
-						<form name="form1" method="post" enctype="multipart/form-data">
+						<form name="form1" method="get" enctype="multipart/form-data">
 							<table border="1" width="600px" style="position: static;">
 								<tr>
 									<td>신청자</td>
@@ -159,27 +212,27 @@ function changeState(h_idx) {
 							</table>
 								<tr>
 									<td colspan="4" align="right">
-												<select id="state" name="state" onchange="document.form1.state.value=this.value;">
+												<select id="state" name="state">
+												<!-- onchange="document.form1.state.value=this.value;" -->
 													<option value="신청완료" <c:if test="${dto.h_state=='신청완료'}">${'selected'}</c:if>>신청완료</option>
 													<option value="접수취소" <c:if test="${dto.h_state=='접수취소'}">${'selected'}</c:if>>접수취소</option>
 													<option value="처리중" <c:if test="${dto.h_state=='처리중'}">${'selected'}</c:if>>처리중</option>
 													<option value="이용가능" <c:if test="${dto.h_state=='이용가능'}">${'selected'}</c:if>>이용가능</option>
-												</select>
 													<td width="70px">
-															<input type="button" value="상태변경" class="btn text-white" style="background-color: #6699CC;" onclick="changeState(${dto.h_state})">
+															<input type="hidden" name="h_idx" value="${dto.h_idx}">
+															<input type="button" id="btnChange" value="상태변경" class="btn text-white" style="background-color: #6699CC;">
 													</td>
+												</select>
 									</td>
 									<c:choose>
-										<c:when test="${dto.h_state == '접수취소'}">
+										<c:when test="${dto.h_state == '접수취소'&&dto.h_cancel == null}">
 											<td>
 												<div id="p1">
-													<form name="form2" method="post" action="/admin/hope/cancle_reason">
 														<input type="hidden" name="h_idx" value="${dto.h_idx}">
-														취소사유 : <input name="cancelReason">
+														취소사유 : <input id="cancelReason" name="cancelReason">
 														<td width="70px">
-															<input type="button" value="취소사유등록" class="btn text-white" style="background-color: #6699CC;" onclick="cancelReason()">
+															<input type="button" id="btnCancel" value="취소사유등록" class="btn text-white" style="background-color: #6699CC;">
 														</td>
-													</form>
 												</div>
 											</td>
 										</c:when>

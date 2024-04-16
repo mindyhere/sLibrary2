@@ -73,6 +73,7 @@ public class MemoController {
 	@PostMapping("update.do")
 	public String update(MemoDTO dto){
 		memoDao.update(dto);
+		System.out.println("메모수정==="+dto);
 		return "admin/admin_main";
 	}
 	
