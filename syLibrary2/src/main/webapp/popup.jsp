@@ -55,14 +55,12 @@ function bookInfo(success, data) {
 
 function search() {
 	let keyword = $("#keyword").val();
-	console.log("클릭 = " + keyword);
 
 	if (keyword.trim().length >= 2) {
 		$('#result > tr > td').remove();
 		let url = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbabout_kei2155001&Query="
 				+ keyword
 				+ "&QueryType=Keyword&&MaxResults=100&SearchTarget=Book&Sort=Title&cover=Big&output=js&callBack=bookInfo";
-		console.log("if => " + keyword);
 
 		$.ajax({
 			url : url,
@@ -101,7 +99,6 @@ function modify(e) {
 					  .replaceAll("'", "&#x27;")
 					  .replaceAll("/", "&#x2F;");
 	resultText = resultText.replace(/[\u0000-\u0019]+/g, "");
-	console.log(resultText);
 	return resultText
 }
 </script>

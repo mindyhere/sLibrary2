@@ -11,18 +11,16 @@
 <script>
 $(function(){
 	$("#btnOpen").click(function(){
-		var pop = window.open("../../popup.jsp", "pop",
-		"width=650,height=500, scrollbars=yes, resizable=yes");
+		var pop = window.open("../../popup.jsp", "pop", "width=650,height=500, scrollbars=yes, resizable=yes");
 	});
 	
 	$("#btnCheck").click(function(){
-		location.href= "/user/book/myHopeBook/${sessionScope.mId}";
+		location.href = "/user/book/myHopeBook/${sessionScope.mId}";
 	});
 	
 	$("#btnConfirm").click(function() {
 		const obj = JSON.parse(document.getElementById("data").value);
 		const data = obj[0];
-		console.log(data.h_category);
 		$.ajax({
 			url: "/user/request/insert",
 			data: data,
@@ -37,7 +35,7 @@ $(function(){
 					denyButtonText: "NO"
 					}).then((result) => {
 					if (result.isConfirmed) {
-						location.href="/user/book/myHopeBook/${sessionScope.mId}";
+						location.href = "/user/book/myHopeBook/${sessionScope.mId}";
 					} else if (result.isDenied) {
 						location.reload();
 					}
@@ -48,7 +46,7 @@ $(function(){
 				Swal.fire({
 					icon: "error",
 					title: "Not possible",
-					html: "신청이 거부되었습니다.<br> 반복 실패 시, 관리자에게 문의해 주세요.",
+					html: "신청이 거부되었습니다.<br>반복 실패 시, 관리자에게 문의해 주세요.",
 					confirmButtonText: "OK"
 				});
 			}
@@ -95,8 +93,8 @@ p > input[type="text"] {
 				<span class="mont">신청안내</span>
 				<li>현재 저희 도서관에서 소장하지 않은 책일 경우, 희망도서를 신청하실 수 있습니다.</li>
 				<li>"자료검색하기"를 통해 찾으시는 도서정보를 선택한 후, "신청하기" 를 클릭해 희망도서신청을 완료해주세요.</li>
-				<li>검색 결과는 최대 100건 까지 조회됩니다.</li>
-				<li>"나의서재 > 희망도서내역"에서 신청 처리 현황을 확인하실 수 있습니다.</li>
+				<li>검색 결과는 최대 100건까지 조회됩니다.</li>
+				<li>"나의서재 > 희망도서"에서 처리현황을 확인하실 수 있습니다.</li>
 			</h4>
 		</div>
 		<div clas"bot">

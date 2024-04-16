@@ -14,7 +14,6 @@ public class UserRequestDAOImpl implements UserRequestDAO {
 	// 희망도서 신청(HoBook 테이블 insert)
 	public String insert(HoBookDTO dto) {
 		String result = "";
-		System.out.println(dto);
 		try {
 			sqlSession.insert("request.insert", dto);
 			result = "신청완료";
@@ -22,7 +21,6 @@ public class UserRequestDAOImpl implements UserRequestDAO {
 			e.printStackTrace();
 			result = "Not possible";
 		}
-		System.out.println("333 result=" + result);
 		return result;
 	}
 }

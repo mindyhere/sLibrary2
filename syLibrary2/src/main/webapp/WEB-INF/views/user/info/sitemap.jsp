@@ -153,7 +153,7 @@ text-decoration-line: none !important;
 			<div class="card-header">
 				<ul class="card-title">
 					<li>
-					  <h5 style="margin:0"><strong>자료찾기</strong></h5>
+					  <h5 style="margin:0"><strong>자료찾기 / 희망도서</strong></h5>
 					</li>
 				</ul>
 			</div><!-- card-header 끝 -->
@@ -163,6 +163,18 @@ text-decoration-line: none !important;
 			  <li><p>- 키워드 통합검색</p></li>
 			  <li><p>- 키워드 상세검색</p></li>
 			  <li><p>- 도서 상세정보</p></li>
+			</ul>
+			<br>
+			<ul>
+			<c:choose>
+				<c:when test="${mName != null}">
+				  <li><a href="#" onclick="location.href='/user/request/'"><h5><b>희망도서</b></h5></a></li>
+				</c:when>
+				<c:otherwise>
+				  <li><h5><b>희망도서</b></h5></li>
+				</c:otherwise>
+			</c:choose>	
+				<li><p>- 희망도서 신청</p></li>
 			</ul>
 			<img src="/resources/images/book-half.svg" alt="Member information">
 		  </div><!-- card-body 끝 -->
@@ -212,10 +224,11 @@ text-decoration-line: none !important;
 				 		<li><h5><b>나의서재</b></h5></li>
 				  	</c:otherwise>
 				  </c:choose>
-				  <li><p>- 대출현황</p></li>
-				  <li><p>- 예약현황</p></li>
+				  <li><p>- 대출 중인 도서</p></li>
+				  <li><p>- 예약 중인 도서</p></li>
+				  <li><p>- 희망도서 신청내역</p></li>
 				  <li><p>- 대출이력</p></li>
-				  <li><p>- 대출통계</p></li>
+				  <li><p>- 나의독서통계</p></li>
 				</ul>
 				<img src="/resources/images/person-workspace.svg" alt="Member information">
 		    </div><!-- card-body 끝 -->
