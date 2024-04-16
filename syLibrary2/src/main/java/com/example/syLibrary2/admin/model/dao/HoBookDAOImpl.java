@@ -39,13 +39,33 @@ public class HoBookDAOImpl implements HoBookDAO {
 	}
 	
 	@Override
-	public void state_update(HoBookDTO dto) {
-		sqlSession.update("hope.state_update", dto);
+	public void state_update(int h_idx, String h_state) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("h_idx",h_idx);
+		map.put("h_state",h_state);
+		sqlSession.update("hope.state_update", map);
 	}
 	
 	@Override
-	public void cancle_reason(HoBookDTO dto) {
-		sqlSession.update("hope.cancle_reason", dto);
+	public void cancel_reason(HoBookDTO dto) {
+		sqlSession.update("hope.cancel_reason", dto);
+	}
+	
+	
+	@Override
+	public String ins_book(HoBookDTO dto, int ct_num) {
+		String result = "";
+		Map<String,Object> map=new HashMap<>();
+		map.put("dto", dto);
+		map.put("ct_num", ct_num);
+		System.out.println("dao=="+map);
+		try {
+			sqlSession.insert("hope.book_insert", map);
+			result = "success";
+		} catch (Exception e) {
+			result = "fail";
+		}
+		return result;
 	}
 
 }
