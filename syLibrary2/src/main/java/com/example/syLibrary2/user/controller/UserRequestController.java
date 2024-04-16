@@ -30,11 +30,9 @@ public class UserRequestController {
 	@ResponseBody
 	@GetMapping("insert")
 	public String insert(@RequestParam Map<String, Object> data, HttpSession session) {
-		HoBookDTO dto=new HoBookDTO();
 		String h_memid=(String) session.getAttribute("mId");
-		String[] values = ((String) data.get("h_category")).split(">", 2);
-		System.out.println("카테고리 테스트"+values.toString());
-		dto.setH_memid(h_memid);
+
+		HoBookDTO dto=new HoBookDTO();
 		dto.setH_name((String) data.get("h_name"));
 		dto.setH_url((String) data.get("h_url"));
 		dto.setH_author((String) data.get("h_author"));
@@ -43,10 +41,10 @@ public class UserRequestController {
 		dto.setH_description((String) data.get("h_description"));
 		dto.setH_year(Integer.parseInt((String) data.get("h_year")));
 		dto.setH_category((String) data.get("h_category"));
+		dto.setH_memid(h_memid);
 		dto.setH_link((String) data.get("h_link"));
 		
-		//return hoBookDao.insert(dto);
-		return "test";
+		return hoBookDao.insert(dto);
 	}
 
 }

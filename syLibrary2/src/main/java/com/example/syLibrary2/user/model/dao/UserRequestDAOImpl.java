@@ -17,7 +17,7 @@ public class UserRequestDAOImpl implements UserRequestDAO {
 		System.out.println(dto);
 		try {
 			sqlSession.insert("request.insert", dto);
-			result = "등록되었습니다.";
+			result = "신청완료";
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "Not possible";
