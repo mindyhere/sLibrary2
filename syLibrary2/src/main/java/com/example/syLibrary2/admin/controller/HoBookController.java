@@ -73,5 +73,5 @@ public class HoBookController {
 		dao.cancle_reason(dto);
 		return "admin/hope/hope_detail";
 	}
-	
 }
+
