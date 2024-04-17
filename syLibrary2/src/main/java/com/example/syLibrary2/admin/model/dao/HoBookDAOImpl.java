@@ -47,8 +47,11 @@ public class HoBookDAOImpl implements HoBookDAO {
 	}
 	
 	@Override
-	public void cancel_reason(HoBookDTO dto) {
-		sqlSession.update("hope.cancel_reason", dto);
+	public void cancel_reason(int h_idx,String h_cancel) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("h_idx",h_idx);
+		map.put("h_cancel",h_cancel);
+		sqlSession.update("hope.cancel_reason", map);
 	}
 	
 	

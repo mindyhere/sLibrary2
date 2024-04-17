@@ -15,11 +15,6 @@
 <script>
 	$(function() {
 		$("#btnSearch").click(function() {
-			/* if ($("select[name=search_option] option:selected")
-					.text() == "선택") {
-				swal("분류를 선택하세요");
-				return false;
-			} */
 			if ($("#keyword").val() == "") {
 				swal("검색어를 입력하세요");
 				return false;
@@ -124,8 +119,7 @@ padding-bottom: 20px;
 	<div style="width:1000px;">
 	<div class="page-direction" style="padding: 20px; padding-left: 250px;">
 		<div class="navi">
-				<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;도서관리</span> <i class="bi bi-chevron-right"></i>
-				<span style="font-weight:bold;">도서목록</span>
+				<span style="font-weight:bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;희망도서</span> <i class="bi bi-chevron-right"></i>
 		</div>
 	</div>
 

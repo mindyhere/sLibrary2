@@ -97,8 +97,8 @@
 	}
  	
   	function popup() {
-  	 	var link = '';
-  		var popOption = "top=10, left=10, width=600, height=800";
+  	 	var link = '/book/ct_list.do';
+  		var popOption = "top=10, left=10, width=600, height=470";
   		var pop = window.open(link, "", popOption);
   	}
 	

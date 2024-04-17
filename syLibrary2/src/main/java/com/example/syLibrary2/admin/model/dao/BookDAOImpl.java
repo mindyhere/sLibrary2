@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.syLibrary2.admin.model.dto.BookDTO;
+import com.example.syLibrary2.admin.model.dto.CtBookDTO;
 
 @Repository
 public class BookDAOImpl implements BookDAO {
@@ -81,5 +82,47 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public int ins_ct(String word) {
 		return sqlSession.selectOne("book.ins_ct", word);
+	}
+	
+	@Override
+	public int ct_count() {
+		return sqlSession.selectOne("book.ct_count");
+	}
+	
+	@Override
+	public List<CtBookDTO> ct_list(int start, int end) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("start",start);
+		map.put("end",end);
+		return sqlSession.selectList("book.ct_list",map);
+	}
+	
+	@Override
+	public String ins_ct(CtBookDTO dto) {
+		String result = "";
+		try {
+			int check = sqlSession.selectOne("book.check_ct", dto);
+			if (check == 0) {
+				sqlSession.insert("book.insert_ct", dto);
+				result="success";
+			} else {
+				result="over";
+			}
+		} catch (Exception e) {
+			result="fail";
+		}
+		return result;
+	}
+	
+	@Override
+	public String del_ct(int ct_number) {
+		String result = "";
+		try {
+			sqlSession.delete("book.del_ct", ct_number);
+			result="성공";
+		} catch (Exception e) {
+			result="실패";
+		}
+		return result;
 	}
 }

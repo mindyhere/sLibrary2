@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.syLibrary2.admin.model.dao.BookDAO;
 import com.example.syLibrary2.admin.model.dto.BookDTO;
+import com.example.syLibrary2.admin.model.dto.CtBookDTO;
 import com.example.syLibrary2.util.PageUtil2;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -148,6 +149,43 @@ public class BookController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/book/insert");
 		mav.addObject("result", result);
+		return mav;
+	}
+	
+	@RequestMapping("ct_list.do")
+	public ModelAndView list(@RequestParam(name = "cur_page", defaultValue = "1") int curPage) {
+		int count = dao.ct_count();
+		PageUtil2 page = new PageUtil2(count, curPage);
+		int start = page.getPageBegin();
+		int end = page.getPageEnd();
+		List<CtBookDTO> dto = dao.ct_list(start, end);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/book/ins_ct");
+		Map<String, Object> map = new HashMap<>();
+		map.put("dto", dto);
+		map.put("count", count);
+		map.put("page", page);
+		mav.addObject("map", map);
+		return mav;
+	}
+	
+	@PostMapping("ins_ct.do")
+	public ModelAndView insert(CtBookDTO dto, HttpServletRequest request) {
+		String result = "";
+		result = dao.ins_ct(dto);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/book/ins_ct");
+		mav.addObject("result", result);
+		return mav;
+	}
+
+	@RequestMapping("del_ct.do")
+	public ModelAndView del_ct(@RequestParam(name = "ct_number") int ct_number) {
+		String rst = "";
+		rst = dao.del_ct(ct_number);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/book/ins_ct");
+		mav.addObject("rst", rst);
 		return mav;
 	}
 }

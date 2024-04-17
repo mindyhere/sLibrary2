@@ -62,4 +62,32 @@ where b_id=#{b_id}
 select ct_number from ct_book
 where #{word} like '%' || category || '%'
 </select>
+
+<select id="ct_count" resultType="int">
+select count(*) from ct_book
+</select>
+
+<select id="ct_list" resultType="com.example.syLibrary2.admin.model.dto.CtBookDTO">
+select *
+	from (
+		select rownum as rn, A.*
+		from (
+			select category, ct_number
+			from ct_book 
+			order by ct_number
+		) A
+	) where rn between #{start} and #{end}
+</select>
+
+<select id="check_ct" resultType="int">
+select nvl(count(*),0) from ct_book where category=#{category} or ct_number=#{ct_number}
+</select>
+<insert id="insert_ct">
+	insert into ct_book (category, ct_number)
+	values (#{category}, #{ct_number})
+</insert> 
+
+<delete id="del_ct">
+	 delete from ct_book where ct_number=#{ct_number}
+</delete>
 </mapper>

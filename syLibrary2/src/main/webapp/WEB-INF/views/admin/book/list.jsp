@@ -15,11 +15,6 @@
 <script>
 	$(function() {
 		$("#btnSearch").click(function() {
-			/* if ($("select[name=search_option] option:selected")
-					.text() == "선택") {
-				swal("분류를 선택하세요");
-				return false;
-			} */
 			if ($("#keyword").val() == "") {
 				swal("검색어를 입력하세요");
 				return false;

@@ -55,16 +55,6 @@
 			let b_description = $("#b_description").val();
 			let b_amount = $("#b_amount").val();
 			let b_isbn = $("#b_isbn").val();
-			/* let b_categoty = $("#b_categoty").val();
-		 	let b_url = $("#file1").val(); 
-			
-			if (b_url == "") {
-				document.getElementById('b_url').src = "${dto.b_url}";
-			} 
-			if (b_categoty == "") {
-				document.getElementById('b_category').value = "${dto.b_category}";
-				return;
-			} */
 			if (b_name == "") {
 				swal("도서명을 입력하세요");
 				$("#b_name").focus();
