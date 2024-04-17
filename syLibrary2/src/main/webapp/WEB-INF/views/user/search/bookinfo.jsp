@@ -611,7 +611,7 @@ white-space:nowrap;
 	<div class="modal-body" id="modal-body">
 		<div class="modal-container">
 			<div id="modal-header" class="d-flex justify-content-between">
-				<div><h3>&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;REVIEW</h3></stong></div>
+				<div><h3>&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;REVIEW</h3></strong></div>
 				<div><button type="button" class="btn-close" id="btnClose"></button></div>
 			</div><!-- modal-header 끝 -->	
 			
