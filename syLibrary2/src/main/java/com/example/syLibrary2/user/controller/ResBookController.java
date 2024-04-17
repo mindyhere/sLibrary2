@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpSession;
 public class ResBookController {
 
 	@Autowired
-	private ResbookDAO resbookDao; 
+	private ResbookDAO resbookDao;
 
 	// 페이지로드
 	@GetMapping("/{mId}")
@@ -50,20 +50,48 @@ public class ResBookController {
 	@ResponseBody
 	public int recheck_book(@RequestParam("b_id") int r_bookid, @RequestParam("m_id") String m_id) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("r_bookid", r_bookid); 
-		map.put("m_id", m_id); 
+		map.put("r_bookid", r_bookid);
+		map.put("m_id", m_id);
 		int reCnt = resbookDao.recheck_book(map);
+		int cntRes = resbookDao.recheck_level(map);
 		int status = 0;
-		if (reCnt < 3) { // 최대 예약 횟수가 3회 미만인 경우
+
+		if (cntRes == 5) {
 			int dupCnt = resbookDao.recheck_duplicate(map);
-			if (dupCnt == 0) { // 중복 예약이 없는 경우 예약 가능
-				status = 3; 			
-				resbookDao.insert_book(map);
-			} else if (dupCnt == 1) { // 중복 예약이 있는 경우
-				status = 2; 
+			if (dupCnt == 0) {
+				if (reCnt < 5) {
+					status = 3;
+					resbookDao.insert_book(map);
+				} else {
+					status = 1;
+				}
+			} else if (dupCnt == 1) {
+				status = 2;
 			}
-		} else if (reCnt >= 3) { // 3권 예약 중인 경우
-			status = 1; 
+		} else if (cntRes == 4) {
+			int dupCnt = resbookDao.recheck_duplicate(map);
+			if (dupCnt == 0) {
+				if (reCnt < 4) {
+					status = 3;
+					resbookDao.insert_book(map);
+				} else {
+					status = 1;
+				}
+			} else if (dupCnt == 1) {
+				status = 2;
+			}
+		} else if (cntRes == 3) {
+			int dupCnt = resbookDao.recheck_duplicate(map);
+			if (dupCnt == 0) {
+				if (reCnt < 3) {
+					status = 3;
+					resbookDao.insert_book(map);
+				} else {
+					status = 1;
+				}
+			} else if (dupCnt == 1) {
+				status = 2;
+			}
 		}
 		return status;
 	}
