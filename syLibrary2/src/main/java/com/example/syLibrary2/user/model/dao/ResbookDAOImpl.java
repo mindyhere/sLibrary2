@@ -28,6 +28,12 @@ public class ResbookDAOImpl implements ResbookDAO {
 		return sqlSession.selectList("resbook.myReBook", r_memno);
 	}
 
+	// 레벨에 따른 예약 가능권수 확인
+	@Override
+	public int recheck_level(Map<String, Object> map) {
+		return sqlSession.selectOne("resbook.recheck_level", map);
+	}
+	
 	@Override // 예약도서 권수 표시
 	public int recheck_book(Map<String, Object> map) {
 		return sqlSession.selectOne("resbook.recheck_book", map);

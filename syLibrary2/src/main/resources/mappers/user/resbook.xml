@@ -4,29 +4,30 @@
 
 
 	<!--예약신청 기능 -->
-   <insert id="insert_book">
-      insert into re_book (
-      r_num,
-      r_memno,
-      r_bookid,
-      r_reservation)
-      values (
-      re_book_seq.nextval,
-      (select m_no from sl_member
-      where m_id = #{m_id}),
-      #{r_bookid},
-      ( select
-      case when max(r_reservation) <![CDATA[ < 0 then 1 ]]>
-      else NVL(MAX(r_reservation),0) + 1
-      end as r_reservation
-      from re_book
-      where r_bookid = #{r_bookid}
-      )
-      )
-   </insert>
+	<insert id="insert_book">
+		insert into re_book (
+		r_num,
+		r_memno,
+		r_bookid,
+		r_reservation)
+		values (
+		re_book_seq.nextval,
+		(select m_no from sl_member
+		where m_id = #{m_id}),
+		#{r_bookid},
+		( select
+		case when max(r_reservation) <![CDATA[ < 0 then 1 ]]>
+		else NVL(MAX(r_reservation),0) + 1
+		end as r_reservation
+		from re_book
+		where r_bookid = #{r_bookid}
+		)
+		)
+	</insert>
 
 	<!-- 사용자 예약도서 리스트 -->
-	<select id="myReBook" resultType="com.example.syLibrary2.admin.model.dto.ReBookDTO">
+	<select id="myReBook"
+		resultType="com.example.syLibrary2.admin.model.dto.ReBookDTO">
 		SELECT
 		r_memno,
 		b_id,
@@ -34,8 +35,8 @@
 		b_author,
 		b_pub,
 		b_year,
-		b_url,	
-		r_regdate,		
+		b_url,
+		r_regdate,
 		r_reservation,
 		( SELECT
 		COUNT(*)
@@ -43,7 +44,8 @@
 		sl_member, re_book
 		WHERE
 		m_no =
-		(select m_no from sl_member
+		(select m_no from
+		sl_member
 		WHERE m_id = #{r_memno} AND m_no = r_memno)
 		AND <![CDATA[ r_reservation >=0 ]]>
 		)
@@ -56,10 +58,18 @@
 		WHERE m_id = #{r_memno})
 		AND b_id = r_bookid
 		AND <![CDATA[ r_reservation >=0 ]]>
-		
-		
+
+
 		ORDER BY to_char(r_regdate, 'yyyy-mm-dd HH24:MI:SS')
-		
+
+	</select>
+
+	<!-- 레벨에 따른 예약 가능권수 확인 -->
+	<select id="recheck_level" resultType="int">
+		SELECT cnt_reserv FROM
+		sl_member, sl_level
+		WHERE m_id = #{m_id}
+		AND m_level = le_no
 	</select>
 
 	<!-- 예약도서 권수 확인 -->
@@ -91,7 +101,8 @@
 
 	<!-- 예약취소 -->
 	<delete id="res_delete" statementType="CALLABLE">
-		{call res_cancel(#{m_id}, #{r_bookid})}
+		{call res_cancel(#{m_id},
+		#{r_bookid})}
 	</delete>
 
 	<!-- 예약 차례로 대출 후 예약목록에서 삭제 -->
@@ -103,6 +114,4 @@
 		#{m_id})
 		and r_bookid = #{b_id}
 	</delete>
-
-
 </mapper>
