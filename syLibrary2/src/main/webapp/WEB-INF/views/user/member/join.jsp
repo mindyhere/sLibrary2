@@ -10,25 +10,29 @@
 <link rel="icon" href="/resources/images/icon.png" type="image/x-icon">
 <link rel="stylesheet" href="/resources/static/user.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link	rel="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+<link
+	rel="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/static/assets/lineicons.css" />
-<link rel="stylesheet" href="/resources/static/assets/materialdesignicons.min.css" />
+<link rel="stylesheet"
+	href="/resources/static/assets/materialdesignicons.min.css" />
 
 <script>
-//아이디 중복체크
+	//아이디 중복체크
 	function checkId() {
 		var mId = $("#mId").val();
-		$.ajax({ 
+		$.ajax({
 			url : "id_check.do",
 			type : "post",
-			data : {mId : mId},
+			data : {
+				mId : mId
+			},
 			success : function(result) {
-					if (result == 1) {
-						$("#checkId").html('이미 사용중인 아이디입니다.');
-						$("#checkId").attr('color', 'red');
-					} else {
-						$("#checkId").html('사용할 수 있는 아이디입니다.');
-						$("#checkId").attr('color', 'blue');
+				if (result == 1) {
+					$("#checkId").html('이미 사용중인 아이디입니다.');
+					$("#checkId").attr('color', 'red');
+				} else {
+					$("#checkId").html('사용할 수 있는 아이디입니다.');
+					$("#checkId").attr('color', 'blue');
 				}
 			},
 			error : function() {
@@ -80,11 +84,11 @@
 				myAlert("warning", "주소를 입력하세요!");
 				$("#mAddress").focus();
 				return false;
-			}			
+			}
 		});
 	});
-	
-//myAlert 커스텀
+
+	//myAlert 커스텀
 	function myAlert(icon, title, msg) {
 		Swal.fire({
 			icon : "warning",
@@ -143,31 +147,30 @@
 	<form method="post" action="/user/member/join.do" name="form1"
 		enctype="multipart/form-data">
 		<div class="container">
-		<h3 class="text-bold">
-		<img src="/resources/images/myLibrary/mem.png" width="50px"
-				height="40px"> 회원가입</h3>		
+			<h3 class="text-bold">
+				<img src="/resources/images/myLibrary/mem.png" width="50px"
+					height="40px"> 회원가입
+			</h3>
 			<hr>
 			<div class="container">
 				<div class="card-style mb-30" style="border-radius: 40px">
 					<div class="row">
-						<div class="col-3"
+						<div class="col-4"
 							style="background-color: #ededed; border-radius: 40px;">
 							<div style="text-align: -webkit-center;">
-								<br> <br>						
-								<div class="profile-image" style="width: 400px; height: 350px">
-								<br> <img id="url"
-										src="../../resources/images/member/image_no.png" width="100px"
-										height="100px"> 프로필 사진<br> <input type="file"
-										id="mImg" name="mImg" onchange="readURL(this);"
-										class="form-control" width="50px" height="50px">												  							
+								<div>
+									<br> <img id="url"
+										src="../../resources/images/member/image_no.png" style="margin-top: 50px; margin-bottom: 20px;">
+									<input type="file" id="mImg" name="mImg"
+										onchange="readURL(this);" class="form-control">
 								</div>
-							</div>						
+							</div>
 						</div>
-						<div class="col-9"
+						<div class="col-8"
 							style="background-color: white; border-radius: 20px; padding: 30px 50px 30px 50px;">
 							<div class="input-style-1">
-							<label>이름</label><input id="mName" type="text" name="mName" class="form-control"
-									placeholder="이름">
+								<label>이름</label><input id="mName" type="text" name="mName"
+									class="form-control" placeholder="이름">
 							</div>
 							<div class="input-style-1">
 								<label>아이디</label> <input type="text" class="form-control"
@@ -185,8 +188,9 @@
 									placeholder="전화번호  '-' 빼고 입력" maxlength="13">
 							</div>
 							<div class="input-style-1">
-								<label>생년월일</label> <input type="date" id="mBirthDate" max="2030-12-30" min="1880-07-07"
-									placeholder="생년월일" name="mBirthDate" class="form-control">
+								<label>생년월일</label> <input type="date" id="mBirthDate"
+									max="2030-12-30" min="1880-07-07" placeholder="생년월일"
+									name="mBirthDate" class="form-control">
 							</div>
 							<div class="input-style-1">
 								<label>이메일</label> <input type="email" id="mEmail" name="mEmail"
@@ -215,7 +219,7 @@
 						</div>
 					</div>
 				</div>
-			</div> 
+			</div>
 		</div>
 	</form>
 </body>
