@@ -85,6 +85,11 @@ public class BookDAOImpl implements BookDAO {
 	}
 	
 	@Override
+	public int ctct(String word) {
+		return sqlSession.selectOne("book.ctct", word);
+	}
+	
+	@Override
 	public int ct_count() {
 		return sqlSession.selectOne("book.ct_count");
 	}
