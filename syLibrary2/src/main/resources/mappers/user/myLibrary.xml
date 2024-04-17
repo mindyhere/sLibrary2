@@ -289,6 +289,7 @@
 		WHERE
 		h_memid =
 		#{mId}
+		ORDER BY h_regdate DESC
 	</select>
 
 	<!-- 희망도서 신청취소 -->
