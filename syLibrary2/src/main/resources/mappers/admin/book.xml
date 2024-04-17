@@ -20,17 +20,6 @@
 	insert into sl_book (b_id,b_name,b_author,b_pub,b_year,b_category,b_isbn,b_amount,b_url,b_description,b_ct_num)
 	values (book_seq.nextval, #{b_name}, #{b_author}, #{b_pub}, #{b_year}, #{b_category}, #{b_isbn}, #{b_amount}, #{b_url}, #{b_description}, #{ct_number})
 </insert> 
-<!-- <select id="list" resultType="com.example.syLibrary2.admin.model.BookDTO">
-	select *
-	from (
-		select rownum as rn, A.*
-		from (
-			select b_id, b_name, b_author, b_pub, b_year, b_category 
-			from sl_book 
-			order by b_id
-		) A
-	) where rn between #{start} and #{end}
-</select> -->
 <select id="edit" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
 	select * from sl_book where b_id=#{b_id}
 </select>
@@ -68,4 +57,9 @@ where b_id=#{b_id}
 		</otherwise>
 	</choose>
 </sql>
+
+<select id="ins_ct" resultType="int">
+select ct_number from ct_book
+where #{word} like '%' || category || '%'
+</select>
 </mapper>

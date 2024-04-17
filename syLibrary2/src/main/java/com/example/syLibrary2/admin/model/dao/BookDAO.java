@@ -6,13 +6,12 @@ import com.example.syLibrary2.admin.model.dto.BookDTO;
 
 public interface BookDAO {
 	int count(String search_option, String keyword);
-	// int count();
 	List<BookDTO> list(int start, int end, String search_option, String keyword);
 	List<String> select_cg();
 	String insert(BookDTO dto);
 	BookDTO edit(int b_id);
 	String update(BookDTO dto);
 	void delete(int b_id);
-	// List<BookDTO> list(int pageStart, int pageEnd);
 	String url_cate(int b_id);
+	int ins_ct(String word);
 }

@@ -26,18 +26,16 @@ import jakarta.servlet.http.Part;
 @RequestMapping("/book/*")
 public class BookController {
 	@Autowired
-	BookDAO dao;
-
+	BookDAO dao; 
+ 
 	@RequestMapping("list_all.do")
 	public ModelAndView list(@RequestParam(name = "cur_page", defaultValue = "1") int curPage,
 			@RequestParam(name = "search_option", defaultValue = "none") String search_option,
 			@RequestParam(name = "keyword", defaultValue = "") String keyword) {
-		// System.out.println(curPage);
 		int count = dao.count(search_option, keyword);
 		PageUtil2 page = new PageUtil2(count, curPage);
 		int start = page.getPageBegin();
 		int end = page.getPageEnd();
-		// System.out.println(count+" "+start + " " + end);
 		List<BookDTO> dto = dao.list(start, end, search_option, keyword);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/book/list");
@@ -48,7 +46,6 @@ public class BookController {
 		map.put("keyword", keyword);
 		map.put("page", page);
 		mav.addObject("map", map);
-		// System.out.println(search_option);
 		return mav;
 	}
 
@@ -69,7 +66,6 @@ public class BookController {
 		map.put("list", dao.select_cg());
 		map.put("check", check);
 		mav.addObject("map", map);
-		// System.out.println(map);
 		return mav;
 	}
 
@@ -104,38 +100,12 @@ public class BookController {
 			dto.setB_url(filename);
 		}
 		String b_category = dto.getB_category();
-		int ct_number = 0;
-		if (b_category.contains("판타지")) {
-			ct_number = 100;
-		} else if(b_category.contains("에세이")) {
-			ct_number = 110;
-		} else if(b_category.contains("소설")) {
-			ct_number = 120;
-		} else if(b_category.contains("동화")) {
-			ct_number = 130;
-		} else if(b_category.contains("SF")) {
-			ct_number = 140;
-		} else if(b_category.contains("추리")) {
-			ct_number = 150;
-		} else if(b_category.contains("만화")) {
-			ct_number = 160;
-		} else if(b_category.contains("청소년")) {
-			ct_number = 170;
-		} else if(b_category.contains("자기계발")) {
-			ct_number = 180;
-		} else if(b_category.contains("역사")) {
-			ct_number = 190;
-		} else if(b_category.contains("과학")) {
-			ct_number = 200;
-		} else {
-			ct_number = 500;
-		}
+		int ct_number = dao.ins_ct(b_category);
 		dto.setCt_number(ct_number);
 		result = dao.update(dto);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/book/edit");
 		mav.addObject("result", result);
-		// System.out.println(mav);
 		return mav;
 	}
 
@@ -172,39 +142,12 @@ public class BookController {
 		}
 		dto.setB_url(filename);
 		String b_category = dto.getB_category();
-		int ct_number = 0;
-		if (b_category.contains("판타지")) {
-			ct_number = 100;
-		} else if(b_category.contains("에세이")) {
-			ct_number = 110;
-		} else if(b_category.contains("소설")) {
-			ct_number = 120;
-		} else if(b_category.contains("동화")) {
-			ct_number = 130;
-		} else if(b_category.contains("SF")) {
-			ct_number = 140;
-		} else if(b_category.contains("추리")) {
-			ct_number = 150;
-		} else if(b_category.contains("만화")) {
-			ct_number = 160;
-		} else if(b_category.contains("청소년")) {
-			ct_number = 170;
-		} else if(b_category.contains("자기계발")) {
-			ct_number = 180;
-		} else if(b_category.contains("역사")) {
-			ct_number = 190;
-		} else if(b_category.contains("과학")) {
-			ct_number = 200;
-		} else {
-			ct_number = 500;
-		}
+		int ct_number = dao.ins_ct(b_category);
 		dto.setCt_number(ct_number);
-		// System.out.println(dto);
 		result = dao.insert(dto);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/book/insert");
 		mav.addObject("result", result);
-		// System.out.println(mav);
 		return mav;
 	}
 }
