@@ -5,19 +5,16 @@
 {call review_insert(#{m_id}, #{b_id}, #{contents})
 </select>
 
-<!-- b_id별 등록된 리뷰 목록조회 -->
 <select id="getReviews" resultType="java.util.Map">
 select rownum, idx, m_id, writer, b_id, b_name, contents, to_char(post_date, 'yyyy-MM-dd') post_date 
 from review_v
 where b_id=#{b_id}
 </select>
 
-<!-- 관리자가 삭제할 경우 -->
 <delete id="admin_delete">
 delete from review where idx=#{idx}
 </delete>
 
-<!-- 회원(작성자)이 삭제할 경우 -->
 <select id="user_delete" statementType="CALLABLE">
 {call review_delete(#{m_id}, #{idx})
 </select>

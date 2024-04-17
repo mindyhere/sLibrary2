@@ -4,15 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface ReviewDAO {
-	// 도서별 리뷰 목록 조회
 	List<Map<String, Object>> getReviews(int b_id);
 
 	String insert(Map<String, Object> map);
 
-	// 회원이 삭제할 경우
 	void delete(Map<String, Object> map);
 
-	// 관리자가 삭제할경우
 	void delete(int idx);
 
 	List<Map<String, Object>> search(Map<String, Object> map);

@@ -46,7 +46,6 @@ $(function() {
 			return false;
 		},
 		select: function(event, ui) {
-			console.log(ui.item.idx);
 		},
 		minLength: 1,
 		delay: 200,

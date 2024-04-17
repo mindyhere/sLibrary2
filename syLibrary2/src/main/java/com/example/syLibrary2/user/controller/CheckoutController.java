@@ -31,11 +31,10 @@ public class CheckoutController {
 		String resultPage = "";
 		switch (param.get("p_result").toString()) {
 		case "1":
-			// 중복신청 여부 확인
 			Map<String, Object> map = new HashMap<>();
 			map.put("m_id", m_id);
 			map.put("b_id", b_id);
-			int result = checkoutDao.duplicate(map) > 0 ? 0 : 1; // 0(대출불가-중복신청) or 1(대출가능)
+			int result = checkoutDao.duplicate(map) > 0 ? 0 : 1;
 			if (checkoutDao.duplicate(map) > 0) {
 				resultPage = "redirect:fail";
 			} else {

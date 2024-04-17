@@ -180,7 +180,6 @@ function checkOut(b_id) {
 		$.ajax({
 			url:'/checkout/'+b_id,
 			success: function(result){
-				console.log(result);
 				if(result=="Not possible") {
 					myConfirm(result,
 							"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
@@ -194,7 +193,6 @@ function checkOut(b_id) {
 				}
 			},
 			error: function(err) {
-				console.log("**"+err);
 				myConfirm("Not possible",
 						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
 						"error", 
@@ -255,7 +253,6 @@ function insert(params) {
 }
 
 function deleteReview(params) {
-	console.log(params);
 	$.ajax({
 		url: "/review/delete",
 		data: params,
@@ -614,7 +611,7 @@ white-space:nowrap;
 	<div class="modal-body" id="modal-body">
 		<div class="modal-container">
 			<div id="modal-header" class="d-flex justify-content-between">
-				<div><h3>&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;REVIEW</h3></stong></div>
+				<div><h3>&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;REVIEW</h3></strong></div>
 				<div><button type="button" class="btn-close" id="btnClose"></button></div>
 			</div><!-- modal-header 끝 -->	
 			

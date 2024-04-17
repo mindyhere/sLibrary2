@@ -30,28 +30,6 @@ public class ChartController {
 	@ResponseBody
 	public List<Map<String, Object>> chcht() {
 		List<Map<String, Object>> ctchart = dao.ct_chart();
-		//List<Map<String, Object>> chart1 = null;
-//		JSONArray json = new JSONArray();
-//		for(int j=0; j < ct_Chart.size(); j++) {
-//			JSONObject jsonObject = new JSONObject();
-//			jsonObject.put("cnt", ct_Chart.get(j).get("CNT"));
-//			jsonObject.put("category", ct_Chart.get(j).get("CATEGORY"));
-//			json.add(jsonObject);
-//		}
-		
-		/*
-		 * for (int j = 0; j < ctchart.size(); j++) { Map<String, Object> chart = new
-		 * HashMap<>(); chart.put("category", ctchart.get(j).get("CATEGORY"));
-		 * chart.put("cnt", ctchart.get(j).get("CNT")); json.add(chart); }
-		 */
-		
-		// ModelAndView mav = new ModelAndView();
-		// mav.setViewName("admin/chart/ct_chart");
-		// mav.addObject("ct_Chart", json);
-		//mav.addObject("ct_Chart", chart);
-		//System.out.println(json);
-		//return mav;
-		// System.out.println("컨트롤러:"+ctchart);
 		return ctchart;
 	}
 	
@@ -65,7 +43,6 @@ public class ChartController {
 	@ResponseBody
 	public List<Map<String, Object>> loChart() {
 		List<Map<String, Object>> chart = dao.loChart();
-		// System.out.println("컨트롤러:"+chart);
 		return chart;
 	}
 		

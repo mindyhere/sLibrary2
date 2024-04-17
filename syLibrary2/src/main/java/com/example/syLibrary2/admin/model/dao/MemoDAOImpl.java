@@ -45,16 +45,6 @@ public class MemoDAOImpl implements MemoDAO {
 	}
 
 	public MemoDTO search(int me_rownum) {
-//		MemoDTO dto = new MemoDTO();
-//		try {
-//			dto = session.selectOne("memo.search", me_rownum);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			if(session != null)
-//				session.close();
-//		}
-//		return dto;
 		return sqlSession.selectOne("memo.search", me_rownum);
 	}
 }

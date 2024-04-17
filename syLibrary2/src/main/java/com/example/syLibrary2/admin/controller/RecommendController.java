@@ -55,7 +55,6 @@ public class RecommendController {
 
 	@GetMapping("index/search")
 	public ModelAndView search(@RequestParam(name = "keyword", defaultValue = "") String keyword, ModelAndView mav) {
-		// 관리자, 추천도서 edit → 도서 검색
 		List<BookDTO> list = searchDao.totSearch(keyword);
 		mav.setViewName("user/book/autocomplete");
 		mav.addObject("list", list);
@@ -76,10 +75,10 @@ public class RecommendController {
 		Map<String, Object> map = new HashMap<>();
 		String option = "";
 		if (cnt == 5) {
-			option = "all"; // 전체삭제
+			option = "all";
 			recommendDao.delete(option);
 		} else if (cnt < 5) {
-			option = "each"; // 개별삭제
+			option = "each";
 			String[] values = arr.split(",");
 			if (values != null) {
 				for (int i = 0; i < values.length; i++) {
@@ -91,5 +90,4 @@ public class RecommendController {
 		map.put("result", result);
 		return map;
 	}
-
 }

@@ -11,7 +11,6 @@ public class UserRequestDAOImpl implements UserRequestDAO {
 	@Autowired
 	SqlSession sqlSession;
 
-	// 희망도서 신청(HoBook 테이블 insert)
 	public String insert(HoBookDTO dto) {
 		String result = "";
 		try {

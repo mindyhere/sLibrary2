@@ -24,9 +24,9 @@ public class ReviewController {
 
 	@GetMapping("totalList")
 	public ModelAndView totalList(ModelAndView mav) {
-		String keyword="";
+		String keyword = "";
 		mav.setViewName("user/search/totalReviews");
-		mav.addObject("reviews", reviewDao.searchAll(keyword)); // 전체 리뷰글 찾기
+		mav.addObject("reviews", reviewDao.searchAll(keyword));
 		return mav;
 	}
 
@@ -63,7 +63,6 @@ public class ReviewController {
 		switch (option) {
 		case "user":
 			String m_id = (String) session.getAttribute("mId");
-			System.out.println(m_id);
 			for (int i = 0; i < values.length; i++) {
 				Map<String, Object> map = new HashMap<>();
 				int idx = Integer.parseInt(values[i]);
@@ -79,14 +78,14 @@ public class ReviewController {
 			break;
 		}
 	}
-	
+
 	@GetMapping("search")
 	public ModelAndView search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "searchOpt", defaultValue = "all") String searchOpt, ModelAndView mav) {
 		mav.setViewName("user/search/totalReviews");
 		if (searchOpt.equals("all")) {
 			mav.addObject("reviews", reviewDao.searchAll(keyword));
-		}else {
+		} else {
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("searchOpt", searchOpt);
 			m.put("keyword", keyword);

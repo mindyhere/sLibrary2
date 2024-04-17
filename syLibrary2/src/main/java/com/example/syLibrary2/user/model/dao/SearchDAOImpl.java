@@ -14,7 +14,7 @@ import com.example.syLibrary2.admin.model.dto.BookDTO;
 @Repository
 public class SearchDAOImpl implements SearchDAO {
 
-	@Autowired // 의존관계주입. 스프링 객체생성&연결
+	@Autowired
 	SqlSession sqlSession;
 
 	@Autowired
@@ -31,7 +31,7 @@ public class SearchDAOImpl implements SearchDAO {
 			String b_name = dto.getB_name();
 			String b_author = dto.getB_author();
 			String b_pub = dto.getB_pub();
-			// 키워드 강조(폰트 컬러)
+			
 			b_name = b_name.replace(keyword, "<span style='color:crimson'>" + keyword + "</span>");
 			b_author = b_author.replace(keyword, "<span style='color:crimson'>" + keyword + "</span>");
 			b_pub = b_pub.replace(keyword, "<span style='color:crimson'>" + keyword + "</span>");
@@ -50,7 +50,7 @@ public class SearchDAOImpl implements SearchDAO {
 			String b_name = dto.getB_name();
 			String b_author = dto.getB_author();
 			String b_pub = dto.getB_pub();
-			// 키워드 강조(폰트 컬러)
+			
 			b_name = b_name.replace(keyword, "<span style='color:crimson; font-weight:bold;'>" + keyword + "</span>");
 			b_author = b_author.replace(keyword,
 					"<span style='color:crimson; font-weight:bold;'>" + keyword + "</span>");
@@ -75,7 +75,7 @@ public class SearchDAOImpl implements SearchDAO {
 			String name = dto.getB_name();
 			String author = dto.getB_author();
 			String pub = dto.getB_pub();
-			// 키워드 강조(폰트 컬러)
+			
 			if (b_name != "") {
 				name = name.replace(b_name, "<span style='color:crimson'>" + b_name + "</span>");
 			}
@@ -103,7 +103,6 @@ public class SearchDAOImpl implements SearchDAO {
 		map.put("cntName", cntName);
 		map.put("cntAuthor", cntAuthor);
 		map.put("cntPub", cntPub);
-		System.out.println("countRecords= " + map);
 		return map;
 	}
 
@@ -115,7 +114,6 @@ public class SearchDAOImpl implements SearchDAO {
 		map.put("b_author", b_author);
 		map.put("b_pub", b_pub);
 		return sqlSession.selectOne("search.resultCount", map);
-
 	}
 
 	@Override

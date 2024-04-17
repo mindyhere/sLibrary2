@@ -27,7 +27,6 @@ public class CheckoutDAOImpl implements CheckoutDAO {
 	@Override
 	public void checkMloan(Map<String, Object> param) {
 		sqlSession.selectOne("checkout.check_mLoan", param);
-		System.out.println("111 impl => " + param);
 	}
 
 	@Override
@@ -37,7 +36,7 @@ public class CheckoutDAOImpl implements CheckoutDAO {
 
 	@Override
 	public void insert(Map<String, Object> map) {
-		sqlSession.insert("checkout.insert_Lobook", map); // 대출 Lo_book insert
-		sqlSession.update("checkout.call_checkLevel", map.get("m_id")); // 회원등급 업데이트
+		sqlSession.insert("checkout.insert_Lobook", map); 
+		sqlSession.update("checkout.call_checkLevel", map.get("m_id")); 
 	}
 }
