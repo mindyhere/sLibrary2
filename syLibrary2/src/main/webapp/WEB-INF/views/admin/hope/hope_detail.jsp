@@ -41,6 +41,10 @@ th {
 <script>
 $(function() {
 	$("#btnCancel").click(function() {
+		if ($("#cancelReason").val() == "") {
+			swal("취소사유를 입력하세요");
+			return false;
+		}
 		let h_cancel = $("#cancelReason").val();
 		let h_idx = $("#hidx").val();
 		$.ajax({
@@ -75,7 +79,7 @@ $(function() {
 				<div style="left: 290px; position: absolute; width: 2000px;">
 					<div class="dd">
 						<form name="form1" method="get" enctype="multipart/form-data" action="/admin/hope/change_status?state=${state}&h_idx=${h_idx}">
-							<table border="1" width="600px" style="position: static;">
+							<table border="1" width="750px" style="position: static;">
 								<tr>
 									<td>신청자</td>
 									<td><input type="text" name="h_memid" id="h_memid" size="5"
@@ -141,7 +145,7 @@ $(function() {
 								<tr>
 									<td colspan="4" align="right">
 												<select id="state" name="state">
-												<c:if test="${dto.h_state == '신청완료'||dto.h_state == '처리중'}">
+												<%-- <c:if test="${dto.h_state == '신청완료'||dto.h_state == '처리중'}"> --%>
 											<c:choose>
 												<c:when test="${dto.h_state == '신청완료'}">
 													<option value="신청완료" selected>신청완료</option>
@@ -173,7 +177,7 @@ $(function() {
 															<input type="hidden" name="h_idx" value="${dto.h_idx}">
 															<input type="submit" id="btnChange" value="상태변경" class="btn text-white" style="background-color: #6699CC;">
 													</td>
-											</c:if>
+											<%-- </c:if> --%>
 										</select>
 									</td>
 									<c:choose>
