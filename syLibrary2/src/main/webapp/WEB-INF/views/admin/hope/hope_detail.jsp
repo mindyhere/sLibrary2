@@ -42,7 +42,7 @@ th {
 $(function() {
 	$("#btnCancel").click(function() {
 		let h_cancel = $("#cancelReason").val();
-		let h_idx = $("#h_idx").val();
+		let h_idx = $("#hidx").val();
 		$.ajax({
 			type : "post",
 			url : "/admin/hope/cancel_reason",
@@ -50,94 +50,14 @@ $(function() {
 				"h_cancel" : h_cancel,
 				"h_idx" : h_idx
 			},
-			success : function(data) {
-				document.getElementById("h_cancel").value=data.h_cancel;
+			success : function() {
 				swal('등록되었습니다');
-				//location.href = "/admin/hope/hope_detail";
 			}
 		});
-		document.form1.h_cancel.value=h_cancel;
 		document.form1.submit();
 	});
 
 });
-/* function cancelReason() {
-	let h_cancel = $("#cancelReason").val();
-	let h_idx = $("#h_idx").val();
-	$.ajax({
-		type: "post",
-		url: "/admin/hope/cancel_reason",
-		data: {
-			"h_idx" : h_idx,
-			"h_cancel" : h_cancel
-		},
-		success : function() {
-			swal('수정되었습니다.');
-			location.href = "/admin/hope/hope_detail";
-		}
-	})
-	
-	document.form2.h_idx.value=h_idx;
-	document.form2.h_cancel.value=h_cancel;
-	document.form2.action="/admin/hope/cancel_reason";
-	document.form2.submit();
-} */
-/* $(function() {
-	$("#btnChange").click(function() {
-		let h_state = $("#state").val();
-		let h_idx = $("#h_idx").val();
-		$.ajax({
-			type : "post",
-			url : "/admin/hope/change_status",
-			data : {
-				"h_state" : h_state,
-				"h_idx" : h_idx
-			},
-			success : function(data) {
-				consol.log(data);
-				document.getElementById("h_state").value=data.h_state;
-				swal('등록되었습니다');
-				//location.href = "/admin/hope/hope_detail";
-			}
-		});
-		document.form1.h_state.value=h_state;
-		document.form1.submit();
-	});
-	//document.form1.h_idx.value=h_idx;
-	//document.form1.h_state.value=h_state;
-	//document.form1.action="/admin/hope/change_status";
-}); */
-
-/* function change(state) {
-	location.href = "/admin/hope/change_status?state="+state+"&h_idx=${dto.h_idx}";
-} */
-
-/* $("#state").change(function() {
-	alert($(this).val());
-	alert($(this).children("option:selected").text());
-	}); */
-/* function changeState(h_idx) {
-	
-	let h_state = $("#state_change").val();
-	let h_idx = $("#h_idx").val();
-	$.ajax({
-		type: "post",
-		url: "/admin/hope/change_status",
-		data: {
-			"h_idx" : h_idx,
-			"h_state" : h_state
-		},
-		success : function() {
-			swal('수정되었습니다.');
-			location.href = "/admin/hope/hope_detail";
-		}
-	})
-	
-	document.form1.h_idx.value=h_idx;
-	document.form1.h_state.value=h_state;
-	document.form1.action="/admin/hope/change_status";
-	document.form1.submit();
-} */
 </script>
 </head>
 <body>
@@ -179,8 +99,7 @@ $(function() {
 									<tr>
 										<td></td>
 										<td colspan="3">
-											<input type="text" name="h_cancel" id="h_cancel" size="5"
-										class="form-control" readonly value="${dto.h_cancel}">
+											<input type="text" name="h_cancel" id="h_cancel" size="5"class="form-control" readonly value="${dto.h_cancel}">
 										</td>
 									</tr>
 								</c:if>
@@ -221,56 +140,47 @@ $(function() {
 							</table>
 								<tr>
 									<td colspan="4" align="right">
-												<%-- <select id="state" name="state">
-												<!-- onchange="document.form1.state.value=this.value;" -->
-													<option value="신청완료" <c:if test="${dto.h_state=='신청완료'}">${'selected'}</c:if>>신청완료</option>
-													<option value="접수취소" <c:if test="${dto.h_state=='접수취소'}">${'selected'}</c:if>>접수취소</option>
-													<option value="처리중" <c:if test="${dto.h_state=='처리중'}">${'selected'}</c:if>>처리중</option>
-													<option value="이용가능" <c:if test="${dto.h_state=='이용가능'}">${'selected'}</c:if>>이용가능</option>
-													<td width="70px">
-															<input type="hidden" name="h_idx" value="${dto.h_idx}">
-															<input type="button" id="btnChange" value="상태변경" class="btn text-white" style="background-color: #6699CC;">
-													</td>
-												</select> --%>
 												<select id="state" name="state">
-				<c:choose>
-					<c:when test="${dto.h_state == '신청완료'}">
-						<option value="신청완료" selected>신청완료</option>
-						<option value="접수취소">접수취소</option>
-						<option value="처리중">처리중</option>
-						<option value="이용가능">이용가능</option>
-						
-					</c:when>
-					<c:when test="${dto.h_state == '접수취소'}">
-						<option value="신청완료" >신청완료</option>
-						<option value="접수취소" selected>접수취소</option>
-						<option value="처리중">처리중</option>
-						<option value="이용가능">이용가능</option>
-					</c:when>
-					<c:when test="${dto.h_state == '처리중'}">
-						<option value="신청완료" >신청완료</option>
-						<option value="접수취소">접수취소</option>
-						<option value="처리중" selected>처리중</option>
-						<option value="이용가능">이용가능</option>
-					</c:when>
-					<c:when test="${dto.h_state == '이용가능'}">
-						<option value="신청완료" >신청완료</option>
-						<option value="접수취소">접수취소</option>
-						<option value="처리중">처리중</option>
-						<option value="이용가능" selected>이용가능</option>
-					</c:when> 
-				</c:choose>
-				<td width="70px">
+												<c:if test="${dto.h_state == '신청완료'||dto.h_state == '처리중'}">
+											<c:choose>
+												<c:when test="${dto.h_state == '신청완료'}">
+													<option value="신청완료" selected>신청완료</option>
+													<option value="접수취소">접수취소</option>
+													<option value="처리중">처리중</option>
+													<option value="이용가능">이용가능</option>
+													
+												</c:when>
+												<c:when test="${dto.h_state == '접수취소'}">
+													<option value="신청완료" >신청완료</option>
+													<option value="접수취소" selected>접수취소</option>
+													<option value="처리중">처리중</option>
+													<option value="이용가능">이용가능</option>
+												</c:when>
+												<c:when test="${dto.h_state == '처리중'}">
+													<option value="신청완료" >신청완료</option>
+													<option value="접수취소">접수취소</option>
+													<option value="처리중" selected>처리중</option>
+													<option value="이용가능">이용가능</option>
+												</c:when>
+												<c:when test="${dto.h_state == '이용가능'}">
+													<option value="신청완료" >신청완료</option>
+													<option value="접수취소">접수취소</option>
+													<option value="처리중">처리중</option>
+													<option value="이용가능" selected>이용가능</option>
+												</c:when> 
+											</c:choose>
+											<td width="70px">
 															<input type="hidden" name="h_idx" value="${dto.h_idx}">
 															<input type="submit" id="btnChange" value="상태변경" class="btn text-white" style="background-color: #6699CC;">
 													</td>
-			</select>
+											</c:if>
+										</select>
 									</td>
 									<c:choose>
 										<c:when test="${dto.h_state == '접수취소'&&dto.h_cancel == null}">
 											<td>
 												<div id="p1">
-														<input type="hidden" name="h_idx" value="${dto.h_idx}">
+														<input type="hidden" id="hidx" name="hidx" value="${dto.h_idx}">
 														취소사유 : <input id="cancelReason" name="cancelReason">
 														<td width="70px">
 															<input type="button" id="btnCancel" value="취소사유등록" class="btn text-white" style="background-color: #6699CC;">

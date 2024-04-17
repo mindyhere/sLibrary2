@@ -23,7 +23,6 @@
 	function randomColor(category) {
 		var colors = [];
 		for (let i = 0; i < category.length; i++) {
-			//colors.push("#"+Math.round(Math.random() * 0xffffff * 0.5).toString(16));
 			var r = Math.round(Math.random() * 127 + 127);
 			var g = Math.round(Math.random() * 127 + 127);
 			var b = Math.round(Math.random() * 127 + 127);
@@ -40,17 +39,11 @@
 		$.ajax({
 					url : "/admin/chart/ct_chart.do",
 					type : "get",
-					// dataType : "json",
 					contentType : "text/html;charset=utf-8",
-					//async:false,
 					success : function(data) {
-						// alert(data);
-						// console.log(data);
 						for (let j = 0; j < 7; j++) {
 							category.push(data[j].CATEGORY);
 							cnt.push(data[j].CNT);
-							// console.log(category);
-							// console.log(cnt);
 						}
 						const ctx = document.getElementById('myChart')
 								.getContext('2d');
@@ -81,9 +74,6 @@
 												'#fff' ],
 										borderRadius : 25,
 										anchor : 'center',
-/* 										formatter: function(value, context) {
-				                                return (value > 3) ? value+ "%" : null //data가 10 미만이면 숫자 값은 출력x
-				                        } */
 									},
 								}
 							}

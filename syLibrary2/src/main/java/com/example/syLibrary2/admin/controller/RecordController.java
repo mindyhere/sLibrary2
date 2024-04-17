@@ -31,7 +31,6 @@ public class RecordController {
 		int start = page.getPageBegin();
 		int end = page.getPageEnd();
 		List<RecordDTO> dto = dao.list(start, end, search_option, keyword);
-		// System.out.println(dto);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/l_book/lo_record");
 		Map<String, Object> map = new HashMap<>();

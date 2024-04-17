@@ -3,6 +3,7 @@ package com.example.syLibrary2.admin.model.dao;
 import java.util.List;
 
 import com.example.syLibrary2.admin.model.dto.BookDTO;
+import com.example.syLibrary2.admin.model.dto.CtBookDTO;
 
 public interface BookDAO {
 	int count(String search_option, String keyword);
@@ -14,4 +15,8 @@ public interface BookDAO {
 	void delete(int b_id);
 	String url_cate(int b_id);
 	int ins_ct(String word);
+	int ct_count();
+	List<CtBookDTO> ct_list(int start, int end);
+	String ins_ct(CtBookDTO dto);
+	String del_ct(int ct_number);
 }
