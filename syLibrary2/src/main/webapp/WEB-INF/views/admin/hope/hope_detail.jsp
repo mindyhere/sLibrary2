@@ -214,6 +214,19 @@ $(function() {
 			
 		</script>
 			</c:if>
+			<c:if test="${map.rst == 'a'}">
+				<script>
+		swal({
+	        text: "분류를 먼저 등록해 주세요",
+	        buttons: {cancel: false, confirm: true,},
+	    }).then(function(isConfirmed) {
+	        if (isConfirmed) {
+	        	location.href = "/admin/hope/detail.do?h_idx="+${map.idx};
+	        } 
+	    });
+			
+		</script>
+			</c:if>
 	</div>
 <jsp:include page="/WEB-INF/views/admin/admin_footer.jsp" />
 </div>

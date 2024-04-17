@@ -19,4 +19,5 @@ public interface BookDAO {
 	List<CtBookDTO> ct_list(int start, int end);
 	String ins_ct(CtBookDTO dto);
 	String del_ct(int ct_number);
+	int ctct(String h_category);
 }

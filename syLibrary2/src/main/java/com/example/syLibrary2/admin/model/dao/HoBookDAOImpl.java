@@ -61,7 +61,6 @@ public class HoBookDAOImpl implements HoBookDAO {
 		Map<String,Object> map=new HashMap<>();
 		map.put("dto", dto);
 		map.put("ct_num", ct_num);
-		System.out.println("dao=="+map);
 		try {
 			sqlSession.insert("hope.book_insert", map);
 			result = "success";

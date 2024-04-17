@@ -58,8 +58,13 @@ where b_id=#{b_id}
 	</choose>
 </sql>
 
+<select id="ctct" resultType="int">
+select nvl(count(ct_number),0) from ct_book
+where #{word} like '%' || category || '%'
+</select>
+
 <select id="ins_ct" resultType="int">
-select ct_number from ct_book
+select nvl(ct_number,0) from ct_book
 where #{word} like '%' || category || '%'
 </select>
 
