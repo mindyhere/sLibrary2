@@ -82,6 +82,7 @@ function confirm(i) {
 	const obj = JSON.parse(document.getElementById(i).value);
 	const data = obj[0];
 	
+	opener.document.getElementById("h_url").src = data.h_url
 	opener.document.getElementById("h_name").value = data.h_name
 	opener.document.getElementById("h_author").value = data.h_author
 	opener.document.getElementById("h_pub").value = data.h_pub
@@ -153,7 +154,7 @@ a {
 <div class="container">
 	<div id="modal-header" class="d-flex justify-content-between">
 		<div>
-			<h3>&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;SEARCH</h3></strong>
+			<h3>&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;SEARCH</strong></h3>
 		</div>
 	</div><!-- modal-header 끝 -->
 	
