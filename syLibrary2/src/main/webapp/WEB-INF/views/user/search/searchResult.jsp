@@ -28,12 +28,12 @@ $(function() {
 		let form1 = $("form[name=form1]");
         let keyword	= $("input[name=keyword]");
 		let view= $("input[name=viewOpt]:checked").val();
-		/*if(keyword.val()=="" || keyword.val().trim().length==0 ){
+		if(keyword.val()=="" || keyword.val().trim().length==0 ){
 			myAlert("warning", "잠깐!", "검색어를 입력해주세요.");
 			$('#keyword').val("");
 			keyword.focus();
 			return false;
-		} */
+		}
 		form1.submit();
 	});
 	$("#btnDetail").click(function() {
@@ -202,7 +202,6 @@ function checkOut(b_id){
 		$.ajax({
 			url:'/checkout/'+b_id,
 			success: function(result){
-				console.log("success : result=" + result);
 				if(result=="Not possible"){
 					myConfirm(result,
 							"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
@@ -216,7 +215,6 @@ function checkOut(b_id){
 				}
 			},
 			error: function(err){
-				console.log("**err : "+err);
 				myConfirm("Not possible",
 						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
 						"error", 

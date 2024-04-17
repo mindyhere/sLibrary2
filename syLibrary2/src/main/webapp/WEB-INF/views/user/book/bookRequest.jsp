@@ -42,7 +42,6 @@ $(function(){
 				});
 			},
 			error: function(err) {
-				console.log("**"+err);
 				Swal.fire({
 					icon: "error",
 					title: "Not possible",

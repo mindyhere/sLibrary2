@@ -3,17 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 div{
-    /*border: 2px dashed #343a40;	/*테스트용 아웃라인*/
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 /* 카드 뷰 */
 .card-view{
-padding:1%; 
-margin-bottom:10%;
-white-space: nowrap;
+	padding:1%; 
+	margin-bottom:10%;
+	white-space: nowrap;
 }
 #book{
-width: 10rem;
+	width: 10rem;
 }
 .card-img-overlay .btn-group-sm{
 	float:right;

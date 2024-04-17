@@ -62,7 +62,6 @@ $(function(){
 				data:{"cnt":cnt, "arr":values},
 				dataType: "json",
 				success: function (data) {
-					console.log(data);
 					if(data.result=="success") {
 						recommendList();
 					}

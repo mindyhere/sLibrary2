@@ -180,7 +180,6 @@ function checkOut(b_id) {
 		$.ajax({
 			url:'/checkout/'+b_id,
 			success: function(result){
-				console.log(result);
 				if(result=="Not possible") {
 					myConfirm(result,
 							"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
@@ -194,7 +193,6 @@ function checkOut(b_id) {
 				}
 			},
 			error: function(err) {
-				console.log("**"+err);
 				myConfirm("Not possible",
 						"나의서재에서 이용현황을 확인해주세요.<br>해당 페이지로 이동할까요?", 
 						"error", 
@@ -255,7 +253,6 @@ function insert(params) {
 }
 
 function deleteReview(params) {
-	console.log(params);
 	$.ajax({
 		url: "/review/delete",
 		data: params,

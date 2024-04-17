@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="search">
 
-<!-- 키워드 통합검색 -->
 <select id="totSearch" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
 	select *
 	from (
@@ -20,7 +19,6 @@
 	where rn between #{start} and #{end}
 </select>
 
-<!-- 상세검색(도서명, 작가, 출판사) -->
 <select id="detailSearch" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
   select *	
   from(
@@ -39,7 +37,6 @@
   where rn between #{start} and #{end}
 </select>
 
-<!-- 페이지별 목록(페이지나누기) -->
 <select id="pageList" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
 	select *
 	from (
@@ -53,7 +50,6 @@
 	where rn between #{start} and #{end}
 </select>
 
-<!-- 관리자, 추천도서검색 -->
 <select id="simpleSearch" resultType="com.example.syLibrary2.admin.model.dto.BookDTO">
 select b_id, b_name, b_author, b_pub, b_year
 from  sl_book 
@@ -71,7 +67,6 @@ order by B_id desc, B_name
 	select * from sl_book where b_id=#{b_id}
 </select>
 
-<!-- 검색결과 → 레코드 개수 -->
 <select id="resultCount" resultType="int">
 	select count(*) from sl_book
 	<choose>
@@ -90,7 +85,6 @@ order by B_id desc, B_name
 	</choose>
 </select>
 
-<!-- 검색결과 → 컬럼별 레코드 개수 -->
 <select id="cntName" resultType="int">
 	select count(*) from sl_book
 	where b_name like '%'|| #{b_name} ||'%'
@@ -104,7 +98,6 @@ order by B_id desc, B_name
 	where b_pub like '%'|| #{b_pub} ||'%' 
 </select>
 
-<!-- 검색어 자동완성(도서명, 저자, 발행처) -->
 <select id="autocomplete" resultType="java.util.Map">
 	select ${searchOpt} result from sl_book where ${searchOpt} like '%'|| #{keyword} ||'%' order by result
 </select>
