@@ -40,7 +40,6 @@ $(function() {
 		form2.submit();
 	}); 
 
-	// 상세검색창 토글버튼
 	$("#btnShow").click(function() {
 		$(".searchForm2").slideDown("fast");
 		$("#btnShow").hide();
