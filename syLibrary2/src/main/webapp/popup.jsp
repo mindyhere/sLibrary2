@@ -153,7 +153,7 @@ a {
 <div class="container">
 	<div id="modal-header" class="d-flex justify-content-between">
 		<div>
-			<h3>&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;SEARCH</h3></stong>
+			<h3>&nbsp;&nbsp;<strong><i class="bi bi-justify-left"></i>&nbsp;SEARCH</h3></strong>
 		</div>
 	</div><!-- modal-header 끝 -->
 	
