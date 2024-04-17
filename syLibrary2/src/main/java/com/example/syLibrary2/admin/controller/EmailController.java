@@ -22,7 +22,6 @@ public class EmailController {
 	@ResponseBody
 	@RequestMapping("send.do")
 	public String send(@RequestParam (name="receiveMail") String receiveMail, @RequestParam (name="subject") String subject, @RequestParam (name="message") String message) {
-		// Map<String, String> data = new HashMap<String, String>();
 		EmailDTO dto = new EmailDTO();	
 		dto.setSubject(subject);
 		dto.setMessage(message);
@@ -38,7 +37,6 @@ public class EmailController {
 			e.printStackTrace();
 			result = "fail";
 		}
-		// data.put("result", result);
 		System.out.println(result);
 		return result;
 	}

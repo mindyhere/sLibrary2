@@ -190,9 +190,9 @@ tbody tr:hover {
 		  </c:choose>
 		<tr align="center">
 			<td colspan="7"><c:if test="${map.page.curPage > 1}">
-					<a id="hr" href="#" onclick="javascript:listlist('1')">[처음]</a>
+					<a id="hr" href="#" onclick="javascript:list('1')">[처음]</a>
 				</c:if> <c:if test="${map.page.curBlock > 1}">
-					<a id="hr" href="#" onclick="javascript:listlist('${map.page.prevPage}')">[이전]</a>
+					<a id="hr" href="#" onclick="javascript:list('${map.page.prevPage}')">[이전]</a>
 				</c:if> <c:forEach var="num" begin="${map.page.blockStart}"
 					end="${map.page.blockEnd}">
 					<c:choose>
@@ -200,13 +200,13 @@ tbody tr:hover {
 							<span style="color: blue">${num}</span>
 						</c:when>
 						<c:otherwise>
-							<a id="hr" href="#" onclick="javascript:listlist('${num}')">${num}</a>
+							<a id="hr" href="#" onclick="javascript:list('${num}')">${num}</a>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach> <c:if test="${map.page.curBlock < map.page.totBlock}">
-					<a id="hr" href="#" onclick="javascript:listlist('${map.page.nextPage}')">[다음]</a>
+					<a id="hr" href="#" onclick="javascript:list('${map.page.nextPage}')">[다음]</a>
 				</c:if> <c:if test="${map.page.curPage < map.page.totPage}">
-					<a id="hr" href="#" onclick="javascript:listlist('${map.page.totPage}')">[마지막]</a>
+					<a id="hr" href="#" onclick="javascript:list('${map.page.totPage}')">[마지막]</a>
 				</c:if></td>
 		</tr>
 	</table>

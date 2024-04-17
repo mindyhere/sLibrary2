@@ -39,6 +39,7 @@
 
 <select id="detail" resultType="com.example.syLibrary2.admin.model.dto.HoBookDTO">
 	select
+	h_idx,
 	h_memid,
 	to_char(h_regdate, 'yy/mm/dd') h_regdate,
 	to_char(h_chkdate, 'yy/mm/dd') h_chkdate,
