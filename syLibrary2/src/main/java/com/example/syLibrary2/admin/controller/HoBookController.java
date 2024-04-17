@@ -62,8 +62,8 @@ public class HoBookController {
 	public String change_status(HoBookDTO dto, @RequestParam(name="state")String h_state){
 		int h_idx = dto.getH_idx();
 		String result = "";
+		String h_category = dto.getH_category();
 		if (h_state.equals("이용가능")) {
-			dao.state_update(h_idx, h_state);
 			return "redirect:/admin/hope/ins_book?h_idx="+h_idx;
 		} else {
 			dao.state_update(h_idx, h_state);
@@ -85,14 +85,27 @@ public class HoBookController {
 		dto.setH_idx(h_idx);
 		String result = "";
 		String h_category = dto.getH_category();
-		int ct_number = bookDao.ins_ct(h_category);
-		result = dao.ins_book(dto, ct_number);
 		ModelAndView mav = new ModelAndView();
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", result);
-		map.put("idx", h_idx);
-		mav.setViewName("admin/hope/hope_detail");
-		mav.addObject("map", map); 
+		int ctct = bookDao.ctct(h_category);
+		if (ctct == 0) {
+			result="a";
+			Map<String, Object> map = new HashMap<>();
+			map.put("rst", result);
+			map.put("idx", h_idx);
+			mav.setViewName("admin/hope/hope_detail");
+			mav.addObject("map", map); 
+		} else {
+			String h_state = "이용가능";
+			dao.state_update(h_idx, h_state);
+			int ct_number = bookDao.ins_ct(h_category);
+			result = dao.ins_book(dto, ct_number);
+			Map<String, Object> map = new HashMap<>();
+			map.put("result", result);
+			map.put("idx", h_idx);
+			mav.setViewName("admin/hope/hope_detail");
+			mav.addObject("map", map); 
+		}
+		System.out.println(mav);
 		return mav;
 	}
 }
