@@ -23,10 +23,6 @@ public class BookDAOImpl implements BookDAO {
 		return sqlSession.selectOne("book.count",map);
 	}
 
-	/*
-	 * @Override public int count() { return sqlSession.selectOne("book.count"); }
-	 */
-
 	@Override
 	public List<BookDTO> list(int start, int end, String search_option, String keyword) {
 		Map<String,Object> map=new HashMap<>();
@@ -77,15 +73,13 @@ public class BookDAOImpl implements BookDAO {
 		sqlSession.delete("book.delete", b_id);
 	}
 
-	/*
-	 * @Override public List<BookDTO> list(int start, int end) { Map<String,Object>
-	 * map=new HashMap<>(); map.put("start",start); map.put("end",end);
-	 * List<BookDTO> list = sqlSession.selectList("book.list", map); return list; }
-	 */
-
 	@Override
 	public String url_cate(int b_id) {
 		return sqlSession.selectOne("book.url_cate", b_id);
 	}
-
+	
+	@Override
+	public int ins_ct(String word) {
+		return sqlSession.selectOne("book.ins_ct", word);
+	}
 }
