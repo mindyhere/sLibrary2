@@ -177,7 +177,7 @@ $(function() {
 															<input type="hidden" name="h_idx" value="${dto.h_idx}">
 															<input type="submit" id="btnChange" value="상태변경" class="btn text-white" style="background-color: #6699CC;">
 													</td>
-											</c:if>
+											</c:if> 
 										</select>
 									</td>
 									<c:choose>
