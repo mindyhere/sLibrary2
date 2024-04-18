@@ -20,41 +20,30 @@ function bookInfo(success, data) {
 	let str = "";
 	if (data.totalResults > 0) {
 		for (i = 0; i < items.length; i++) {
-			let arrCategory = items[i].categoryName.split(">", 2)
-			let strCategoryName = "";
-			console.log("000 length : "+arrCategory.length);
-			if(arrCategory.length > 1){
-				if (arrCategory[1].includes("/")) {
-					strCategoryName = arrCategory[1].split("/", 1).toString();
-					console.log("1-1 : "+arrCategory[1] + ", " + strCategoryName);
-				} else {
-					strCategoryName = arrCategory[1];
-					console.log("1-2 : "+arrCategory[1] + ", " + strCategoryName);
-				}
-			}else {
-				if(arrCategory[0].toString().legth > 0) {
-					strCategoryName = arrCategory[0].toString();
-				}else {
-					strCategoryName = "기타";
-				}
-				console.log("222 : " + arrCategory[0]+", "+ items[i].title+ "=>" + strCategoryName);
-			}
+			let title = (!items[i].title)? "-" : items[i].title;
+			let cover = (!items[i].cover)? "-" : items[i].cover;
+			let author = (!items[i].author)? "-" : items[i].author;
+			let publisher = (!items[i].publisher)? "-" : items[i].publisher;
+			let isbn13 = (!items[i].isbn13)? "-" : items[i].isbn13;
+			let description = (!items[i].description)? "-" : modify(items[i].description);
+			let pubDate = (!items[i].pubDate)? "-" : items[i].pubDate.substr(0, 4);
+			let categoryName = (!items[i].categoryName)? "-" : items[i].categoryName.split(">", 2);
+			let link = (!items[i].link)? "-" : items[i].link;
 			
-			console.log("333 : "+strCategoryName+", 타입" +typeof strCategoryName);
 			let jsonArr = new Array();
 			jsonArr.push({
 				"idx" : i + "",
-				"h_name" : items[i].title,
-				"h_url" : items[i].cover,
-				"h_author" : items[i].author,
-				"h_pub" : items[i].publisher,
-				"h_isbn" : items[i].isbn13,
-				"h_description" : modify(items[i].description),
-				"h_year" : items[i].pubDate.substr(0, 4),
-				"h_category" : strCategoryName,
+				"h_name" : title,
+				"h_url" : cover,
+				"h_author" : author,
+				"h_pub" : publisher,
+				"h_isbn" : isbn13,
+				"h_description" : description,
+				"h_year" : pubDate,
+				"h_category" : setCategoryName(categoryName),
 				"h_link" : items[i].link
 			});
-
+			console.log(jsonArr);
 			str += "<tr><td><a href='#' onclick='confirm(" + i + ")'>"
 					+ items[i].title + "</a><br>(" + items[i].author
 					+ "&nbsp;|&nbsp;" + items[i].publisher + "&nbsp;|&nbsp;"
@@ -113,21 +102,35 @@ function confirm(i) {
 }
 
 function modify(e) {
-	let resultText = "";
-	console.log("도서설명=" + e)
-	if (e=== undefined || e === null){
-		resultText = e.replaceAll("&", "&amp;")	
+
+	let resultText = e.replaceAll("&", "&amp;")	
 						  .replaceAll("<", "&lt;")
 						  .replaceAll(">", "&gt;")
 						  .replaceAll("((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")", "$1&quot;")
 						  .replaceAll("'", "&#x27;")
 						  .replaceAll("/", "&#x2F;");
 		resultText = resultText.replace(/[\u0000-\u0019]+/g, "");
-	} else {
-		resultText = "-";
-	}
-	console.log("resultText=" + resultText)
+
 	return resultText
+}
+
+function setCategoryName(e) {
+	let arrCategory = e;
+	let strCategoryName = "";
+	if(arrCategory.length > 1){
+		if (arrCategory[1].includes("/")) {
+			strCategoryName = arrCategory[1].split("/", 1).toString();
+		} else {
+			strCategoryName = arrCategory[1];
+		}
+	}else {
+		if(arrCategory[0].toString().legth > 0) {
+			strCategoryName = arrCategory[0].toString();
+		}else {
+			strCategoryName = "기타";
+		}
+	}
+	return strCategoryName;
 }
 </script>
 

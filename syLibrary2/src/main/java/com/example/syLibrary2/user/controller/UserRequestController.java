@@ -31,7 +31,8 @@ public class UserRequestController {
 	@GetMapping("insert")
 	public String insert(@RequestParam Map<String, Object> data, HttpSession session) {
 		String h_memid=(String) session.getAttribute("mId");
-
+		System.out.println(data);
+		
 		HoBookDTO dto=new HoBookDTO();
 		dto.setH_name((String) data.get("h_name"));
 		dto.setH_url((String) data.get("h_url"));
