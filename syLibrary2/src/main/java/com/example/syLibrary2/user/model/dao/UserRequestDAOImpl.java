@@ -18,7 +18,7 @@ public class UserRequestDAOImpl implements UserRequestDAO {
 			result = "신청완료";
 		} catch (Exception e) {
 			e.printStackTrace();
-			result = "Not possible";
+			result = "error";
 		}
 		return result;
 	}
