@@ -78,7 +78,7 @@ $(function() {
 				
 				<div style="left: 290px; position: absolute; width: 2000px;">
 					<div class="dd">
-						<form name="form1" method="get" enctype="multipart/form-data" action="/admin/hope/change_status?state=${state}&h_idx=${h_idx}">
+						<form name="form1" method="get" enctype="multipart/form-data" action="/admin/hope/change_status">
 							<table border="1" width="750px" style="position: static;">
 								<tr>
 									<td>신청자</td>
@@ -145,7 +145,7 @@ $(function() {
 								<tr>
 									<td colspan="4" align="right">
 												<select id="state" name="state">
-												<c:if test="${dto.h_state == '신청완료'||dto.h_state == '처리중'}">
+												<c:if test="${dto.h_state != '이용가능'}">
 											<c:choose>
 												<c:when test="${dto.h_state == '신청완료'}">
 													<option value="신청완료" selected>신청완료</option>
