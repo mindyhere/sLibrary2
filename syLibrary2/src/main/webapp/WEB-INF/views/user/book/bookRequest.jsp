@@ -55,7 +55,7 @@ $(function(){
 </script>
 
 <style>
-p>input[type="text"] {
+td > input {
 	border-color: #FAE0E0 !important;
 	outline: none;
 	box-shadow: none !important;

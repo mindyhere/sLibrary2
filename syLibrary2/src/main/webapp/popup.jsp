@@ -20,6 +20,8 @@ function bookInfo(success, data) {
 	let str = "";
 	if (data.totalResults > 0) {
 		for (i = 0; i < items.length; i++) {
+			let categoryArr = items[i].categoryName.split(">", 2)
+			console.log(categoryArr[1].split("/", 1));
 			let jsonArr = new Array();
 			jsonArr.push({
 				"idx" : i + "",
@@ -30,7 +32,7 @@ function bookInfo(success, data) {
 				"h_isbn" : items[i].isbn13,
 				"h_description" : modify(items[i].description),
 				"h_year" : items[i].pubDate.substr(0, 4),
-				"h_category" : items[i].categoryName.split(">", 2).join(" "),
+				"h_category" : categoryArr[1].split("/", 1).toString(),
 				"h_link" : items[i].link
 			});
 
