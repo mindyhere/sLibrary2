@@ -42,6 +42,7 @@ function apply(){
 		data: data,
 		success: function(result) {
 			if(result != "error"){
+				console.log(result);
 				Swal.fire({
 					title: result,
 					html: "나의서재에서 신청현황을 확인하실 수 있습니다.<br>해당 페이지로 이동할까요?",
