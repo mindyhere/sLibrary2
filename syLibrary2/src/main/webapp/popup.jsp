@@ -20,8 +20,27 @@ function bookInfo(success, data) {
 	let str = "";
 	if (data.totalResults > 0) {
 		for (i = 0; i < items.length; i++) {
-			let categoryArr = items[i].categoryName.split(">", 2)
-			console.log(categoryArr[1].split("/", 1));
+			let arrCategory = items[i].categoryName.split(">", 2)
+			let strCategoryName = "";
+			console.log("000 length : "+arrCategory.length);
+			if(arrCategory.length > 1){
+				if (arrCategory[1].includes("/")) {
+					strCategoryName = arrCategory[1].split("/", 1).toString();
+					console.log("1-1 : "+arrCategory[1] + ", " + strCategoryName);
+				} else {
+					strCategoryName = arrCategory[1];
+					console.log("1-2 : "+arrCategory[1] + ", " + strCategoryName);
+				}
+			}else {
+				if(arrCategory[0].toString().legth > 0) {
+					strCategoryName = arrCategory[0].toString();
+				}else {
+					strCategoryName = "기타";
+				}
+				console.log("222 : " + arrCategory[0]+", "+ items[i].title+ "=>" + strCategoryName);
+			}
+			
+			console.log("333 : "+strCategoryName+", 타입" +typeof strCategoryName);
 			let jsonArr = new Array();
 			jsonArr.push({
 				"idx" : i + "",
@@ -32,7 +51,7 @@ function bookInfo(success, data) {
 				"h_isbn" : items[i].isbn13,
 				"h_description" : modify(items[i].description),
 				"h_year" : items[i].pubDate.substr(0, 4),
-				"h_category" : categoryArr[1].split("/", 1).toString(),
+				"h_category" : strCategoryName,
 				"h_link" : items[i].link
 			});
 
@@ -51,7 +70,6 @@ function bookInfo(success, data) {
 			confirmButtonText: "OK"
 		});
 	}
-	
 	$("#result").append(str);
 }
 
@@ -95,13 +113,20 @@ function confirm(i) {
 }
 
 function modify(e) {
-	let resultText = e.replaceAll("&", "&amp;")	
-					  .replaceAll("<", "&lt;")
-					  .replaceAll(">", "&gt;")
-					  .replaceAll("((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")", "$1&quot;")
-					  .replaceAll("'", "&#x27;")
-					  .replaceAll("/", "&#x2F;");
-	resultText = resultText.replace(/[\u0000-\u0019]+/g, "");
+	let resultText = "";
+	console.log("도서설명=" + e)
+	if (e=== undefined || e === null){
+		resultText = e.replaceAll("&", "&amp;")	
+						  .replaceAll("<", "&lt;")
+						  .replaceAll(">", "&gt;")
+						  .replaceAll("((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")", "$1&quot;")
+						  .replaceAll("'", "&#x27;")
+						  .replaceAll("/", "&#x2F;");
+		resultText = resultText.replace(/[\u0000-\u0019]+/g, "");
+	} else {
+		resultText = "-";
+	}
+	console.log("resultText=" + resultText)
 	return resultText
 }
 </script>
