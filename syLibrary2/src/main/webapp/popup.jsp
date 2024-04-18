@@ -102,6 +102,7 @@ function confirm(i) {
 }
 
 function modify(e) {
+
 	let resultText = e.replaceAll("&", "&amp;")	
 						  .replaceAll("<", "&lt;")
 						  .replaceAll(">", "&gt;")
@@ -109,6 +110,7 @@ function modify(e) {
 						  .replaceAll("'", "&#x27;")
 						  .replaceAll("/", "&#x2F;");
 		resultText = resultText.replace(/[\u0000-\u0019]+/g, "");
+
 	return resultText
 }
 
