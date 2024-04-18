@@ -19,12 +19,29 @@ $(function(){
 	});
 	
 	$("#btnConfirm").click(function() {
-		const obj = JSON.parse(document.getElementById("data").value);
-		const data = obj[0];
-		$.ajax({
-			url: "/user/request/insert",
-			data: data,
-			success: function(result) {
+		const h_name = $("#h_name").val();
+		if(h_name!==""){
+			apply();
+		} else {
+			Swal.fire({
+				icon: "info",
+				title: "Check!",
+				html: "[자료검색하기]를 클릭해 신청서를 작성해주세요.",
+				confirmButtonText: "OK"
+			});
+		}
+	});
+});
+
+function apply(){
+	const obj = JSON.parse(document.getElementById("data").value);
+	const data = obj[0]
+	console.log(data)
+	$.ajax({
+		url: "/user/request/insert",
+		data: data,
+		success: function(result) {
+			if(result != "error"){
 				Swal.fire({
 					title: result,
 					html: "나의서재에서 신청현황을 확인하실 수 있습니다.<br>해당 페이지로 이동할까요?",
@@ -40,8 +57,7 @@ $(function(){
 						location.reload();
 					}
 				});
-			},
-			error: function(err) {
+			}else {
 				Swal.fire({
 					icon: "error",
 					title: "Not possible",
@@ -49,13 +65,22 @@ $(function(){
 					confirmButtonText: "OK"
 				});
 			}
-		});
+		},
+		error: function(err) {
+			console.log("에러발생: " + err);
+			Swal.fire({
+				icon: "error",
+				title: "Not possible",
+				html: "신청이 거부되었습니다.<br>반복 실패 시, 관리자에게 문의해 주세요.",
+				confirmButtonText: "OK"
+			});
+		}
 	});
-});
+}
 </script>
 
 <style>
-p>input[type="text"] {
+td > input {
 	border-color: #FAE0E0 !important;
 	outline: none;
 	box-shadow: none !important;
