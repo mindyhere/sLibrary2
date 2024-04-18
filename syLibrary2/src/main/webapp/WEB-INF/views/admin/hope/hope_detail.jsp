@@ -145,7 +145,7 @@ $(function() {
 								<tr>
 									<td colspan="4" align="right">
 												<select id="state" name="state">
-												<%-- <c:if test="${dto.h_state == '신청완료'||dto.h_state == '처리중'}"> --%>
+												<c:if test="${dto.h_state == '신청완료'||dto.h_state == '처리중'}">
 											<c:choose>
 												<c:when test="${dto.h_state == '신청완료'}">
 													<option value="신청완료" selected>신청완료</option>
@@ -177,7 +177,7 @@ $(function() {
 															<input type="hidden" name="h_idx" value="${dto.h_idx}">
 															<input type="submit" id="btnChange" value="상태변경" class="btn text-white" style="background-color: #6699CC;">
 													</td>
-											<%-- </c:if> --%>
+											</c:if>
 										</select>
 									</td>
 									<c:choose>
