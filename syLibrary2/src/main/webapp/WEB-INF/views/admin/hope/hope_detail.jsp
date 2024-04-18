@@ -99,9 +99,9 @@ $(function() {
 									class="form-control" readonly value="${dto.h_state}">
 									</td>
 								</tr>
-								<c:if test="${dto.h_cancel != null}">
+								<c:if test="${dto.h_state == '접수취소' && dto.h_cancel != null}">
 									<tr>
-										<td></td>
+										<td>취소사유</td>
 										<td colspan="3">
 											<input type="text" name="h_cancel" id="h_cancel" size="5"class="form-control" readonly value="${dto.h_cancel}">
 										</td>
@@ -181,7 +181,7 @@ $(function() {
 										</select>
 									</td>
 									<c:choose>
-										<c:when test="${dto.h_state == '접수취소'&&dto.h_cancel == null}">
+										<c:when test="${dto.h_state == '접수취소'}">
 											<td>
 												<div id="p1">
 														<input type="hidden" id="hidx" name="hidx" value="${dto.h_idx}">
