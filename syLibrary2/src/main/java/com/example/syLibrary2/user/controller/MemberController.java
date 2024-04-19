@@ -41,7 +41,6 @@ public class MemberController {
 	}
 
 	@PostMapping("join.do")
-	@ResponseBody
 	public ModelAndView join(HttpServletRequest request, @RequestParam("mImg") MultipartFile mImgFile)
 			throws IOException {
 		String mName = request.getParameter("mName");
@@ -81,7 +80,8 @@ public class MemberController {
 		memberDao.insert_join(dto);
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/");
+		mav.addObject("message", "성공");
+		mav.setViewName("/user/login/login");
 		return mav;
 
 	}
