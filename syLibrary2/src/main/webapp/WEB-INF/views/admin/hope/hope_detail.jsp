@@ -99,9 +99,9 @@ $(function() {
 									class="form-control" readonly value="${dto.h_state}">
 									</td>
 								</tr>
-								<c:if test="${dto.h_state == '접수취소' && dto.h_cancel != null}">
+								<c:if test="${dto.h_cancel != null}">
 									<tr>
-										<td>취소사유</td>
+										<td></td>
 										<td colspan="3">
 											<input type="text" name="h_cancel" id="h_cancel" size="5"class="form-control" readonly value="${dto.h_cancel}">
 										</td>
@@ -144,8 +144,8 @@ $(function() {
 							</table>
 								<tr>
 									<td colspan="4" align="right">
-												<select id="state" name="state">
 												<c:if test="${dto.h_state != '이용가능'}">
+												<select id="state" name="state">
 											<c:choose>
 												<c:when test="${dto.h_state == '신청완료'}">
 													<option value="신청완료" selected>신청완료</option>
@@ -177,11 +177,11 @@ $(function() {
 															<input type="hidden" name="h_idx" value="${dto.h_idx}">
 															<input type="submit" id="btnChange" value="상태변경" class="btn text-white" style="background-color: #6699CC;">
 													</td>
-											</c:if> 
 										</select>
+											</c:if> 
 									</td>
 									<c:choose>
-										<c:when test="${dto.h_state == '접수취소'}">
+										<c:when test="${dto.h_state == '접수취소'&&dto.h_cancel == null}">
 											<td>
 												<div id="p1">
 														<input type="hidden" id="hidx" name="hidx" value="${dto.h_idx}">
